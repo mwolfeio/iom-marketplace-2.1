@@ -5,7 +5,6 @@ import { Octokit } from "octokit";
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import { NextApiRequest, NextApiResponse } from "next";
-const octokit = new Octokit();
 
 export default withIronSessionApiRoute(loginRoute, sessionOptions);
 
@@ -13,13 +12,9 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
   const { email, password } = await req.body;
 
   try {
-    // const {
-    //   data: { login, avatar_url },
-    // } = await octokit.rest.users.getByUsername({ username })
-
+    console.log("Logging in");
     const {
       data: { user, token, balances },
-      // data: { login, avatar_url },
     } = await axios.post("https://api.apiiom.com/user/login", {
       email: email,
       password: password,
@@ -36,6 +31,7 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
     await req.session.save();
     res.json(userData);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: (error as Error).message });
   }
 }

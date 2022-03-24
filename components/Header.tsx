@@ -67,16 +67,6 @@ export default function Header() {
               </li>
             </>
           )}
-          <li>
-            <a href="https://github.com/vvo/iron-session">
-              <Image
-                src="/GitHub-Mark-Light-32px.png"
-                width="32"
-                height="32"
-                alt=""
-              />
-            </a>
-          </li>
         </ul>
       </nav>
       <style jsx>{`
