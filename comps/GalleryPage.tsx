@@ -5,7 +5,7 @@ import Layout from "comps/Layout";
 import Image from "next/image";
 import Gallery from "comps/Gallery";
 
-export default function GalleryPage({ defaults, placeholder }) {
+export default function GalleryPage({ defaults, placeholder, title }) {
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const [offers, setOffers] = useState([]);
@@ -31,16 +31,14 @@ export default function GalleryPage({ defaults, placeholder }) {
     } catch (error) {
       if (error instanceof FetchError) {
         setErrorMsg(error.data.message);
-      } else {
-        console.error("An unexpected error happened:", error);
-      }
+      } else console.error("An unexpected error happened:", error);
     }
     setLoading(false);
   };
 
   return (
     <Layout>
-      <h1>NFT Marketplace</h1>
+      <h1>{title}</h1>
 
       {errorMsg ? (
         <p className="error">{errorMessage}</p>

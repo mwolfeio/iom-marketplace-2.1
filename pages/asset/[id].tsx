@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 
 import Layout from "comps/Layout";
-import Offer from "comps/Offer";
+import Asset from "comps/Asset";
 
 export default function SgProfile() {
   let router = useRouter();
@@ -11,7 +11,7 @@ export default function SgProfile() {
 
   return (
     <Layout>
-      <Offer id={router.query.id} nftId="1234" />
+      <Asset id={router.query.id} />
     </Layout>
   );
 }

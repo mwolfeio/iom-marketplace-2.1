@@ -1,89 +1,94 @@
 import Link from "next/link";
+import React, { useEffect, useState } from "react";
 import useUser from "lib/useUser";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import fetchJson from "lib/fetchJson";
 
 export default function Header() {
+  const [boxCount, setBoxCount] = useState(0);
+  const [iom, setIom] = useState(0);
   const { user, mutateUser } = useUser();
   const router = useRouter();
 
-  // console.log("Header user: ", user);
+  useEffect(() => {
+    if (user && user.isLoggedIn && user.balances) {
+      setBoxCount(
+        user.balances.filter((obj) => obj.token.indexOf("BOX") !== -1).length
+      );
+      setIom(user.balances.filter((obj) => obj.token === "IOM")[0].amount);
+    }
+  }, [user]);
 
   return (
-    <header>
-      <nav>
-        <ul>
-          <li>
-            <Link href="/games">
-              <a>Games</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/boxes">
-              <a>Boxes</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/game-items">
-              <a>Game Items</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/">
-              <a>NFT Marketplace</a>
-            </Link>
-          </li>
-          {user?.isLoggedIn === false && (
+    <>
+      {boxCount > 0 ? (
+        <div className="box-banner">
+          You have {boxCount} Box{boxCount > 1 && "es"} to Open!
+        </div>
+      ) : (
+        ""
+      )}
+      <header>
+        <nav>
+          <ul>
             <li>
-              <Link href="/login">
-                <a>Login</a>
+              <Link href="/games">
+                <a>Games</a>
               </Link>
             </li>
-          )}
-          {user?.isLoggedIn === true && (
-            <>
+            <li>
+              <Link href="/boxes">
+                <a>Boxes</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/game-items">
+                <a>Game Items</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/">
+                <a>NFT Marketplace</a>
+              </Link>
+            </li>
+            {user?.isLoggedIn === false && (
               <li>
-                <Link href="/wallet">
-                  <a>
-                    <span
-                      style={{
-                        marginRight: ".3em",
-                        verticalAlign: "middle",
-                        borderRadius: "100%",
-                        overflow: "hidden",
-                      }}
-                    >
-                      <Image
-                        src={user.avatarUrl}
-                        width={32}
-                        height={32}
-                        alt=""
-                      />
-                    </span>
-                    Wallet
-                  </a>
+                <Link href="/login">
+                  <a>Login</a>
                 </Link>
               </li>
-              <li>
-                <a
-                  href="/api/logout"
-                  onClick={async (e) => {
-                    e.preventDefault();
-                    mutateUser(
-                      await fetchJson("/api/logout", { method: "POST" }),
-                      false
-                    );
-                    router.push("/login");
-                  }}
-                >
-                  Logout
-                </a>
-              </li>
-            </>
-          )}
-        </ul>
-      </nav>
+            )}
+            {user?.isLoggedIn === true && (
+              <>
+                <li>
+                  <Link href="/wallet">
+                    <a>
+                      <span>{iom} $IOM </span> <span> Wallet</span>
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <a
+                    href="/api/logout"
+                    onClick={async (e) => {
+                      e.preventDefault();
+                      mutateUser(
+                        await fetchJson("/api/logout", { method: "POST" }),
+                        false
+                      );
+                      router.push("/login");
+                    }}
+                  >
+                    Logout
+                  </a>
+                </li>
+              </>
+            )}
+          </ul>
+        </nav>
+      </header>
+
       <style jsx>{`
         ul {
           display: flex;
@@ -118,6 +123,6 @@ export default function Header() {
           background-color: #333;
         }
       `}</style>
-    </header>
+    </>
   );
 }

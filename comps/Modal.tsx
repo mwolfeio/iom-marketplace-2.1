@@ -3,7 +3,7 @@ import { FormEvent } from "react";
 export default function Modal({ id, onClose, children }) {
   return (
     <div className="modal-back" onClick={() => onClose()}>
-      <div className="modal-wrap" onClick={() => event.stopPropagation()}>
+      <div className="modal-wrap" onClick={(event) => event.stopPropagation()}>
         {children}
       </div>
       <style jsx>{`
