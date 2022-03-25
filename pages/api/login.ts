@@ -25,9 +25,14 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
       info: user,
       token,
       balances,
-      avatarUrl: "https://avatars.githubusercontent.com/u/90003090?v=4",
+      // schema: sch.data,
     } as User;
+
+    console.log("userData: ", userData);
+
     req.session.user = userData;
+    // req.session.schema = { schema: sch.data };
+
     await req.session.save();
     res.json(userData);
   } catch (error) {

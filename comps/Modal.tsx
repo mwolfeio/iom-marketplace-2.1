@@ -20,10 +20,13 @@ export default function Modal({ id, onClose, children }) {
         .modal-wrap {
           position: relative;
           inset: 2rem;
+          color: #fff;
           width: Calc(100vw - 4rem);
+          max-height: Calc(100vh - 4rem);
+          overflow-y: auto;
           box-sizing: border-box;
           border-radius: 2rem;
-          background: #fff;
+          background: #242830;
           padding: 1rem;
         }
       `}</style>

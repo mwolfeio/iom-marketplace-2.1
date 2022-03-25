@@ -1,5 +1,7 @@
 import { FormEvent } from "react";
 
+import Link from "next/link";
+
 export default function Form({
   errorMessage,
   onSubmit,
@@ -10,7 +12,14 @@ export default function Form({
   return (
     <form onSubmit={onSubmit}>
       <label>
-        <span>IOM email and password:</span>
+        <h3>Welcome!</h3>
+        <p>
+          Sign in to access the IOM Marketplace or create a new account{" "}
+          <Link href="/sign-up">
+            <a>here</a>
+          </Link>
+          .
+        </p>
         <input type="email" name="email" placeholder="email" required />
       </label>
       <label>
@@ -22,6 +31,11 @@ export default function Form({
         />
       </label>
 
+      <Link href="/sign-up">
+        <a>
+          <button type="button">Sign Up</button>
+        </a>
+      </Link>
       <button type="submit">Login</button>
 
       {errorMessage && <p className="error">{errorMessage}</p>}

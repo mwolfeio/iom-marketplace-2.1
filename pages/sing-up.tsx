@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 
 import useUser from "lib/useUser";
 import Layout from "comps/Layout";
-import Form from "comps/LoginForm";
+import Form from "comps/Form";
 import fetchJson, { FetchError } from "lib/fetchJson";
 
 export default function Login() {

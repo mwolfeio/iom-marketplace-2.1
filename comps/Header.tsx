@@ -20,6 +20,8 @@ export default function Header() {
     }
   }, [user]);
 
+  console.log("User: ", user);
+
   return (
     <>
       {boxCount > 0 ? (
@@ -118,6 +120,8 @@ export default function Header() {
         }
 
         header {
+          height: 64px;
+          box-sizing: border-box;
           padding: 0.2rem;
           color: #fff;
           background-color: #333;

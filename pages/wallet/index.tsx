@@ -13,21 +13,32 @@ import axios from "axios";
 export default function SgProfile() {
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
+  const [schema, setSchema] = useState([]);
+  const [iom, setIom] = useState([]);
+  const [boxes, setBoxes] = useState([]);
+  const [items, setItems] = useState([]);
   const [chars, setChars] = useState([]);
-  const [offers, setOffers] = useState([]);
+  // const [offers, setOffers] = useState([]);
   const [pageCount, setPageCount] = useState();
 
   const { user, mutateUser } = useUser();
-
   const router = useRouter();
 
   useEffect(() => {
-    getChars();
+    if (user) hydratePage();
   }, [user]);
 
-  const getChars = async () => {
+  const hydratePage = async () => {
     setLoading(true);
+    await getChars();
 
+    const bal = user.balances;
+    const sch = await getSchema();
+
+    hydratBlanace(bal, sch);
+    setLoading(false);
+  };
+  const getChars = async () => {
     try {
       const {
         data: { rows, pages },
@@ -35,15 +46,15 @@ export default function SgProfile() {
         headers: { Authorization: user.token },
       });
 
-      const { data } = await axios.get(
-        `https://api.apiiom.com/store/user/offer?page=0&size=10`,
-        {
-          headers: { Authorization: user.token },
-        }
-      );
+      // const { data } = await axios.get(
+      //   `https://api.apiiom.com/store/user/offer?page=0&size=10`,
+      //   {
+      //     headers: { Authorization: user.token },
+      //   }
+      // );
 
       setChars(rows);
-      setOffers(data);
+      // setOffers(data);
       setPageCount(pages);
     } catch (error) {
       if (error.response) {
@@ -55,17 +66,85 @@ export default function SgProfile() {
         setErrorMsg(error.response.data.message);
       } else console.error("An unexpected error happened:", error);
     }
-    setLoading(false);
+  };
+  const getSchema = async () => {
+    try {
+      //check session storage
+      let local = sessionStorage.getItem("schema");
+      if (local) {
+        const data = JSON.parse(local);
+        setSchema(data);
+        return data;
+      }
+
+      //get from api
+      const { data } = await axios.get("https://api.apiiom.com/bank/tokens", {
+        headers: { Authorization: user.token },
+      });
+      sessionStorage.setItem("schema", JSON.stringify(data));
+      setSchema(data);
+      return data;
+    } catch (error) {
+      if (error.response) {
+        console.error("Error:", error.response.data);
+        setErrorMsg(error.response.data.message);
+      } else console.error("An unexpected error happened:", error);
+    }
+  };
+  const hydratBlanace = (bal, sch) => {
+    console.log("running hydratBlanace sch: ", sch);
+
+    const merge = bal.map(({ amount, token }) => {
+      const info = sch.find((o) => o.token === token);
+      return { amount, ...info };
+    });
+    console.log("merge", merge);
+
+    //IOM
+    setIom(merge.filter((o) => o.tokenCategory === "CURRENCY"));
+    //Boxes
+    setBoxes(merge.filter((o) => o.tokenCategory === "BOX"));
+    //Game Items
+    setItems(merge.filter((o) => o.tokenCategory === "GAME_ITEM"));
   };
 
   // console.log("token: ", user.token);
-  console.log("offers: ", offers);
+  // console.log("offers: ", offers);
+  console.log("schema: ", schema);
   console.log("chars: ", chars);
 
   return (
     <Layout>
       <h1>Wallet / Profile</h1>
-      {user && <pre>{JSON.stringify(user, null, 2)}</pre>}
+      {user && schema && (
+        <>
+          <h2>Info</h2>
+          <pre>
+            {JSON.stringify(
+              {
+                isLoggedIn: user.isLoggedIn,
+                token: user.token,
+                info: user.info,
+              },
+              null,
+              2
+            )}
+          </pre>
+          <h2>Balance</h2>
+          <p>
+            <b>IOM (number)</b>
+          </p>
+          <pre>{JSON.stringify(iom, null, 2)}</pre>
+          <p>
+            <b>Boxes (Carosel)</b>
+          </p>
+          <pre>{JSON.stringify(boxes, null, 2)}</pre>
+          <p>
+            <b>Game Items (List)</b>
+          </p>
+          <pre>{JSON.stringify(items, null, 2)}</pre>
+        </>
+      )}
       <h3>Chars:</h3>
       {errorMsg ? (
         <p className="error">{errorMsg}</p>

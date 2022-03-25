@@ -18,7 +18,7 @@ export default function Comp({
   const getHref = (item) => {
     const href =
       type === "asset"
-        ? `wallet/?id=${item.id}`
+        ? `wallet?id=${item.id}`
         : `${router.pathname !== "/" ? router.pathname : ""}/?id=${item.id}`;
     return href;
   };
