@@ -8,15 +8,30 @@ export default function Header() {
   const { user, mutateUser } = useUser();
   const router = useRouter();
 
-  console.log("Header user: ", user);
+  // console.log("Header user: ", user);
 
   return (
     <header>
       <nav>
         <ul>
           <li>
+            <Link href="/games">
+              <a>Games</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/boxes">
+              <a>Boxes</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/game-items">
+              <a>Game Items</a>
+            </Link>
+          </li>
+          <li>
             <Link href="/">
-              <a>Home</a>
+              <a>NFT Marketplace</a>
             </Link>
           </li>
           {user?.isLoggedIn === false && (
@@ -29,7 +44,7 @@ export default function Header() {
           {user?.isLoggedIn === true && (
             <>
               <li>
-                <Link href="/profile-sg">
+                <Link href="/wallet">
                   <a>
                     <span
                       style={{
@@ -46,7 +61,7 @@ export default function Header() {
                         alt=""
                       />
                     </span>
-                    Profile (Static Generation, recommended)
+                    Wallet
                   </a>
                 </Link>
               </li>

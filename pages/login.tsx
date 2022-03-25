@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 
 import useUser from "lib/useUser";
-import Layout from "components/Layout";
-import Form from "components/Form";
+import Layout from "comps/Layout";
+import Form from "comps/Form";
 import fetchJson, { FetchError } from "lib/fetchJson";
 
 export default function Login() {
   // here we just check if user is already logged in and redirect to profile
   const { mutateUser } = useUser({
-    redirectTo: "/profile-sg",
+    redirectTo: "/wallet",
     redirectIfFound: true,
   });
 

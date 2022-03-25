@@ -9,15 +9,23 @@ async function fetchOffers(req: NextApiRequest, res: NextApiResponse) {
     size = 30,
     sortAttributeName = "",
     sortMode = "",
-    tokenGames = "",
-    priceFrom,
-    priceTo,
+    tokenGames = [],
+    priceFrom = 0,
+    priceTo = 0,
+    tokenCategories = [],
   } = await req.body;
 
   try {
-    console.log("Getting Nft Offers");
     const { data } = await axios.get(
-      "https://api.apiiom.com/store/offer?page=0&size=10"
+      `https://api.apiiom.com/store/offer?size=${size}&page=${page}${
+        tokenCategories.length
+          ? `&tokenCategories=${tokenCategories.toString()}`
+          : ""
+      }${sortMode ? `&sortMode=${sortMode}` : ""}${
+        tokenGames.length ? `&tokenGames=${tokenGames.toString()}` : ""
+      }${priceFrom ? `&priceFrom=${priceFrom}` : ""}${
+        priceTo ? `&priceTo=${priceTo} ` : ""
+      }`
     );
     console.log("NFTOffers data: ", data);
 

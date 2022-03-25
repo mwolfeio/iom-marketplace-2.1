@@ -4,8 +4,8 @@ import GalleryPage from "comps/GalleryPage";
 export default function Home() {
   return (
     <GalleryPage
-      defaults={{ tokenCategories: ["CHAR"] }}
-      placeholder="No Characters"
+      defaults={{ tokenCategories: ["BOX"] }}
+      placeholder="No Boxes"
     />
   );
 }
