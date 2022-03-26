@@ -1,0 +1,81 @@
+a {
+  cursor: pointer;
+  color: #ff4544;
+  text-decoration: none;
+}
+input,
+textarea {
+  width: 100%;
+  font-family: inherit;
+  border-color: rgba(226, 232, 240);
+  color: #fff;
+  line-height: 1.25;
+  padding: 0.5rem 0.75rem;
+  border-width: 1px;
+  border-radius: 0.25rem;
+  border: none;
+  /* outline-offset: -2px; */
+  /* margin-bottom: 0.5rem; */
+  /* border: 1px solid rgb(237, 242, 247); */
+  outline: none;
+  transition: 150ms cubic-bezier(0.215, 0.61, 0.355, 1);
+  font-size: 1rem;
+  background: #33363d;
+}
+input:focus. textarea:focus {
+  border-color: #ff4544;
+}
+input::placeholder,
+textarea::placeholder {
+  color: #babbbd;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+/* List Spacing------------------- */
+.list-spacing-sml > *:not(:last-child) {
+  margin-right: 8px;
+}
+.list-spacing-med > *:not(:last-child) {
+  margin-right: 1rem;
+}
+.list-spacing-lg > *:not(:last-child) {
+  margin-right: 2rem;
+}
+.vert-space-sml > *:not(:last-child) {
+  margin: 0;
+  margin-bottom: 8px;
+}
+.vert-space-med > *:not(:last-child) {
+  margin: 0;
+  margin-bottom: 24px;
+}
+/* FLEXBOX---------------------- */
+.flex-align-center {
+  display: flex;
+  align-items: center;
+}
+.flex-align-top {
+  display: flex;
+  align-items: flex-start;
+}
+.flex-align-bottom {
+  display: flex;
+  align-items: flex-end;
+}
+.flex-justify-center {
+  display: flex;
+  justify-content: center;
+}
+.flex-justify-right {
+  display: flex;
+  justify-content: flex-end;
+}
+.flex-justify-btw {
+  display: flex;
+  justify-content: space-between;
+}
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}

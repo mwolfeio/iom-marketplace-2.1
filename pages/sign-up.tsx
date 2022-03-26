@@ -3,7 +3,8 @@ import toast from "react-hot-toast";
 
 import useUser from "lib/useUser";
 import Layout from "comps/Layout";
-import Form from "comps/Form";
+import FormWrapper from "comps/FormWrapper";
+import SignUpForm from "comps/SignUpForm";
 import fetchJson, { FetchError } from "lib/fetchJson";
 
 export default function Login() {
@@ -18,14 +19,14 @@ export default function Login() {
   return (
     <Layout>
       <div className="login">
-        <Form
+        <SignUpForm
           errorMessage={errorMsg}
-          onSubmit={async function handleSubmit(event) {
-            event.preventDefault();
+          onSubmit={async function handleSubmit(email, password) {
+            console.log("signing in");
 
             const body = {
-              email: event.currentTarget.email.value,
-              password: event.currentTarget.password.value,
+              email: email,
+              password: password,
             };
 
             try {
@@ -38,8 +39,10 @@ export default function Login() {
               );
               toast.success(`Welcome Back!`);
             } catch (error) {
+              console.log("Error logging in: ", error.response);
+
               if (error instanceof FetchError) {
-                setErrorMsg(error.data.message);
+                // setErrorMsg(error.response);
               } else {
                 console.error("An unexpected error happened:", error);
               }
@@ -49,11 +52,16 @@ export default function Login() {
       </div>
       <style jsx>{`
         .login {
-          max-width: 21rem;
           margin: 0 auto;
-          padding: 1rem;
-          border: 1px solid #ccc;
-          border-radius: 4px;
+          background: #1d2028;
+          border-radius: 24px;
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          padding: 24px;
+          width: Calc(100vw - 32px);
+          max-width: 360px;
+          display: flex;
+          flex-direction: column;
+          box-shadow: 0 2px 4px rgb(0 0 0 / 2%);
         }
       `}</style>
     </Layout>

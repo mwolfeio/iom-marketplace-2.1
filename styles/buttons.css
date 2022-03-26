@@ -1,0 +1,86 @@
+button {
+  cursor: pointer;
+  cursor: pointer;
+  border-radius: 8px;
+  background: #33363d;
+  outline: none;
+  border: none;
+  height: 40px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff60;
+  font-size: 1rem;
+  font-weight: 600;
+  position: relative;
+  white-space: nowrap;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+button {
+  transition: 150ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+button:hover {
+  background: #ffffff;
+  color: #1d2028;
+}
+button.primary {
+  color: white;
+  background: #ff4544;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 0%);
+}
+button.primary:hover {
+  /* transform: scale(1.01); */
+  background: #ff4544;
+  color: white;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 24%);
+}
+
+button.search-button {
+  background: none;
+  color: #ffffff60;
+  border-radius: 3rem;
+}
+button.search-button:hover {
+  background: #ffffff10;
+  color: #fff;
+}
+
+button.secondary {
+  color: #ffffff60;
+  background: #1d2028;
+}
+button.secondary:hover {
+  color: #fff;
+  background: #33363d;
+}
+
+button.turciary {
+  color: #1d2028;
+  background: #ffffff80;
+}
+button.turciary:hover {
+  /* color: #fff; */
+  background: #ffff;
+}
+
+button.icon {
+  padding: 0;
+  width: 40px;
+  min-width: 40px;
+}
+
+.char-item-wrapper button {
+  border-radius: 50px;
+  width: 100%;
+  border: 2px solid white;
+  color: white;
+}
+.char-item-wrapper button:hover {
+  background: #ffffff60;
+}
+.gallery-itme-image-wrapper button {
+  width: auto;
+}

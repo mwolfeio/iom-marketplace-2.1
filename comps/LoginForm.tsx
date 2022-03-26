@@ -1,18 +1,11 @@
-import { FormEvent } from "react";
-
 import Link from "next/link";
+import Loader from "comps/Loader";
 
-export default function Form({
-  errorMessage,
-  onSubmit,
-}: {
-  errorMessage: string;
-  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
-}) {
+export default function Form({ loading }) {
   return (
-    <form onSubmit={onSubmit}>
+    <>
       <label>
-        <h3>Welcome!</h3>
+        <h1 style={{ margin: 0 }}>Welcome!</h1>
         <p>
           Sign in to access the IOM Marketplace or create a new account{" "}
           <Link href="/sign-up">
@@ -30,36 +23,32 @@ export default function Form({
           required
         />
       </label>
-
-      <Link href="/sign-up">
-        <a>
-          <button type="button">Sign Up</button>
-        </a>
+      <Link href="/forgot">
+        <a>Forgot password?</a>
       </Link>
-      <button type="submit">Login</button>
-
-      {errorMessage && <p className="error">{errorMessage}</p>}
-
+      <div className="form-button-wapper flex-align-center list-spacing-sml">
+        <Link href="/sign-up">
+          <a>
+            <button type="button">Sign up</button>
+          </a>
+        </Link>
+        <button type="submit" className="primary">
+          {loading ? <Loader /> : "Sign in"}
+        </button>
+      </div>
       <style jsx>{`
-        form,
-        label {
-          display: flex;
-          flex-flow: column;
-        }
         label > span {
           font-weight: 600;
         }
-        input {
-          padding: 8px;
-          margin: 0.3rem 0 1rem;
-          border: 1px solid #ccc;
-          border-radius: 4px;
+        .form-button-wapper {
+          width: 100%;
         }
-        .error {
-          color: brown;
-          margin: 1rem 0 0;
+        .form-button-wapper > *,
+        .form-button-wapper button {
+          display: block;
+          width: 100%;
         }
       `}</style>
-    </form>
+    </>
   );
 }

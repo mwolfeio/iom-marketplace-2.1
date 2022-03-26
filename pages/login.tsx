@@ -3,7 +3,8 @@ import toast from "react-hot-toast";
 
 import useUser from "lib/useUser";
 import Layout from "comps/Layout";
-import Form from "comps/LoginForm";
+import FormWrapper from "comps/FormWrapper";
+import LoginForm from "comps/LoginForm";
 import fetchJson, { FetchError } from "lib/fetchJson";
 
 export default function Login() {
@@ -14,15 +15,16 @@ export default function Login() {
   });
 
   const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState("");
 
   return (
     <Layout>
       <div className="login">
-        <Form
+        <FormWrapper
           errorMessage={errorMsg}
           onSubmit={async function handleSubmit(event) {
             event.preventDefault();
-
+            setLoading(true);
             const body = {
               email: event.currentTarget.email.value,
               password: event.currentTarget.password.value,
@@ -44,16 +46,24 @@ export default function Login() {
                 console.error("An unexpected error happened:", error);
               }
             }
+            setLoading(false);
           }}
-        />
+        >
+          <LoginForm loading={loading} />
+        </FormWrapper>
       </div>
       <style jsx>{`
         .login {
-          max-width: 21rem;
           margin: 0 auto;
-          padding: 1rem;
-          border: 1px solid #ccc;
-          border-radius: 4px;
+          background: #1d2028;
+          border-radius: 24px;
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          padding: 24px;
+          width: Calc(100vw - 32px);
+          max-width: 360px;
+          display: flex;
+          flex-direction: column;
+          box-shadow: 0 2px 4px rgb(0 0 0 / 2%);
         }
       `}</style>
     </Layout>

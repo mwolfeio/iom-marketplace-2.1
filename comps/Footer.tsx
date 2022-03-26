@@ -21,7 +21,6 @@ export default function Footer() {
           }
         }
       `}</style>
-      <div className="loader" />
     </footer>
   );
 }
