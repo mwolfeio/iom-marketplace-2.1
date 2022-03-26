@@ -25,9 +25,11 @@ export default function Header() {
   return (
     <>
       {boxCount > 0 ? (
-        <div className="box-banner">
-          You have {boxCount} Box{boxCount > 1 && "es"} to Open!
-        </div>
+        <Link href="/wallet">
+          <a className="box-banner flex-align-center flex-justify-center">
+            You have {boxCount} Box{boxCount > 1 && "es"} to Open!
+          </a>
+        </Link>
       ) : (
         ""
       )}
@@ -117,6 +119,12 @@ export default function Header() {
 
         a img {
           margin-right: 1em;
+        }
+        .box-banner {
+          height: 32px;
+          background: #ff4544;
+          font-weight: 600;
+          color: #fff;
         }
 
         header {

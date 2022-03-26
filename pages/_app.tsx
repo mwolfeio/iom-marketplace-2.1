@@ -3,6 +3,8 @@ import "styles/buttons.css";
 
 import { AppProps } from "next/app";
 import { SWRConfig } from "swr";
+import { Toaster } from "react-hot-toast";
+
 import fetchJson from "lib/fetchJson";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -16,6 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       }}
     >
       <Component {...pageProps} />
+      <Toaster />
     </SWRConfig>
   );
 }

@@ -1,54 +1,12 @@
 import React, { useState } from "react";
-import toast from "react-hot-toast";
-
-import useUser from "lib/useUser";
 import Layout from "comps/Layout";
-import FormWrapper from "comps/FormWrapper";
 import ForgotForm from "comps/ForgotForm";
-import fetchJson, { FetchError } from "lib/fetchJson";
 
 export default function Login() {
-  // here we just check if user is already logged in and redirect to profile
-  const { mutateUser } = useUser({
-    redirectTo: "/wallet",
-    redirectIfFound: true,
-  });
-
-  const [errorMsg, setErrorMsg] = useState("");
-
   return (
     <Layout>
       <div className="login">
-        <FormWrapper
-          errorMessage={errorMsg}
-          onSubmit={async function handleSubmit(event) {
-            event.preventDefault();
-
-            const body = {
-              email: event.currentTarget.email.value,
-              password: event.currentTarget.password.value,
-            };
-
-            try {
-              mutateUser(
-                await fetchJson("/api/login", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify(body),
-                })
-              );
-              toast.success(`Welcome Back!`);
-            } catch (error) {
-              if (error instanceof FetchError) {
-                setErrorMsg(error.data.message);
-              } else {
-                console.error("An unexpected error happened:", error);
-              }
-            }
-          }}
-        >
-          <ForgotForm />
-        </FormWrapper>
+        <ForgotForm />
       </div>
       <style jsx>{`
         .login {
