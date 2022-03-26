@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 
 import Layout from "comps/Layout";
 import Gallery from "comps/Gallery";
+import Wallet from "comps/Wallet";
 
 import fetchJson from "lib/fetchJson";
 
@@ -131,10 +132,7 @@ export default function SgProfile() {
             )}
           </pre>
           <h2>Balance</h2>
-          <p>
-            <b>IOM (number)</b>
-          </p>
-          <pre>{JSON.stringify(iom, null, 2)}</pre>
+          <Wallet data={iom} />
           <p>
             <b>Boxes (Carosel)</b>
           </p>

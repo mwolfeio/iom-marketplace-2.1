@@ -5,6 +5,10 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import fetchJson from "lib/fetchJson";
 
+import Banner from "comps/Banner";
+
+import Box from "assets/icons/Box";
+
 export default function Header() {
   const [boxCount, setBoxCount] = useState(0);
   const [iom, setIom] = useState(0);
@@ -20,18 +24,13 @@ export default function Header() {
     }
   }, [user]);
 
-  console.log("User: ", user);
-
   return (
     <>
-      {boxCount > 0 ? (
-        <Link href="/wallet">
-          <a className="box-banner flex-align-center flex-justify-center">
-            You have {boxCount} Box{boxCount > 1 && "es"} to Open!
-          </a>
-        </Link>
-      ) : (
-        ""
+      {boxCount > 0 && (
+        <Banner
+          icon={Box}
+          text={`You have ${boxCount} Box${boxCount > 1 && "es"} to Open!`}
+        />
       )}
       <header>
         <nav>
@@ -119,12 +118,6 @@ export default function Header() {
 
         a img {
           margin-right: 1em;
-        }
-        .box-banner {
-          height: 32px;
-          background: #ff4544;
-          font-weight: 600;
-          color: #fff;
         }
 
         header {
