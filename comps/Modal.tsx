@@ -14,6 +14,7 @@ export default function Modal({ id, onClose, children }) {
           left: 0;
           right: 0;
           bottom: 0;
+          z-index: 100;
           width: 100vw;
           height: 100vh;
           background: #00000080;
