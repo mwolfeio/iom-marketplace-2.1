@@ -16,9 +16,6 @@ export default function Comp({ arr }) {
   useEffect(() => {
     if (user) getHistory();
   }, [user]);
-  useEffect(() => {
-    setHistory([...arr, ...history]);
-  }, [arr]);
 
   const getHistory = async () => {
     setLoading(true);

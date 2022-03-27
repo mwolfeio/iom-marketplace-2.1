@@ -80,6 +80,11 @@ button.icon {
   min-width: 40px;
 }
 
+button.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
 .char-item-wrapper button {
   border-radius: 50px;
   width: 100%;

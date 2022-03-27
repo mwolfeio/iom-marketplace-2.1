@@ -43,16 +43,12 @@ export default function SgProfile() {
     try {
       const {
         data: { rows, pages },
-      } = await axios.get(`https://api.apiiom.com/game/char`, {
-        headers: { Authorization: user.token },
-      });
-
-      // const { data } = await axios.get(
-      //   `https://api.apiiom.com/store/user/offer?page=0&size=10`,
-      //   {
-      //     headers: { Authorization: user.token },
-      //   }
-      // );
+      } = await axios.get(
+        `https://api.apiiom.com/store/user/char?page=0&size=50`,
+        {
+          headers: { Authorization: user.token },
+        }
+      );
 
       setChars(rows);
       // setOffers(data);
@@ -93,13 +89,11 @@ export default function SgProfile() {
     }
   };
   const hydratBlanace = (bal, sch) => {
-    console.log("running hydratBlanace sch: ", sch);
-
+    if (!bal) return;
     const merge = bal.map(({ amount, token }) => {
       const info = sch.find((o) => o.token === token);
       return { amount, ...info };
     });
-    console.log("merge", merge);
 
     //IOM
     setIom(merge.filter((o) => o.tokenCategory === "CURRENCY"));
@@ -108,11 +102,6 @@ export default function SgProfile() {
     //Game Items
     setItems(merge.filter((o) => o.tokenCategory === "GAME_ITEM"));
   };
-
-  // console.log("token: ", user.token);
-  // console.log("offers: ", offers);
-  console.log("schema: ", schema);
-  console.log("chars: ", chars);
 
   return (
     <Layout>

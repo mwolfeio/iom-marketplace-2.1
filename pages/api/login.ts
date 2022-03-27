@@ -10,9 +10,7 @@ export default withIronSessionApiRoute(loginRoute, sessionOptions);
 
 async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
   const { email, password } = await req.body;
-
   try {
-    console.log("Logging in");
     const {
       data: { user, token, balances },
     } = await axios.post("https://api.apiiom.com/user/login", {
@@ -20,16 +18,17 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
       password: password,
     });
 
+    //remove any assets wtih a zero balance
+    const filteredBalances = balances.filter((b) => b.amount > 0);
+    const iom = balances.find((b) => b.token === "IOM").amount;
+
     const userData = {
-      isLoggedIn: true,
+      // isLoggedIn: true,
       info: user,
       token,
-      balances,
-      // schema: sch.data,
+      iom,
+      balances: filteredBalances,
     } as User;
-
-    console.log("userData: ", userData);
-
     req.session.user = userData;
     // req.session.schema = { schema: sch.data };
 

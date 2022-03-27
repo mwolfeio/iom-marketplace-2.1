@@ -7,7 +7,7 @@ import useUser from "lib/useUser";
 import Loader from "comps/Loader";
 import Copy from "assets/icons/Copy";
 
-export default function Comp({ data }) {
+export default function Comp({ arr, hook }) {
   const { user } = useUser();
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -16,6 +16,10 @@ export default function Comp({ data }) {
   useEffect(() => {
     if (user) getHistory();
   }, [user]);
+
+  useEffect(() => {
+    setHistory([...arr, ...history]);
+  }, [arr]);
 
   const getHistory = async () => {
     setLoading(true);

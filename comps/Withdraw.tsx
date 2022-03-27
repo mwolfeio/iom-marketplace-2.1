@@ -20,31 +20,10 @@ export default function Comp({ arr, hook }) {
     if (user) setIom(user.balances.find((o) => o.token === "IOM").amount);
   }, [user]);
 
-  const getAddress = async () => {
-    setLoading(true);
-    console.log("user token: ", user.token);
-
-    try {
-      const {
-        data: { address },
-      } = await axios.get("https://api.apiiom.com/bank/wallet/IOM/address", {
-        headers: { Authorization: user.token },
-      });
-      console.log("address:", address);
-
-      setCode(address);
-    } catch (error) {
-      console.log("Error: ", error);
-      if (error.response) setError(error.response.data.message);
-    }
-    setLoading(false);
-  };
   const copyCode = () => {
     navigator.clipboard.writeText(code);
     toast.success("Address Coppied");
   };
-
-  console.log("user: ", user);
 
   return (
     <div className="login">
@@ -53,6 +32,15 @@ export default function Comp({ arr, hook }) {
         onSubmit={async function handleSubmit(event) {
           event.preventDefault();
           setLoading(true);
+          console.log("payload: ", {
+            token: "IOM",
+            amount: withdraw,
+            fee: 4,
+            walletAddress: address,
+          });
+          console.log("header: ", {
+            headers: { Authorization: user.token },
+          });
 
           try {
             //submit withdraw
@@ -61,7 +49,7 @@ export default function Comp({ arr, hook }) {
               {
                 token: "IOM",
                 amount: withdraw,
-                nonFungibleTokenId: "string",
+                fee: 0,
                 walletAddress: address,
               },
               {

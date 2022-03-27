@@ -1,13 +1,16 @@
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import useUser from "lib/useUser";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import fetchJson from "lib/fetchJson";
+import useUser from "lib/useUser";
 
+import Image from "next/image";
+import Link from "next/link";
 import Banner from "comps/Banner";
-
 import Box from "assets/icons/Box";
+
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 export default function Header() {
   const [boxCount, setBoxCount] = useState(0);
@@ -16,6 +19,8 @@ export default function Header() {
   const router = useRouter();
 
   useEffect(() => {
+    console.log("user: ", user);
+
     if (user && user.isLoggedIn && user.balances) {
       setBoxCount(
         user.balances.filter((obj) => obj.token.indexOf("BOX") !== -1).length
@@ -64,10 +69,11 @@ export default function Header() {
             )}
             {user?.isLoggedIn === true && (
               <>
-                <li>
+                <li className="wallet-wrapper">
                   <Link href="/wallet">
                     <a>
-                      <span>{iom} $IOM </span> <span> Wallet</span>
+                      <span>{numberWithCommas(iom)} $IOM </span>{" "}
+                      <span> Wallet</span>
                     </a>
                   </Link>
                 </li>
@@ -119,7 +125,29 @@ export default function Header() {
         a img {
           margin-right: 1em;
         }
+        .wallet-wrapper {
+          height: 40px;
 
+          transition: 100ms cubic-bezier(0.215, 0.61, 0.355, 1);
+          background: #ffffff00;
+          border-radius: 50px;
+          cursor: pointer;
+          ${router.asPath != "/wallet"
+            ? "border: 1px solid rgba(255, 255, 255, 0.3); padding: 0 1rem;"
+            : ""};
+        }
+        ${router.asPath != "/wallet"
+          ? ".wallet-wrapper:hover {background: #ffffff10;}"
+          : ""}
+        .wallet-wrapper a > *:first-child {
+          ${router.asPath != "/wallet" ? "" : "display: none"};
+        }
+        .wallet-wrapper a > *:first-child::after {
+          content: "";
+          border-right: 1px solid rgba(255, 255, 255, 0.3);
+          height: 24px;
+          margin: 0 1rem;
+        }
         header {
           height: 64px;
           box-sizing: border-box;

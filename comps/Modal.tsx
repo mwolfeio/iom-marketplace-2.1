@@ -18,8 +18,9 @@ export default function Modal({ id, onClose, children }) {
           background: #00000080;
         }
         .modal-wrap {
+          max-width: 1008px;
+          margin: 2rem auto;
           position: relative;
-          inset: 2rem;
           color: #fff;
           width: Calc(100vw - 4rem);
           max-height: Calc(100vh - 4rem);
