@@ -19,6 +19,9 @@ button {
   align-items: center;
   justify-content: center;
 }
+button svg {
+  display: block;
+}
 button {
   transition: 150ms cubic-bezier(0.215, 0.61, 0.355, 1);
 }
@@ -65,7 +68,12 @@ button.turciary:hover {
   /* color: #fff; */
   background: #ffff;
 }
-
+button.icon-text {
+  padding-left: 8px;
+}
+button.icon-text > *:not(:last-child) {
+  margin-right: 4px;
+}
 button.icon {
   padding: 0;
   width: 40px;

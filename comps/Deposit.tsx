@@ -1,9 +1,10 @@
-// import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import Loader from "comps/Loader";
 import axios from "axios";
 import toast from "react-hot-toast";
 import useUser from "lib/useUser";
+
+//comps
+import Loader from "comps/Loader";
 import Copy from "assets/icons/Copy";
 
 export default function Comp({ data }) {
@@ -36,6 +37,7 @@ export default function Comp({ data }) {
     setLoading(false);
   };
   const copyCode = () => {
+    navigator.clipboard.writeText(code);
     toast.success("Address Coppied");
   };
 
@@ -44,13 +46,18 @@ export default function Comp({ data }) {
     <>
       <div>Deposit QR Code</div>
       <div className="flex-align-center flex-justify-center list-spacing-sml">
-        <div>
-          Deposit Address: <span>{code}</span>
-        </div>
+        <p>
+          <span className="deposit-text">Deposit Address:</span> <b>{code}</b>
+        </p>
         <button className="icon" onClick={() => copyCode()}>
           <Copy />
         </button>
       </div>
+      <style jsx>{`
+        .deposit-text {
+          opacity: 0.8;
+        }
+      `}</style>
     </>
   );
 }
