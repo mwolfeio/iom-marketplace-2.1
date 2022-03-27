@@ -1,3 +1,4 @@
+// @ts-nocheck
 import axios from "axios";
 import type { User } from "./user";
 // import useUser from "lib/useUser";
