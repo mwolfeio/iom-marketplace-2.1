@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState, useEffect, FormEvent } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";

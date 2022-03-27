@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Loader from "comps/Loader";
 import Link from "next/link";
 import { useRouter } from "next/router";

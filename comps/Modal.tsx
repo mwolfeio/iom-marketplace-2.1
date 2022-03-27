@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FormEvent } from "react";
 
 export default function Modal({ id, onClose, children }) {

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useEffect, useState, FormEvent } from "react";
 
 export default function Comp({ show, data }: { show: boolean; data: any }) {
