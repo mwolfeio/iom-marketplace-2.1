@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useEffect, useState, FormEvent } from "react";
 import useUser from "lib/useUser";
 
