@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState } from "react";
 import Layout from "comps/Layout";
 import ForgotForm from "comps/ForgotForm";

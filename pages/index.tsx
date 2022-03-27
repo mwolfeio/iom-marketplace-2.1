@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState } from "react";
 import GalleryPage from "comps/GalleryPage";
 

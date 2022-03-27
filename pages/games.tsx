@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Layout from "comps/Layout";
 import Image from "next/image";
 import Games from "comps/Games";
