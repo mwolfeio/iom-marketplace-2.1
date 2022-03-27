@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState, useEffect } from "react";
 import fetchJson, { FetchError } from "lib/fetchJson";
 
