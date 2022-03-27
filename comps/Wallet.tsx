@@ -18,7 +18,7 @@ export default function Comp({ data }) {
             <button className="turciary">Withdraw</button>
           </a>
         </Link>
-        <a>
+        <a target="_blank" href="https://pancakeswap.finance/swap">
           <button className="primary">Get More</button>
         </a>
       </div>

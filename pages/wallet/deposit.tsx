@@ -9,7 +9,7 @@ import BreadCrumbs from "comps/BreadCrumbs";
 export default function Comp() {
   return (
     <Layout>
-      <BreadCrumbs />
+      <BreadCrumbs path={["wallet", "deposit"]} />
       <Deposit />
       <History />
     </Layout>

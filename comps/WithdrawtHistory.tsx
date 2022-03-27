@@ -7,7 +7,7 @@ import useUser from "lib/useUser";
 import Loader from "comps/Loader";
 import Copy from "assets/icons/Copy";
 
-export default function Comp({ arr }) {
+export default function Comp({ data }) {
   const { user } = useUser();
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -16,27 +16,30 @@ export default function Comp({ arr }) {
   useEffect(() => {
     if (user) getHistory();
   }, [user]);
-  useEffect(() => {
-    setHistory([...arr, ...history]);
-  }, [arr]);
 
   const getHistory = async () => {
     setLoading(true);
     try {
       const { data } = await axios.get(
-        "https://api.apiiom.com/bank/deposits?depositStatus=PENDING",
+        "https://api.apiiom.com/bank/withdrawals?withdrawalStatus=IN_PROCESS",
         {
           headers: { Authorization: user.token },
         }
       );
       const confirmed = await axios.get(
-        "https://api.apiiom.com/bank/deposits?depositStatus=PENDING",
+        "https://api.apiiom.com/bank/withdrawals?withdrawalStatus=COMPLETE",
+        {
+          headers: { Authorization: user.token },
+        }
+      );
+      const cancled = await axios.get(
+        "https://api.apiiom.com/bank/withdrawals?withdrawalStatus=CANCELED",
         {
           headers: { Authorization: user.token },
         }
       );
 
-      data.concat(confirmed.data);
+      data.concat(confirmed.data, cancled.data);
 
       console.log("data:", data);
       setHistory(data);
@@ -50,14 +53,16 @@ export default function Comp({ arr }) {
   if (loading) return <Loader />;
   return (
     <>
-      <div>Deposit History</div>
+      <div>Withdraw History</div>
       <div className="deposit-hitory-wrapper">
         {loading ? (
           <Loader />
         ) : history.length ? (
-          history.map((item) => <pre>{JSON.stringify(item, null, 2)}</pre>)
+          history.map((item, i) => (
+            <pre key={i}>{JSON.stringify(item, null, 2)}</pre>
+          ))
         ) : (
-          <h3>No Deposits</h3>
+          <h3>No Withdrawals</h3>
         )}
       </div>
       <style jsx>{`
