@@ -66,7 +66,11 @@ export default function Header() {
             </li>
             {user?.isLoggedIn === false && (
               <li>
-                <Navlink href="/login">Login</Navlink>
+                <Link href="/login">
+                  <a>
+                    <button className="primary">Login</button>
+                  </a>
+                </Link>
               </li>
             )}
             {user?.isLoggedIn === true && (

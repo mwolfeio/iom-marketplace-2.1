@@ -22,6 +22,9 @@ li {
   margin: 0;
   list-style: none;
 }
+svg {
+  display: block;
+}
 
 .gallery-itme-image-wrapper img {
   object-fit: cover !important;
@@ -79,7 +82,7 @@ textarea::placeholder {
 
 /* List Spacing------------------- */
 .list-spacing-sml > *:not(:last-child) {
-  margin-right: 8px;
+  margin-right: 0.5rem;
 }
 .list-spacing-med > *:not(:last-child) {
   margin-right: 1rem;
@@ -89,12 +92,12 @@ textarea::placeholder {
 }
 .vert-space-sml > *:not(:last-child) {
   margin: 0;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 }
 
 .vert-space-med > *:not(:last-child) {
   margin: 0;
-  margin-bottom: 24px;
+  margin-bottom: 1rem;
 }
 /* FLEXBOX---------------------- */
 .flex-align-center {

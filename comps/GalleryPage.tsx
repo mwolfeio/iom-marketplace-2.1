@@ -7,7 +7,34 @@ import Image from "next/image";
 import Gallery from "comps/Gallery";
 import Pagination from "comps/Pagination";
 
-export default function GalleryPage({ defaults, placeholder, title }) {
+const filter = [
+  {
+    type: "pop",
+    key: "sortAttributeName",
+    lable: "",
+  },
+  {
+    type: "slider",
+  },
+  { type: "div" },
+  {
+    type: "drop",
+    lable: "Game",
+    options: [
+      {
+        key: "All Games",
+        value: "",
+      },
+      {
+        key: "Skyzao",
+        value: "SKYZAO",
+      },
+    ],
+  },
+  { type: "div" },
+];
+
+export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const [offers, setOffers] = useState([]);
@@ -40,13 +67,14 @@ export default function GalleryPage({ defaults, placeholder, title }) {
 
   return (
     <Layout>
-      <h1>{title}</h1>
-
       {errorMsg ? (
         <p className="error">{errorMessage}</p>
       ) : (
         <>
           <Gallery
+            title={title}
+            filter={filter}
+            sideNav={sideNav}
             data={offers}
             hook={getOffers}
             loading={loading}
@@ -56,11 +84,7 @@ export default function GalleryPage({ defaults, placeholder, title }) {
         </>
       )}
 
-      <style jsx>{`
-        li {
-          margin-bottom: 0.5rem;
-        }
-      `}</style>
+      <style jsx>{``}</style>
     </Layout>
   );
 }

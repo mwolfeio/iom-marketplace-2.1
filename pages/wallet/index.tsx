@@ -125,6 +125,7 @@ export default function SgProfile() {
                   { type: "text", key: "token" },
                   { type: "text", key: "amount" },
                   { type: "text", key: "tokenGames" },
+
                   {
                     type: "button",
                     key: "Open",
@@ -133,11 +134,6 @@ export default function SgProfile() {
                   {
                     type: "button",
                     key: "Open All",
-                    hook: getMore,
-                  },
-                  {
-                    type: "button",
-                    key: "Get More",
                     hook: getMore,
                     className: "primary",
                   },
