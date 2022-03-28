@@ -36,9 +36,9 @@ export default function Comp({ arr, hook }) {
           console.log("payload: ", {
             token: "IOM",
             amount: withdraw,
-            fee: 4,
             walletAddress: address,
           });
+
           console.log("header: ", {
             headers: { Authorization: user.token },
           });
@@ -46,11 +46,10 @@ export default function Comp({ arr, hook }) {
           try {
             //submit withdraw
             const { data } = await axios.post(
-              "https://api.apiiom.com/user/login",
+              "https://api.apiiom.com/bank/withdrawal",
               {
                 token: "IOM",
                 amount: withdraw,
-                fee: 0,
                 walletAddress: address,
               },
               {
@@ -63,6 +62,7 @@ export default function Comp({ arr, hook }) {
 
             //clear inputs
             setWithdraw(0);
+            setError("");
             setAddress("");
 
             //add withdraw to history
@@ -107,6 +107,7 @@ export default function Comp({ arr, hook }) {
           <div id="withdraw-input">
             <input
               type="number"
+              step="any"
               name="withdraw"
               placeholder="Withdraw amount..."
               min={0}

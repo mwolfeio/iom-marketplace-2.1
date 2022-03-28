@@ -50,7 +50,7 @@ export default function Comp({ arr, hook }) {
       setHistory(data);
     } catch (error) {
       console.log("Error: ", error.response);
-      setError(error.response.data.message);
+      if (error.respons) setError(error.response.data.message);
     }
     setLoading(false);
   };

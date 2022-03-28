@@ -72,12 +72,7 @@ export default function Comp({ show, data }: { show: boolean; data: any }) {
 
               //toast
               toast.success(`Offer Created!`);
-
-              // go to wallet
-              // router.push("/wallet");
-              // window.location.href = "/walle";
-              router.reload("/walle");
-              // router.reload(window.location.pathname)
+              router.reload("/wallet");
             } catch (error) {
               console.log("Error: ", error);
               if (error.response)
