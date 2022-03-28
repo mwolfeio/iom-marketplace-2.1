@@ -7,6 +7,7 @@ import useUser from "lib/useUser";
 //comps
 import Loader from "comps/Loader";
 import Copy from "assets/icons/Copy";
+import List from "comps/List";
 
 export default function Comp({ arr, hook }) {
   const { user } = useUser();
@@ -54,21 +55,33 @@ export default function Comp({ arr, hook }) {
     }
     setLoading(false);
   };
+  const goTo = () => {
+    console.log("go to");
+  };
 
-  if (loading) return <Loader />;
   return (
     <>
-      <div>Withdraw History</div>
       <div className="deposit-hitory-wrapper">
-        {loading ? (
-          <Loader />
-        ) : history.length ? (
-          history.map((item, i) => (
-            <pre key={i}>{JSON.stringify(item, null, 2)}</pre>
-          ))
-        ) : (
-          <h3>No Withdrawals</h3>
-        )}
+        <List
+          loading={loading}
+          title="Deposit History"
+          placeholder="No Withdrawals"
+          data={history}
+          schema={[
+            { type: "icon", key: "" },
+            { type: "text", key: "token" },
+            { type: "text", key: "amount" },
+            { type: "text", key: "status" },
+            { type: "text", key: "id" },
+
+            {
+              type: "button",
+              key: "View",
+              hook: goTo,
+              className: "",
+            },
+          ]}
+        />
       </div>
       <style jsx>{`
         .deposit-hitory-wrapper h3 {

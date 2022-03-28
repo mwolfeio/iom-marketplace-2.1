@@ -1,6 +1,7 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Loader from "comps/Loader";
 
 const generateColumns = (s, height) => {
   let str = "";
@@ -21,8 +22,16 @@ const generateColumns = (s, height) => {
   return str;
 };
 
-export default function Comp({ data, schema, height = "48px", title }) {
+export default function Comp({
+  loading,
+  data = [],
+  schema,
+  height = "48px",
+  title,
+  placeholder = "Empty",
+}) {
   const [grid, setGrid] = useState(0);
+
   useEffect(() => {
     setGrid(generateColumns(schema, height));
   }, [JSON.stringify(schema)]);
@@ -38,25 +47,33 @@ export default function Comp({ data, schema, height = "48px", title }) {
             </p>
           ))}
         </li>
-        {data.map((itm) => (
-          <li key={`list-tiem-${Math.random}`}>
-            {schema.map(({ type, key, hook, className }) => {
-              if (type === "text") return <p>{itm[key]}</p>;
-              if (type === "icon")
-                return <div className="icon" style={{ margin: "auto" }} />;
-              if (type === "button")
-                return (
-                  <button
-                    className={className}
-                    onClick={() => hook()}
-                    style={{ margin: "auto" }}
-                  >
-                    {key}
-                  </button>
-                );
-            })}
-          </li>
-        ))}
+        {loading ? (
+          <Loader />
+        ) : data.length ? (
+          <>
+            {data.map((itm) => (
+              <li key={`list-tiem-${Math.random}`}>
+                {schema.map(({ type, key, hook, className }) => {
+                  if (type === "text") return <p>{itm[key]}</p>;
+                  if (type === "icon")
+                    return <div className="icon" style={{ margin: "auto" }} />;
+                  if (type === "button")
+                    return (
+                      <button
+                        className={className}
+                        onClick={() => hook()}
+                        style={{ margin: "auto" }}
+                      >
+                        {key}
+                      </button>
+                    );
+                })}
+              </li>
+            ))}
+          </>
+        ) : (
+          <p>{placeholder}</p>
+        )}
       </ul>
       <style jsx>{`
         ul {

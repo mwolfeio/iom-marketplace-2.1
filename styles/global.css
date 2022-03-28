@@ -91,6 +91,7 @@ textarea::placeholder {
   margin: 0;
   margin-bottom: 8px;
 }
+
 .vert-space-med > *:not(:last-child) {
   margin: 0;
   margin-bottom: 24px;
