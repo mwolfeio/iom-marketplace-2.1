@@ -8,6 +8,8 @@ import useUser from "lib/useUser";
 import Layout from "comps/Layout";
 import Gallery from "comps/Gallery";
 import Wallet from "comps/Wallet";
+import List from "comps/List";
+import Bubble from "comps/Bubble";
 
 export default function SgProfile() {
   const [errorMsg, setErrorMsg] = useState("");
@@ -103,48 +105,105 @@ export default function SgProfile() {
     //Game Items
     setItems(merge.filter((o) => o.tokenCategory === "GAME_ITEM"));
   };
+  const getMore = () => router.push("/game-items");
 
   return (
     <Layout>
-      <h1>Wallet / Profile</h1>
-      {user && schema && (
-        <>
-          <h2>Info</h2>
-          <pre>
-            {JSON.stringify(
-              {
-                isLoggedIn: user.isLoggedIn,
-                token: user.token,
-                info: user.info,
-              },
-              null,
-              2
-            )}
-          </pre>
-          <h2>Balance</h2>
-          <Wallet data={iom} />
-          <p>
-            <b>Boxes (Carosel)</b>
-          </p>
-          <pre>{JSON.stringify(boxes, null, 2)}</pre>
-          <p>
-            <b>Game Items (List)</b>
-          </p>
-          <pre>{JSON.stringify(items, null, 2)}</pre>
-        </>
-      )}
-      <h3>Chars:</h3>
-      {errorMsg ? (
-        <p className="error">{errorMsg}</p>
-      ) : (
-        <Gallery
-          data={chars}
-          hook={getChars}
-          loading={loading}
-          type="asset"
-          placeholder="No Characters"
-        />
-      )}
+      <div className="vert-space-med">
+        <div className="flex-justify-btw flex-align-center list-spacing-med">
+          <h1>Wallet</h1> <Bubble>{user && user.info.email}</Bubble>
+        </div>
+        {user && schema && (
+          <>
+            <Wallet data={iom} />
+            <div className="extras-wrapper">
+              <List
+                title="Boxes"
+                data={boxes}
+                schema={[
+                  { type: "icon", key: "" },
+                  { type: "text", key: "token" },
+                  { type: "text", key: "amount" },
+                  { type: "text", key: "tokenGames" },
+                  {
+                    type: "button",
+                    key: "Open",
+                    hook: getMore,
+                  },
+                  {
+                    type: "button",
+                    key: "Open All",
+                    hook: getMore,
+                  },
+                  {
+                    type: "button",
+                    key: "Get More",
+                    hook: getMore,
+                    className: "primary",
+                  },
+                ]}
+              />
+
+              <List
+                title="Game Items "
+                data={items}
+                schema={[
+                  { type: "icon", key: "" },
+                  { type: "text", key: "token" },
+                  { type: "text", key: "amount" },
+                  { type: "text", key: "tokenGames" },
+                  {
+                    type: "button",
+                    key: "Get More",
+                    hook: getMore,
+                    className: "primary",
+                  },
+                ]}
+              />
+            </div>
+          </>
+        )}
+        <h3>Chars:</h3>
+        {errorMsg ? (
+          <p className="error">{errorMsg}</p>
+        ) : (
+          <Gallery
+            data={chars}
+            hook={getChars}
+            loading={loading}
+            type="asset"
+            placeholder="No Characters"
+          />
+        )}
+      </div>
+      <style jsx>{`
+        .extras-wrapper {
+          display: grid;
+          grid-template-columns: 1fr;
+          grid-gap: 1rem;
+        }
+        @media (min-width: 1000px) {
+          .extras-wrapper {
+            grid-gap: 24px;
+
+            grid-template-columns: 1fr 1fr;
+          }
+        }
+      `}</style>
     </Layout>
   );
 }
+
+// <h2>Info</h2>
+// <pre>
+//   {JSON.stringify(
+//     {
+//       isLoggedIn: user.isLoggedIn,
+//       token: user.token,
+//       info: user.info,
+//     },
+//     null,
+//     2
+//   )}
+// </pre>
+// <h2>Balance</h2>

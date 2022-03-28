@@ -24,8 +24,11 @@ export default function Header() {
     console.log("user: ", user);
 
     if (user && user.isLoggedIn && user.balances) {
+      let b = user.balances.filter((obj) => obj.token.indexOf("BOX") !== -1);
       setBoxCount(
-        user.balances.filter((obj) => obj.token.indexOf("BOX") !== -1).length
+        b.reduce(function (a, b) {
+          return a + b.amount;
+        }, 0)
       );
       setIom(user.balances.filter((obj) => obj.token === "IOM")[0].amount);
     }

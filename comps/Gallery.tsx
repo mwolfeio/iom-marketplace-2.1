@@ -74,6 +74,7 @@ export default function Comp({
 
       <style jsx>{`
         .gallery-wrapper {
+          margin: 1rem 0;
           border-radius: 1rem;
           width: 100%;
           min-height: 420px;
