@@ -1,17 +1,14 @@
 // @ts-nocheck
 import React, { useEffect, useState } from "react";
-import useUser from "lib/useUser";
+import axios from "axios";
 import { useRouter } from "next/router";
+import fetchJson from "lib/fetchJson";
+import useUser from "lib/useUser";
 
 import Layout from "comps/Layout";
 import Gallery from "comps/Gallery";
 import Wallet from "comps/Wallet";
 
-import fetchJson from "lib/fetchJson";
-
-import axios from "axios";
-
-// Make sure to check https://nextjs.org/docs/basic-features/layouts for more info on how to use layouts
 export default function SgProfile() {
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
@@ -27,10 +24,13 @@ export default function SgProfile() {
   const router = useRouter();
 
   useEffect(() => {
+    console.log("Detected a change in the user");
     if (user) hydratePage();
-  }, [user]);
+  }, [JSON.stringify(user)]);
 
   const hydratePage = async () => {
+    console.log("hydrating page because user state changed");
+
     setLoading(true);
     await getChars();
 

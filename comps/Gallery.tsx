@@ -16,9 +16,8 @@ export default function Comp({
   type = "offer",
   placeholder = "No Items",
 }) {
-  const router = useRouter();
   const { user } = useUser();
-
+  const router = useRouter();
   const getHref = (item) => {
     const href =
       type === "asset"
@@ -31,7 +30,9 @@ export default function Comp({
     <>
       {router.query.id && (
         <Modal onClose={() => router.push(router.pathname)}>
-          {type === "offer" && <Offer id={router.query.id} />}
+          {type === "offer" && (
+            <Offer id={router.query.id} href={router.pathname} />
+          )}
           {type === "asset" && (
             <Asset data={data.find((obj) => obj.id === router.query.id)} />
           )}
@@ -57,6 +58,7 @@ export default function Comp({
                     data={item}
                     owned={
                       user &&
+                      user.isLoggedIn &&
                       user.info.id ===
                         (item.ownerUserId ? item.ownerUserId : item.userId)
                     }

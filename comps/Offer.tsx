@@ -14,7 +14,7 @@ import fetchJson from "lib/fetchJson";
 import Asset from "comps/Asset";
 import Loader from "comps/Loader";
 
-export default function Offer({ id, userId, nftId, asset }) {
+export default function Offer({ id, userId, nftId, asset, href }) {
   const { user } = useUser();
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState("");
@@ -56,6 +56,7 @@ export default function Offer({ id, userId, nftId, asset }) {
       {!loading && offer ? (
         <>
           <PurchaseOffer
+            href={href}
             offer={offer}
             user={user}
             id={id}
@@ -74,7 +75,7 @@ export default function Offer({ id, userId, nftId, asset }) {
   );
 }
 
-const PurchaseOffer = ({ offer, user, id, setErrorMsg }) => {
+const PurchaseOffer = ({ offer, user, id, setErrorMsg, href }) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { mutateUser } = useUser({
@@ -92,7 +93,8 @@ const PurchaseOffer = ({ offer, user, id, setErrorMsg }) => {
     setErrorMsg("");
     console.log("payload: ", {
       offerId: id,
-      amount: event.currentTarget.quantity.value,
+      amount:
+        offer.tokenType === "FUNGIBLE" ? event.currentTarget.quantity.value : 1,
     });
 
     try {
@@ -103,7 +105,10 @@ const PurchaseOffer = ({ offer, user, id, setErrorMsg }) => {
         "https://api.apiiom.com/store/buyOffer",
         {
           offerId: id,
-          amount: event.currentTarget.quantity.value,
+          amount:
+            offer.tokenType === "FUNGIBLE"
+              ? event.currentTarget.quantity.value
+              : 1,
         },
         {
           headers: { Authorization: user.token },
@@ -129,7 +134,7 @@ const PurchaseOffer = ({ offer, user, id, setErrorMsg }) => {
 
       //close offer and refresh page
       // router.back();
-      router.push("/wallet");
+      href ? router.push(href) : router.push("/wallet");
     } catch (error) {
       console.log("Error: ", error);
       if (error.response) setErrorMsg(`Error: ${error.response.data.message}`);

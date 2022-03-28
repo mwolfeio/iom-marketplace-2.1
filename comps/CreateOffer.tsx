@@ -1,23 +1,19 @@
 // @ts-nocheck
 import { useEffect, useState, FormEvent } from "react";
+import { useRouter } from "next/router";
+import toast from "react-hot-toast";
+import useUser from "lib/useUser";
+import axios from "axios";
+
+import FormWrapper from "comps/FormWrapper";
+import Loader from "comps/Loader";
 
 export default function Comp({ show, data }: { show: boolean; data: any }) {
   const [open, setOpen] = useState(false);
   const [laoding, setLoading] = useState(false);
   const [error, setError] = useState(false);
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    //submit offer
-    let payload = {
-      token: "IOM",
-      amount: 0,
-      unitPrice: 0,
-      nftId: "string",
-      description: "string",
-    };
-    //go to wallet
-  };
+  const router = useRouter();
+  const { user } = useUser();
 
   if (!show) return <></>;
   return (
@@ -32,12 +28,69 @@ export default function Comp({ show, data }: { show: boolean; data: any }) {
         </button>
       )}
       {open && (
-        <form onSubmit={() => handleSubmit()}>
+        <FormWrapper
+          errorMessage={error}
+          onSubmit={async function handleSubmit(event) {
+            event.preventDefault();
+            setLoading(true);
+            console.log("submitting offer");
+
+            try {
+              console.log("event.currentTarget: ", event.currentTarget);
+
+              //submit offer
+              let payload = {
+                token: data.token,
+                amount:
+                  data.tokenType === "FUNGIBLE"
+                    ? event.currentTarget.quant.value
+                    : 1,
+                unitPrice: event.currentTarget.price.value,
+                nftId: data.id,
+                description: event.currentTarget.description.value,
+              };
+              console.log("payload: ", payload);
+              await axios.post(
+                "https://api.apiiom.com/store/createOffer",
+                payload,
+                {
+                  headers: { Authorization: user.token },
+                }
+              );
+              console.log("offer created");
+
+              //refresh user
+              const res = await fetch("/api/refreshUser", {
+                method: "POST",
+                body: JSON.stringify(user),
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              });
+
+              console.log("user updated: ", await res.json());
+
+              //toast
+              toast.success(`Offer Created!`);
+
+              // go to wallet
+              // router.push("/wallet");
+              // window.location.href = "/walle";
+              router.reload("/walle");
+              // router.reload(window.location.pathname)
+            } catch (error) {
+              console.log("Error: ", error);
+              if (error.response)
+                setErrorMsg(`Error: ${error.response.data.message}`);
+            }
+            setLoading(false);
+          }}
+        >
           {data.tokenType === "FUNGIBLE" && (
             <label>
               <input
                 type="number"
-                name="quantity"
+                name="quant"
                 placeholder="Quantity..."
                 required
               />
@@ -46,7 +99,7 @@ export default function Comp({ show, data }: { show: boolean; data: any }) {
           <label>
             <input
               type="number"
-              name="Price"
+              name="price"
               placeholder="Price in IOM..."
               required
             />
@@ -61,9 +114,9 @@ export default function Comp({ show, data }: { show: boolean; data: any }) {
             />
           </label>
           <button type="submit" className="primary">
-            Submit Offer
+            {laoding ? <Loader /> : "Submit Offer"}
           </button>
-        </form>
+        </FormWrapper>
       )}
     </div>
   );
