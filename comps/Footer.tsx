@@ -241,42 +241,97 @@ const Footer = () => {
 
 const List = ({ title, links, style }) => {
   return (
-    <nav className={`links ${style}`}>
-      <span>{title}</span>
-      <ul style={{ marginTop: "8px" }}>
-        {links.map((link) => (
-          <li key={Math.random()}>
-            <a href={link.link}>{link.text}</a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <>
+      <nav className={`links ${style}`}>
+        <span>{title}</span>
+        <ul style={{ marginTop: "8px" }}>
+          {links.map((link) => (
+            <li key={Math.random()}>
+              <a href={link.link}>{link.text}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <style jsx>{`
+        .links li a {
+          opacity: 0.6;
+          display: block;
+          box-sizing: border-box;
+          padding: 4px 0;
+          transition: 0.15s ease;
+        }
+        .links li a:hover {
+          opacity: 1;
+        }
+      `}</style>
+    </>
   );
 };
 
 const Socials = ({ title, links }) => {
   return (
-    <div className="socials">
-      <span>{title}</span>
-      <ul
-        className="flex-align-center list-spacing-med"
-        style={{ marginTop: "16px" }}
-      >
-        {links.map((link) => {
-          let Icon = link.icon;
-          return (
-            <li
-              key={Math.random()}
-              className="flex-align-center  flex-justify-center"
-            >
-              <a href={link.link}>
-                <Icon />
-              </a>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+    <>
+      <div className="socials">
+        <span>{title}</span>
+        <ul
+          className="flex-align-center list-spacing-med"
+          style={{ marginTop: "16px" }}
+        >
+          {links.map((link) => {
+            let Icon = link.icon;
+            return (
+              <li
+                key={Math.random()}
+                className="flex-align-center  flex-justify-center"
+              >
+                <a href={link.link}>
+                  <Icon />
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+      <style jsx>{`
+        li a {
+          opacity: 0.6;
+          display: block;
+          box-sizing: border-box;
+          padding: 4px 0;
+          transition: 0.15s ease;
+        }
+        li a:hover {
+          opacity: 1;
+        }
+        .socials ul {
+          justify-content: center;
+        }
+
+        .socials li {
+          height: 36px;
+          width: 36px;
+          border-radius: 100%;
+          background: #33363d;
+          transition: 0.15s ease;
+        }
+        .socials li svg {
+          display: block;
+        }
+
+        .socials li:hover {
+          background: white;
+        }
+        .socials li:hover svg path {
+          fill: #1d2028;
+        }
+        a {
+          color: #ffffff60;
+        }
+        a:hover {
+          color: #ffffff;
+        }
+      `}</style>
+    </>
   );
 };
 
