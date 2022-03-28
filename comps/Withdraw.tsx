@@ -70,7 +70,9 @@ export default function Comp({ arr, hook }) {
             toast.success(`Withdraw successful!`);
           } catch (error) {
             console.log("Error: ", error.response);
-            setError(`Error: ${error.response.data.message}`);
+            setError(
+              `Error: ${error.response ? error.response.data.message : error}`
+            );
           }
           setLoading(false);
         }}
@@ -122,9 +124,9 @@ export default function Comp({ arr, hook }) {
         </label>
 
         <div className="withdraw-buttons flex-justify-btw">
-          <div onClick={() => setWithdraw(iom * 0.25)}>25%</div>
-          <div onClick={() => setWithdraw(iom * 0.5)}>50%</div>
-          <div onClick={() => setWithdraw(iom * 0.75)}>75%</div>
+          <div onClick={() => setWithdraw(Math.round(iom * 0.25))}>25%</div>
+          <div onClick={() => setWithdraw(Math.round(iom * 0.5))}>50%</div>
+          <div onClick={() => setWithdraw(Math.round(iom * 0.75))}>75%</div>
           <div onClick={() => setWithdraw(iom)}>100%</div>
         </div>
         <label>

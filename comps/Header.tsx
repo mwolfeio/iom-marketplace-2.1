@@ -6,6 +6,7 @@ import useUser from "lib/useUser";
 
 import Image from "next/image";
 import Link from "next/link";
+import Navlink from "comps/Navlink";
 import Banner from "comps/Banner";
 import Box from "assets/icons/Box";
 
@@ -38,42 +39,41 @@ export default function Header() {
           text={`You have ${boxCount} Box${boxCount > 1 && "es"} to Open!`}
         />
       )}
-      <header>
+      <header className="flex-align-center flex-justify-btw">
+        <Link href="/">
+          <a>
+            <Image height="80px" width="190px" src="/logo.svg" />
+          </a>
+        </Link>
         <nav>
-          <ul>
+          <ul className="list-spacing-med">
             <li>
-              <Link href="/games">
-                <a>Games</a>
-              </Link>
+              <Navlink href="/games">Games</Navlink>
             </li>
             <li>
-              <Link href="/boxes">
-                <a>Boxes</a>
-              </Link>
+              <Navlink href="/boxes">Boxes</Navlink>
             </li>
             <li>
-              <Link href="/game-items">
-                <a>Game Items</a>
-              </Link>
+              <Navlink href="/game-items">Game Items</Navlink>
             </li>
             <li>
-              <Link href="/">
-                <a>NFT Marketplace</a>
-              </Link>
+              <Navlink exact href="/">
+                NFT Marketplace
+              </Navlink>
             </li>
             {user?.isLoggedIn === false && (
               <li>
-                <Link href="/login">
-                  <a>Login</a>
-                </Link>
+                <Navlink href="/login">Login</Navlink>
               </li>
             )}
             {user?.isLoggedIn === true && (
               <>
-                <li className="wallet-wrapper">
+                <li className="wallet-wrapper flex-align-center">
                   <Link href="/wallet">
                     <a>
-                      <span>{numberWithCommas(iom)} $IOM </span>{" "}
+                      <span style={{ color: "rgb(255, 206, 56)" }}>
+                        {numberWithCommas(iom)} $IOM{" "}
+                      </span>{" "}
                       <span> Wallet</span>
                     </a>
                   </Link>
@@ -102,14 +102,11 @@ export default function Header() {
       <style jsx>{`
         ul {
           display: flex;
+          align-items: center;
+          height: 40px;
           list-style: none;
-          margin-left: 0;
-          padding-left: 0;
-        }
-
-        li {
-          margin-right: 1rem;
-          display: flex;
+          padding: 8px 0;
+          margin: 0;
         }
 
         li:first-child {
@@ -150,11 +147,9 @@ export default function Header() {
           margin: 0 1rem;
         }
         header {
-          height: 64px;
+          padding: 0.5rem 1rem;
           box-sizing: border-box;
-          padding: 0.2rem;
           color: #fff;
-          background-color: #333;
         }
       `}</style>
     </>

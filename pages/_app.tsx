@@ -7,6 +7,7 @@ import { SWRConfig } from "swr";
 import { Toaster } from "react-hot-toast";
 
 import fetchJson from "lib/fetchJson";
+import Background from "assets/media/Background";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -18,6 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         },
       }}
     >
+      <Background />
       <Component {...pageProps} />
       <Toaster />
     </SWRConfig>

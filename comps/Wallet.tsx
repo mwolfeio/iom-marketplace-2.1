@@ -1,13 +1,21 @@
 // @ts-nocheck
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Comp({ data }) {
+  const [bal, setBal] = useState(0);
+  useEffect(() => {
+    console.log("data: ", data);
+
+    if (data && data.length) setBal(data[0].amount);
+  }, [JSON.stringify(data)]);
+
   return (
     <>
+      <h1>{bal} IOM</h1>
       <p>
-        <b>IOM (number)</b>
+        <b>$0.00 USD</b>
       </p>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
       <div className="list-spacing-sml flex-align-center">
         <Link href="/wallet/deposit">
           <a>

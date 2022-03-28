@@ -5,6 +5,7 @@ import fetchJson, { FetchError } from "lib/fetchJson";
 import Layout from "comps/Layout";
 import Image from "next/image";
 import Gallery from "comps/Gallery";
+import Pagination from "comps/Pagination";
 
 export default function GalleryPage({ defaults, placeholder, title }) {
   const [errorMsg, setErrorMsg] = useState("");
@@ -44,12 +45,15 @@ export default function GalleryPage({ defaults, placeholder, title }) {
       {errorMsg ? (
         <p className="error">{errorMessage}</p>
       ) : (
-        <Gallery
-          data={offers}
-          hook={getOffers}
-          loading={loading}
-          placeholder={placeholder}
-        />
+        <>
+          <Gallery
+            data={offers}
+            hook={getOffers}
+            loading={loading}
+            placeholder={placeholder}
+          />
+          <Pagination />
+        </>
       )}
 
       <style jsx>{`
