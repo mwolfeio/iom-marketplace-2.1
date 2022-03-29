@@ -26,7 +26,7 @@ export default function Comp({ children, hook, active, clickable }) {
       <style jsx>{`
         .bubble-wrapper.active {
           background: #ffffff30;
-          color: #ffffff;
+          color: #3772ff;
         }
         .bubble-wrapper {
           height: 36px;

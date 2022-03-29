@@ -19,6 +19,7 @@ export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
   const [open, setOpen] = useState(true);
 
   //query perams
+  const [initQuery, setInitQuery] = useState();
   const [query, setQuery] = useState({
     page: 0,
     size: 30,
@@ -39,10 +40,10 @@ export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
       sortMode = "",
       tokenGames = [],
       priceFrom = 0,
-      priceTo = 0,
+      priceTo = 10000,
       tokenCategories = [],
     } = defaults;
-    setQuery({
+    const q = {
       page,
       size,
       sortAttributeName,
@@ -51,7 +52,9 @@ export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
       priceFrom,
       priceTo,
       tokenCategories,
-    });
+    };
+    setQuery(q);
+    setInitQuery(q);
   };
   const filter = [
     {
@@ -107,7 +110,18 @@ export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
     setLoading(true);
 
     try {
-      console.log("fetching offers");
+      console.log(
+        "running getOffers: ",
+        `https://api.apiiom.com/store/offer?size=${size}&page=${page}${
+          tokenCategories.length
+            ? `&tokenCategories=${tokenCategories.toString()}`
+            : ""
+        }${sortMode ? `&sortMode=${sortMode}` : ""}${
+          tokenGames.length ? `&tokenGames=${tokenGames.toString()}` : ""
+        }${priceFrom ? `&priceFrom=0` : ""}${
+          priceTo ? `&priceTo=${priceTo} ` : ""
+        }`
+      );
       const {
         data: { rows, totalPages },
       } = await axios.get(
@@ -117,9 +131,7 @@ export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
             : ""
         }${sortMode ? `&sortMode=${sortMode}` : ""}${
           tokenGames.length ? `&tokenGames=${tokenGames.toString()}` : ""
-        }${priceFrom ? `&priceFrom=${priceFrom}` : ""}${
-          priceTo ? `&priceTo=${priceTo} ` : ""
-        }`
+        }&priceFrom=0${priceTo ? `&priceTo=${priceTo} ` : ""}`
       );
 
       setOffers(rows);
@@ -140,6 +152,7 @@ export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
         <div className={`widget-wrapper ${sideNav && "active"}`}>
           {sideNav && (
             <SideNav
+              canReset={JSON.stringify(initQuery) !== JSON.stringify(query)}
               filter={filter}
               open={open}
               reset={reset}
@@ -154,12 +167,15 @@ export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
             >
               {sideNav ? (
                 <Bubble
-                  active={open}
+                  open={open}
+                  active={JSON.stringify(initQuery) !== JSON.stringify(query)}
                   clickable={true}
                   hook={() => setOpen(!open)}
                 >
                   <Filter />
-                  <span>Filter</span>
+                  <span>
+                    <b>Filter</b>
+                  </span>
                 </Bubble>
               ) : (
                 <h2>{title}</h2>

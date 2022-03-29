@@ -16,18 +16,10 @@ export default function GalleryPage({
   const [active, setActive] = useState();
 
   useEffect(() => {
-    console.log("New Data: ", data);
-    console.log("New Query: ", query);
     if (data) {
-      console.log("query[keyField]: ", query[keyField]);
-      console.log("data: ", data);
-
-      const qv = query[keyField];
       const i = data.findIndex(
-        (x) => JSON.stringify(x.value) == JSON.stringify(qv)
+        (x) => JSON.stringify(x.value) == JSON.stringify(query[keyField])
       );
-      console.log("index: ", i);
-
       setActive(i === -1 ? 0 : i);
       setList(data);
     }
@@ -36,7 +28,6 @@ export default function GalleryPage({
   const addToQuery = (val) => {
     let p = { ...query };
     p[keyField] = val;
-    console.log("new query = ", p);
     setQuery(p);
   };
 
@@ -89,6 +80,7 @@ export default function GalleryPage({
           box-sizing: border-box;
           cursor: pointer;
           line-height: 1.5rem;
+          background: rgb(35, 38, 47);
         }
         .header {
           padding: 0.5rem 0.75rem;

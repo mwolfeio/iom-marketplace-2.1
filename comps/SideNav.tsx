@@ -15,6 +15,7 @@ export default function GalleryPage({
   reset,
   query,
   setQuery,
+  canReset,
 }) {
   // const [open, setOpen] = useState(true);
 
@@ -31,7 +32,15 @@ export default function GalleryPage({
               return <PopDown data={options} />;
               break;
             case "slider":
-              return <Range lable={lable} data={options} />;
+              return (
+                <Range
+                  lable={lable}
+                  query={query}
+                  setQuery={setQuery}
+                  data={options}
+                  keyField={keyField}
+                />
+              );
               break;
             case "drop":
               return (
@@ -50,13 +59,12 @@ export default function GalleryPage({
           }
         })}
         <div className="flex-align-center flex-justify-left list-spacing-sml">
-          <div
-            className="flex-align-center list-spacing-sml"
-            onClick={() => reset()}
-          >
-            <Clear />
-            <span>Clear</span>
-          </div>
+          {canReset && (
+            <button className="icon-text" onClick={() => reset()}>
+              <Clear />
+              <span>Clear</span>
+            </button>
+          )}
         </div>
       </div>
       <style jsx>{`

@@ -1,15 +1,49 @@
 // @ts-nocheck
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import _ from "lodash";
 
 import Chev from "assets/icons/ChevDown";
 import SliderBack from "assets/media/SliderBack";
 
-export default function GalleryPage({ lable, data }) {
-  const [open, setOpen] = useState(true);
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+export default function GalleryPage({
+  lable,
+  query,
+  data,
+  setQuery,
+  keyField,
+}) {
+  const [range, setRange] = useState(10000);
+  // const [debouncedState, setDebouncedState] = useState(100000);
 
   useEffect(() => {
-    console.log("loaded");
-  }, []);
+    console.log("query changed");
+    setRange(query.priceTo);
+  }, [JSON.stringify(query)]);
+
+  const handleChange = (event: any) => {
+    console.log("search:", event.target.value);
+    setRange(event.target.value);
+    debounce(event.target.value);
+  };
+
+  const debounce = useCallback(
+    _.debounce((_searchVal: number) => {
+      console.log("RUNNING QUERY AGAIN");
+
+      let p = { ...query };
+      console.log("old querty", p);
+      p[keyField] = parseInt(_searchVal);
+      console.log("new query = ", p);
+      setQuery(p);
+
+      // setDebouncedState(_searchVal);
+    }, 1000),
+    []
+  );
 
   return (
     <>
@@ -20,14 +54,26 @@ export default function GalleryPage({ lable, data }) {
             style={{ width: "100%" }}
             className="flex-align-center flex-justify-btw"
           >
-            <SliderBack />
+            <input
+              style={{ padding: "8px 0" }}
+              type="range"
+              name="amount"
+              onChange={handleChange}
+              value={range}
+              min={1}
+              max={10000}
+              required
+            />
           </div>
           <div
             style={{ width: "100%", fontSize: "12px", marginTop: "8px" }}
             className="flex-align-center flex-justify-btw"
           >
             <span>0.01 $IOM</span>
-            <span>0.01 $IOM</span>
+            <span>
+              <b style={{ color: "#3772ff" }}>{numberWithCommas(range)} $IOM</b>
+            </span>
+            <span>10k $IOM</span>
           </div>
         </div>
       </div>

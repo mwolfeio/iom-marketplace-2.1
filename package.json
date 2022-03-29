@@ -9,6 +9,7 @@
     "axios": "^0.26.1",
     "embla-carousel-react": "^6.2.0",
     "iron-session": "latest",
+    "lodash": "^4.17.21",
     "next": "latest",
     "octokit": "^1.7.0",
     "react": "^17.0.2",
