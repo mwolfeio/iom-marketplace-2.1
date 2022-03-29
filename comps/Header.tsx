@@ -9,6 +9,7 @@ import Link from "next/link";
 import Navlink from "comps/Navlink";
 import Banner from "comps/Banner";
 import Box from "assets/icons/Box";
+import MoreButton from "comps/MoreButton";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -86,19 +87,7 @@ export default function Header() {
                   </Link>
                 </li>
                 <li>
-                  <a
-                    href="/api/logout"
-                    onClick={async (e) => {
-                      e.preventDefault();
-                      mutateUser(
-                        await fetchJson("/api/logout", { method: "POST" }),
-                        false
-                      );
-                      router.push("/login");
-                    }}
-                  >
-                    Logout
-                  </a>
+                  <MoreButton />
                 </li>
               </>
             )}

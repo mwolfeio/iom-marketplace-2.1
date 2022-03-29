@@ -192,6 +192,7 @@ export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
                 hook={getOffers}
                 loading={loading}
                 placeholder={placeholder}
+                refresh={getOffers}
               />
               <Pagination
                 pageCount={pageCount}

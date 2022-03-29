@@ -21,6 +21,7 @@ export default function Comp({
   filter = [],
   title,
   wallet = false,
+  refresh,
 }) {
   const { user } = useUser();
   const router = useRouter();
@@ -66,6 +67,7 @@ export default function Comp({
               id={router.query.id}
               href={router.pathname}
               onClose={() => router.push(router.pathname)}
+              refresh={refresh}
             />
           )}
           {type === "asset" && (

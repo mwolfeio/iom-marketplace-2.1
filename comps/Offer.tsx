@@ -15,7 +15,15 @@ import Asset from "comps/Asset";
 import AssetCarosel from "comps/AssetCarosel";
 import Loader from "comps/Loader";
 
-export default function Offer({ id, userId, nftId, asset, href, onClose }) {
+export default function Offer({
+  id,
+  userId,
+  nftId,
+  asset,
+  href,
+  onClose,
+  refresh,
+}) {
   const { user } = useUser();
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState("");
@@ -100,6 +108,7 @@ export default function Offer({ id, userId, nftId, asset, href, onClose }) {
                 user={user}
                 id={id}
                 setErrorMsg={setErrorMsg}
+                refresh={refresh}
               />
               {errorMsg && <p className="error-wrapper">⛔ {errorMsg}</p>}
             </>
@@ -114,7 +123,7 @@ export default function Offer({ id, userId, nftId, asset, href, onClose }) {
   );
 }
 
-const PurchaseOffer = ({ offer, user, id, setErrorMsg, href }) => {
+const PurchaseOffer = ({ offer, user, id, setErrorMsg, href, refresh }) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { mutateUser } = useUser({
@@ -164,8 +173,9 @@ const PurchaseOffer = ({ offer, user, id, setErrorMsg, href }) => {
           "Content-Type": "application/json",
         },
       });
-      const data = await response.json();
 
+      const data = await response.json();
+      refresh();
       console.log("user updated: ", data);
 
       //show toast

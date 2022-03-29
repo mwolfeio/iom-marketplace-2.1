@@ -18,7 +18,8 @@ export default function Comp({ arr, hook }) {
   const [address, setAddress] = useState("");
 
   useEffect(() => {
-    if (user) setIom(user.balances.find((o) => o.token === "IOM").amount);
+    if (user && user.isLoggedIn)
+      setIom(user.balances.find((o) => o.token === "IOM").amount);
   }, [user]);
 
   const copyCode = () => {

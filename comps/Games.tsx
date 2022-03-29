@@ -20,7 +20,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       `}</style>
       <div className="game-wrapper">
         <GameTile />
-        <h1>More Comming Soon</h1>
+        <h1>More Games Coming Soon</h1>
       </div>
     </>
   );
