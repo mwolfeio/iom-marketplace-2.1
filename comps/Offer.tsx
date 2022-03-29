@@ -346,15 +346,16 @@ export default function Offer({
   );
 }
 
-const PurchaseOffer = ({ offer, user, id, setErrorMsg, href, refresh }) => {
+const PurchaseOffer = ({ offer, id, setErrorMsg, href, refresh }) => {
   const [loading, setLoading] = useState(false);
   const [qt, setQt] = useState();
   const router = useRouter();
-  const { mutateUser } = useUser({
+  const { user } = useUser({
     redirectTo: "",
     redirectIfFound: false,
   });
 
+  const owner = offer.userId === user.info.id;
   const purchaseOffer = async (event) => {
     event.preventDefault();
     console.log("purchasing product");
@@ -373,20 +374,37 @@ const PurchaseOffer = ({ offer, user, id, setErrorMsg, href, refresh }) => {
       console.log("user balance before: ", user.balances);
 
       //prchase offer
-      await axios.post(
-        "https://api.apiiom.com/store/buyOffer",
-        {
-          offerId: id,
-          amount:
-            offer.tokenType === "FUNGIBLE"
-              ? event.currentTarget.quantity.value
-              : 1,
-        },
-        {
+      if (owner) {
+        console.log(
+          "deleting with payload",
+          {
+            offerId: id,
+          },
+          {
+            headers: { Authorization: user.token },
+          }
+        );
+
+        await axios.delete(`https://api.apiiom.com/store/offer/${id}`, {
           headers: { Authorization: user.token },
-        }
-      );
-      console.log("item purchaesd");
+        });
+        console.log("Offer Deleted");
+      } else {
+        await axios.post(
+          "https://api.apiiom.com/store/buyOffer",
+          {
+            offerId: id,
+            amount:
+              offer.tokenType === "FUNGIBLE"
+                ? event.currentTarget.quantity.value
+                : 1,
+          },
+          {
+            headers: { Authorization: user.token },
+          }
+        );
+        console.log("item purchaesd");
+      }
 
       //add new asset to balance - refresh user
       // await refreshUser(user);
@@ -415,6 +433,8 @@ const PurchaseOffer = ({ offer, user, id, setErrorMsg, href, refresh }) => {
 
     setLoading(false);
   };
+  console.log("user Id", user);
+  console.log("owner Id", offer.userId);
 
   return (
     <form
@@ -441,6 +461,8 @@ const PurchaseOffer = ({ offer, user, id, setErrorMsg, href, refresh }) => {
       >
         {loading ? (
           <Loader />
+        ) : owner ? (
+          "Delete Offer"
         ) : (
           `Buy ${qt > 1 ? `(${qt * offer.price} IOM)` : ""}`
         )}

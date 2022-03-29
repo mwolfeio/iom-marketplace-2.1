@@ -80,6 +80,7 @@ const Comp = ({}) => {
 
       <style jsx>{`
         ul.more-drop {
+          z-index: 50;
           opacity: 0;
           height: 0;
           overflow: hidden;
