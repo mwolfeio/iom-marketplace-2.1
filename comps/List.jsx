@@ -52,8 +52,8 @@ export default function Comp({
         ) : data.length ? (
           <>
             {data.map((itm) => (
-              <li key={`list-tiem-${Math.random}`}>
-                {schema.map(({ type, key, hook, className }) => {
+              <li key={`list-tiem-${Math.random()}`}>
+                {schema.map(({ type, key, hook, className, count }) => {
                   if (type === "text") return <p>{itm[key]}</p>;
                   if (type === "icon")
                     return <div className="icon" style={{ margin: "auto" }} />;
@@ -61,7 +61,9 @@ export default function Comp({
                     return (
                       <button
                         className={className}
-                        onClick={() => hook()}
+                        onClick={() =>
+                          hook(itm.token, count == "all" ? itm.amount : count)
+                        }
                         style={{ margin: "auto" }}
                       >
                         {key}
@@ -72,10 +74,18 @@ export default function Comp({
             ))}
           </>
         ) : (
-          <p>{placeholder}</p>
+          <li className="palceholde-wrapper flex-justify-center flex-align-center">
+            {placeholder}
+          </li>
         )}
       </ul>
       <style jsx>{`
+        li.palceholde-wrapper {
+          text-align: center;
+          display: flex;
+          font-weight: 700;
+          opacity: 0.3;
+        }
         ul {
           width: 100%;
           border-radius: 1rem;

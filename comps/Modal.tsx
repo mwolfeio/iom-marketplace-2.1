@@ -28,7 +28,7 @@ export default function Modal({ id, onClose, children }) {
           max-height: Calc(100vh - 4rem);
           overflow-y: auto;
           box-sizing: border-box;
-          border-radius: 2rem;
+          border-radius: 1rem;
           background: #242830;
           padding: 1rem;
         }

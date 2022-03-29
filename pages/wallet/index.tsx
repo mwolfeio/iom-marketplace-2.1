@@ -9,6 +9,8 @@ import Layout from "comps/Layout";
 import Gallery from "comps/Gallery";
 import Wallet from "comps/Wallet";
 import List from "comps/List";
+import Boxes from "comps/Boxes";
+import Pagination from "comps/Pagination";
 import Bubble from "comps/Bubble";
 
 export default function SgProfile() {
@@ -19,7 +21,7 @@ export default function SgProfile() {
   const [boxes, setBoxes] = useState([]);
   const [items, setItems] = useState([]);
   const [chars, setChars] = useState([]);
-  // const [offers, setOffers] = useState([]);
+  const [userState, setUserState] = useState();
   const [pageCount, setPageCount] = useState();
 
   const { user, mutateUser } = useUser();
@@ -27,8 +29,18 @@ export default function SgProfile() {
 
   useEffect(() => {
     console.log("Detected a change in the user");
-    if (user) hydratePage();
+
+    if (user) {
+      setUserState(user);
+    }
   }, [JSON.stringify(user)]);
+  useEffect(() => {
+    console.log("Detected a change in the user state");
+
+    if (userState) {
+      hydratePage();
+    }
+  }, [userState]);
 
   const hydratePage = async () => {
     console.log("hydrating page because user state changed");
@@ -36,7 +48,7 @@ export default function SgProfile() {
     setLoading(true);
     await getChars();
 
-    const bal = user.balances;
+    const bal = userState.balances;
     const sch = await getSchema();
 
     hydratBlanace(bal, sch);
@@ -106,6 +118,37 @@ export default function SgProfile() {
     setItems(merge.filter((o) => o.tokenCategory === "GAME_ITEM"));
   };
   const getMore = () => router.push("/game-items");
+  const openBoxes = async (token) => {
+    console.log("running openBoxes");
+
+    try {
+      let payload = {
+        box: token,
+        charToBeMinted: "IOM",
+        amount: 0,
+      };
+      console.log("payload: ", payload);
+
+      //open the box
+      const { data } = await axios.get(
+        `https://api.apiiom.com/store/box/open`,
+        payload,
+        {
+          headers: { Authorization: user.token },
+        }
+      );
+
+      //display new Char
+      console.log("Box res: ", data);
+
+      //refreshthe page
+    } catch (error) {
+      console.error("Error:", error.response);
+      setErrorMsg(
+        error.response ? error.response.data.message : "There was an error"
+      );
+    }
+  };
 
   return (
     <Layout>
@@ -117,29 +160,7 @@ export default function SgProfile() {
           <>
             <Wallet data={iom} />
             <div className="extras-wrapper">
-              <List
-                title="Boxes"
-                data={boxes}
-                schema={[
-                  { type: "icon", key: "" },
-                  { type: "text", key: "token" },
-                  { type: "text", key: "amount" },
-                  { type: "text", key: "tokenGames" },
-
-                  {
-                    type: "button",
-                    key: "Open",
-                    hook: getMore,
-                  },
-                  {
-                    type: "button",
-                    key: "Open All",
-                    hook: getMore,
-                    className: "primary",
-                  },
-                ]}
-              />
-
+              <Boxes data={boxes} user={user} refresh={setUserState} />
               <List
                 title="Game Items "
                 data={items}
@@ -159,17 +180,20 @@ export default function SgProfile() {
             </div>
           </>
         )}
-        <h3>Chars:</h3>
         {errorMsg ? (
           <p className="error">{errorMsg}</p>
         ) : (
-          <Gallery
-            data={chars}
-            hook={getChars}
-            loading={loading}
-            type="asset"
-            placeholder="No Characters"
-          />
+          <>
+            <Gallery
+              title={"Characters"}
+              data={chars}
+              hook={getChars}
+              loading={loading}
+              type="asset"
+              placeholder="No Characters"
+            />
+            <Pagination />
+          </>
         )}
       </div>
       <style jsx>{`

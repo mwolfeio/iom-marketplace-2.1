@@ -5,15 +5,15 @@ import Loader from "comps/Loader";
 export default function Form({ loading }) {
   return (
     <>
+      <h1 style={{ margin: 0 }}>Welcome!</h1>
+      <p>
+        Sign in to access the IOM Marketplace or create a new account{" "}
+        <Link href="/sign-up">
+          <a>here</a>
+        </Link>
+        .
+      </p>
       <label>
-        <h1 style={{ margin: 0 }}>Welcome!</h1>
-        <p>
-          Sign in to access the IOM Marketplace or create a new account{" "}
-          <Link href="/sign-up">
-            <a>here</a>
-          </Link>
-          .
-        </p>
         <input type="email" name="email" placeholder="email" required />
       </label>
       <label>

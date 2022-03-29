@@ -11,11 +11,14 @@ export default withIronSessionApiRoute(loginRoute, sessionOptions);
 
 async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
   const { info, token } = await req.body;
+  console.log("running refresh user");
 
   try {
     const { data } = await axios.get("https://api.apiiom.com/bank/balances", {
       headers: { authorization: token },
     });
+
+    console.log("recieved respose");
 
     const filteredBalances = data.filter((b) => b.amount > 0);
     const iom = data.find((b) => b.token === "IOM").amount;
@@ -26,6 +29,8 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
       iom,
       balances: filteredBalances,
     };
+
+    console.log("updating user");
 
     req.session.user = userData;
     await req.session.save();

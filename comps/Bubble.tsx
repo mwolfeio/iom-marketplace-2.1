@@ -15,7 +15,9 @@ export default function Comp({ children, hook, active, clickable }) {
   return (
     <>
       <div
-        className={`bubble-wrapper flex-align-center ${active ? "active" : ""}`}
+        className={`bubble-wrapper flex-align-center list-spacing-sml ${
+          active ? "active" : ""
+        }`}
         onClick={() => click()}
       >
         {children}
@@ -27,13 +29,13 @@ export default function Comp({ children, hook, active, clickable }) {
           color: #ffffff;
         }
         .bubble-wrapper {
-          ${clickable && "cursor: pointer;"}
           height: 36px;
           background: #ffffff10;
           color: #ffffff60;
           padding: 0 1rem;
           border-radius: 3rem;
           transition: 0.15s cubic-bezier(0.215, 0.61, 0.355, 1);
+          ${clickable && "cursor: pointer;"}
         }
         .bubble-wrapper:hover {
           ${clickable && "color: #ffffff;"}

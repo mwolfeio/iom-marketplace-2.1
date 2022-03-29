@@ -11,6 +11,7 @@ import Offer from "comps/Offer";
 import CharGalleryItem from "comps/CharGalleryItem";
 import Bubble from "comps/Bubble";
 import SideNav from "comps/SideNav";
+import Filter from "assets/icons/Filter";
 
 export default function Comp({
   data,
@@ -59,7 +60,8 @@ export default function Comp({
                 clickable={true}
                 hook={() => setOpen(!open)}
               >
-                Filter
+                <Filter />
+                <span>Filter</span>
               </Bubble>
             ) : (
               <h2>{title}</h2>

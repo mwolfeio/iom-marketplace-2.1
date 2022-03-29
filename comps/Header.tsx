@@ -137,16 +137,13 @@ export default function Header() {
           background: #ffffff00;
           border-radius: 50px;
           cursor: pointer;
-          ${router.asPath != "/wallet"
-            ? "border: 1px solid rgba(255, 255, 255, 0.3); padding: 0 1rem;"
-            : ""};
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          padding: 0 1rem;
         }
-        ${router.asPath != "/wallet"
-          ? ".wallet-wrapper:hover {background: #ffffff10;}"
-          : ""}
-        .wallet-wrapper a > *:first-child {
-          ${router.asPath != "/wallet" ? "" : "display: none"};
+        .wallet-wrapper:hover {
+          background: #ffffff10;
         }
+
         .wallet-wrapper a > *:first-child::after {
           content: "";
           border-right: 1px solid rgba(255, 255, 255, 0.3);

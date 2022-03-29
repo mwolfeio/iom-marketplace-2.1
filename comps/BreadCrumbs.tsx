@@ -4,16 +4,25 @@ import Link from "next/link";
 
 import Chev from "assets/icons/ChevRight";
 
-export default function Comp({ path }) {
+export default function Comp({ path, buttonText = "Back", icon = true, hook }) {
   return (
     <div style={{ marginBottom: "1rem" }}>
       <div className="list-spacing-med flex-align-center">
         <Link href="/wallet">
-          <button className="icon-text ">
-            <div style={{ transform: "rotate(180deg)" }}>
-              <Chev />
-            </div>
-            <span>Back</span>
+          <button
+            onClick={() => {
+              if (hook) {
+                hook();
+              }
+            }}
+            className={icon ? "icon-text " : ""}
+          >
+            {icon && (
+              <div style={{ transform: "rotate(180deg)" }}>
+                <Chev />
+              </div>
+            )}
+            <span>{buttonText}</span>
           </button>
         </Link>
 
