@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import fetchJson from "lib/fetchJson";
+import moment from "moment";
 
 // import type { User } from "api/user";
 // import fetchJson, { FetchError } from "lib/fetchJson";
@@ -14,6 +15,11 @@ import fetchJson from "lib/fetchJson";
 import Asset from "comps/Asset";
 import AssetCarosel from "comps/AssetCarosel";
 import Loader from "comps/Loader";
+import Bubble from "comps/Bubble";
+
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 export default function Offer({
   id,
@@ -91,6 +97,162 @@ export default function Offer({
   //If the offer's user ID = this Users Id then add
   //the edit controlls
 
+  const getDate = (utcSeconds) => {
+    var d = new Date(0); // The 0 there is the key, which sets the date to the epoch
+    d.setUTCSeconds(utcSeconds);
+
+    return moment(d).format("MMM Do YY, h:mm:ss a");
+  };
+
+  const getAttributes = (attrb, token, type) => {
+    switch (type) {
+      case "CHAR":
+        switch (token) {
+          case "GORDOLA":
+            return (
+              <>
+                <div className="flex-justify-btw list-spacing-sml">
+                  <span>Skin Code</span>
+                  <div className="div-lin" />
+                  <span>{attrb.skinCode}</span>
+                </div>
+                <div className="flex-justify-btw list-spacing-sml">
+                  <span>Points Coefficient</span>
+                  <div className="div-lin" />
+                  <span>{attrb.pointsCoefficient}</span>
+                </div>
+                <div className="flex-justify-btw list-spacing-sml">
+                  <span>Last Insulin Use</span>
+                  <div className="div-lin" />
+                  <span>{getDate(attrb.lastInsulinUseExpiration)}</span>
+                </div>
+                <div className="flex-justify-btw list-spacing-sml">
+                  <span>Matches until next shot</span>
+                  <div className="div-lin" />
+                  <span>
+                    {attrb.remainingMatchesUntilLastInsulinUseExpiration}
+                  </span>
+                </div>{" "}
+                <div className="flex-justify-btw list-spacing-sml">
+                  <span>Time of hear attack</span>
+                  <div className="div-lin" />
+                  <span>{getDate(attrb.heartAttackTime)}</span>
+                </div>
+                <style jsx>
+                  {`
+                    span {
+                      white-space: nowrap;
+                    }
+                    div {
+                      padding: 0.5rem 0;
+                    }
+                    div > *:first-child {
+                      font-weight: 600;
+                      opacity: 0.6;
+                    }
+                    .div-lin {
+                      width: 100%;
+                      border-bottom: 1px solid #ffffff10;
+                    }
+                  `}
+                </style>
+              </>
+            );
+            break;
+          default:
+            return <div>NFT info</div>;
+            break;
+        }
+        break;
+      case "GAME_ITEM":
+        switch (token) {
+          case "INSULIN":
+            return (
+              <div>
+                <p
+                  style={{
+                    fontWeight: 600,
+                    opacity: 0.6,
+                    marginBottom: ".5rem",
+                  }}
+                >
+                  About
+                </p>
+                <p>
+                  Insulin can be used to revive your fatty and get him back into
+                  the race.
+                </p>
+              </div>
+            );
+            break;
+          case "DEFIBRILATOR":
+            return (
+              <div>
+                <p
+                  style={{
+                    fontWeight: 600,
+                    opacity: 0.6,
+                    marginBottom: ".5rem",
+                  }}
+                >
+                  About
+                </p>
+                <p>
+                  We all need a little pick-me-up sometimes. Use the
+                  Defibrilator to bring your Fatty back from the edge.
+                </p>
+              </div>
+            );
+            break;
+          default:
+            return <div>In Game Item info</div>;
+            break;
+        }
+        break;
+      case "BOX":
+        switch (token) {
+          case "BOX1":
+            return (
+              <div>
+                <p
+                  style={{
+                    fontWeight: 600,
+                    opacity: 0.6,
+                    marginBottom: ".5rem",
+                  }}
+                >
+                  About
+                </p>
+                <p>Boxes are a great way to earn rare, valuable fatties.</p>
+              </div>
+            );
+            break;
+          case "BOX2":
+            return;
+            <div>
+              <p
+                style={{
+                  fontWeight: 600,
+                  opacity: 0.6,
+                  marginBottom: ".5rem",
+                }}
+              >
+                About
+              </p>
+              <p>Boxes are a great way to earn rare, valuable fatties.</p>
+            </div>;
+            break;
+          default:
+            return <div>Boc info</div>;
+            break;
+        }
+        break;
+
+      default:
+        break;
+    }
+  };
+
   return (
     <div>
       {loading && <Loader />}
@@ -101,7 +263,45 @@ export default function Offer({
             onClose={onClose}
             path={router.pathname.replace("/", "")}
           >
-            <>
+            <div className="vert-space-med">
+              <div>
+                <div className="flex-align-center flex-justify-btw">
+                  <h1>
+                    {offer.token}{" "}
+                    {offer.tokenType === "NON_FUNGIBLE" && (
+                      <span style={{ opacity: 0.3 }}>(NFT)</span>
+                    )}
+                  </h1>
+                  <div className="flex-align-center flex-justify-btw list-spacing-sml">
+                    {offer.tokenGames.map((of) => (
+                      <Bubble>{of}</Bubble>
+                    ))}
+                  </div>{" "}
+                </div>
+                <p>ID: {offer.id}</p>
+              </div>
+              <div className="attributes-wrapper">
+                <p
+                  style={{
+                    fontWeight: 600,
+                    opacity: 0.6,
+                    marginBottom: ".5rem",
+                  }}
+                >
+                  Description
+                </p>
+                <p>{offer.description}</p>
+              </div>
+              <div className="attributes-wrapper">
+                {getAttributes(
+                  offer.nftAttrs,
+                  offer.token,
+                  offer.tokenCategory
+                )}
+              </div>
+              <button className="price-button">
+                Price: {numberWithCommas(offer.price)} $IOM
+              </button>
               <PurchaseOffer
                 href={href}
                 offer={offer}
@@ -111,7 +311,7 @@ export default function Offer({
                 refresh={refresh}
               />
               {errorMsg && <p className="error-wrapper">⛔ {errorMsg}</p>}
-            </>
+            </div>
           </Asset>
 
           <AssetCarosel slides={simlar} />
@@ -119,6 +319,21 @@ export default function Offer({
       ) : (
         <p>No offer found</p>
       )}
+      <style jsx>
+        {`
+          .price-button {
+            border-radius: 50px;
+            width: 100%;
+            border: 2px solid #fff;
+            color: #fff;
+          }
+          .attributes-wrapper {
+            border-radius: 1rem;
+            background: #ffffff10;
+            padding: 1rem;
+          }
+        `}
+      </style>
     </div>
   );
 }
@@ -209,6 +424,7 @@ const PurchaseOffer = ({ offer, user, id, setErrorMsg, href, refresh }) => {
       )}
       <button
         type="submit"
+        style={{ width: "100%" }}
         className={`primary ${user.iom < offer.price && "disabled"}`}
         disabled={user.iom < offer.price}
       >

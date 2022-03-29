@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { useEffect, useState, FormEvent } from "react";
 import useUser from "lib/useUser";
+import moment from "moment";
 
 import CreateOffer from "comps/CreateOffer";
 import BreadCrumbs from "comps/BreadCrumbs";
@@ -15,6 +16,72 @@ import SkyImg from "assets/media/skyzao_logo.png";
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
+const getDate = (utcSeconds) => {
+  var d = new Date(0); // The 0 there is the key, which sets the date to the epoch
+  d.setUTCSeconds(utcSeconds);
+
+  return moment(d).format("MMM Do YY, h:mm:ss a");
+};
+
+const getAttributes = (attrb, token, type) => {
+  switch (token) {
+    case "GORDOLA":
+      return (
+        <>
+          <div className="flex-justify-btw list-spacing-sml">
+            <span>Skin Code</span>
+            <div className="div-lin" />
+            <span>{attrb.skinCode}</span>
+          </div>
+          <div className="flex-justify-btw list-spacing-sml">
+            <span>Points Coefficient</span>
+            <div className="div-lin" />
+            <span>{attrb.pointsCoefficient}</span>
+          </div>
+          <div className="flex-justify-btw list-spacing-sml">
+            <span>Last Insulin Use</span>
+            <div className="div-lin" />
+            <span>{getDate(attrb.lastInsulinUseExpiration)}</span>
+          </div>
+          <div className="flex-justify-btw list-spacing-sml">
+            <span>Matches until next shot</span>
+            <div className="div-lin" />
+            <span>{attrb.remainingMatchesUntilLastInsulinUseExpiration}</span>
+          </div>{" "}
+          <div className="flex-justify-btw list-spacing-sml">
+            <span>Time of hear attack</span>
+            <div className="div-lin" />
+            <span>{getDate(attrb.heartAttackTime)}</span>
+          </div>
+          <style jsx>
+            {`
+              span {
+                white-space: nowrap;
+              }
+              div {
+                padding: 0.5rem 0;
+              }
+              div > *:first-child {
+                font-weight: 600;
+                opacity: 0.6;
+              }
+              .div-lin {
+                width: 100%;
+                border-bottom: 1px solid #ffffff10;
+              }
+            `}
+          </style>
+        </>
+      );
+
+      break;
+
+    default:
+      <div>No Info</div>;
+      break;
+  }
+};
 
 export default function Comp({ data, onClose, path, children, hook }) {
   const [owned, setOwned] = useState("");
@@ -73,8 +140,30 @@ export default function Comp({ data, onClose, path, children, hook }) {
           </div>
           <div>
             <div className="asset-content-wrap">
-              <pre>{JSON.stringify(data, null, 2)}</pre>
-              {children}
+              {children ? (
+                children
+              ) : (
+                <div
+                  className="vert-space-med"
+                  style={{ paddingBottom: "1rem" }}
+                >
+                  <div>
+                    <div className="flex-align-center flex-justify-btw">
+                      <h1>
+                        {data.token}{" "}
+                        {data.tokenType === "NON_FUNGIBLE" && (
+                          <span style={{ opacity: 0.3 }}>(NFT)</span>
+                        )}
+                      </h1>
+                    </div>
+                    <p>ID: {data.id}</p>
+                  </div>
+
+                  <div className="attributes-wrapper">
+                    {getAttributes(data.attrs, data.token)}
+                  </div>
+                </div>
+              )}
               <CreateOffer show={owned} data={data} hook={hook} />
             </div>
           </div>
@@ -144,6 +233,17 @@ export default function Comp({ data, onClose, path, children, hook }) {
           border-right: 1px solid rgba(255, 255, 255, 0.3);
           height: 24px;
           margin: 0 1rem;
+        }
+        .price-button {
+          border-radius: 50px;
+          width: 100%;
+          border: 2px solid #fff;
+          color: #fff;
+        }
+        .attributes-wrapper {
+          border-radius: 1rem;
+          background: #ffffff10;
+          padding: 1rem;
         }
         @media (min-width: 768px) {
           .asset-wrapper {

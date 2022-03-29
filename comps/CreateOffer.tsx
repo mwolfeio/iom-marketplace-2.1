@@ -26,11 +26,19 @@ export default function Comp({
   return (
     <div>
       {open ? (
-        <button type="button" onClick={() => setOpen(false)}>
+        <button
+          type="button"
+          onClick={() => setOpen(false)}
+          style={{ width: "100%", marginBottom: ".5rem" }}
+        >
           Close
         </button>
       ) : (
-        <button className="primary" onClick={() => setOpen(true)}>
+        <button
+          className="primary"
+          onClick={() => setOpen(true)}
+          style={{ width: "100%" }}
+        >
           Create Offer
         </button>
       )}
@@ -116,7 +124,7 @@ export default function Comp({
               required
             />
           </label>
-          <button type="submit" className="primary">
+          <button type="submit" className="primary" style={{ width: "100%" }}>
             {laoding ? <Loader /> : "Submit Offer"}
           </button>
         </FormWrapper>
