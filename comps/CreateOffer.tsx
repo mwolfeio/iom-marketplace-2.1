@@ -8,7 +8,14 @@ import axios from "axios";
 import FormWrapper from "comps/FormWrapper";
 import Loader from "comps/Loader";
 
-export default function Comp({ show, data }: { show: boolean; data: any }) {
+export default function Comp({
+  show,
+  data,
+  hook,
+}: {
+  show: boolean;
+  data: any;
+}) {
   const [open, setOpen] = useState(false);
   const [laoding, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -59,20 +66,21 @@ export default function Comp({ show, data }: { show: boolean; data: any }) {
               );
               console.log("offer created");
 
-              //refresh user
-              const res = await fetch("/api/refreshUser", {
-                method: "POST",
-                body: JSON.stringify(user),
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              });
-
-              console.log("user updated: ", await res.json());
+              //refresh getChars
+              hook();
+              // const res = await fetch("/api/refreshUser", {
+              //   method: "POST",
+              //   body: JSON.stringify(user),
+              //   headers: {
+              //     "Content-Type": "application/json",
+              //   },
+              // });
 
               //toast
               toast.success(`Offer Created!`);
-              router.reload("/wallet");
+
+              //close modal
+              router.push("/wallet");
             } catch (error) {
               console.log("Error: ", error);
               if (error.response)

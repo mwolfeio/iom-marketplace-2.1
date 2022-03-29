@@ -16,7 +16,7 @@ function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-export default function Comp({ data, onClose, path, children }) {
+export default function Comp({ data, onClose, path, children, hook }) {
   const [owned, setOwned] = useState("");
   const { user } = useUser();
 
@@ -75,7 +75,7 @@ export default function Comp({ data, onClose, path, children }) {
             <div className="asset-content-wrap">
               <pre>{JSON.stringify(data, null, 2)}</pre>
               {children}
-              <CreateOffer show={owned} data={data} />
+              <CreateOffer show={owned} data={data} hook={hook} />
             </div>
           </div>
         </div>

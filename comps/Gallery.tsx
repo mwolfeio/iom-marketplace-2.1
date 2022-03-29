@@ -72,6 +72,7 @@ export default function Comp({
             <Asset
               data={data.find((obj) => obj.id === router.query.id)}
               onClose={() => router.push(router.pathname)}
+              hook={hook}
             />
           )}
         </Modal>

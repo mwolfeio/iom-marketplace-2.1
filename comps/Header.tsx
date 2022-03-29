@@ -154,6 +154,8 @@ export default function Header() {
           padding: 0.5rem 1rem;
           box-sizing: border-box;
           color: #fff;
+          max-width: 1300px;
+          margin: auto;
         }
       `}</style>
     </>
