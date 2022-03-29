@@ -147,3 +147,41 @@ textarea::placeholder {
   display: flex;
   flex-direction: column;
 }
+
+/* Resposive design---------------------------- */
+/* LARGE MOBILE---------------------------- */
+@media (max-width: 375px) {
+  .mini-mobile-hide {
+    display: none !important;
+  }
+}
+@media (min-width: 375px) {
+}
+
+/* TABLET---------------------------- */
+
+@media (max-width: 768px) {
+  .mobile-hide {
+    display: none !important;
+  }
+}
+@media (min-width: 768px) {
+  .desktop-hide {
+    display: none !important;
+  }
+}
+
+/*SMALL DESKTOP---------------------------- */
+@media (max-width: 1025px) {
+  .tablet-hide {
+    display: none !important;
+  }
+}
+@media (min-width: 1025px) {
+}
+
+/* LARGE DESKTOP---------------------------- */
+@media (min-width: 1200px) {
+}
+@media (min-width: 1600px) {
+}

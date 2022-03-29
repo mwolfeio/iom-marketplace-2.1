@@ -14,7 +14,7 @@ export default function GalleryPage({ data }) {
     <>
       <div className="wrapper">
         <div className="flex-align-center flex-justify-btw">
-          <span>Pop Dwon</span>
+          <span>Sort</span>
           <div className="chev flex-align-center flex-justify-center">
             <Chev />
           </div>
