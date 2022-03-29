@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import fetchJson from "lib/fetchJson";
 import useUser from "lib/useUser";
 
+//comps
 import Layout from "comps/Layout";
 import Gallery from "comps/Gallery";
 import Wallet from "comps/Wallet";
@@ -12,6 +13,10 @@ import List from "comps/List";
 import Boxes from "comps/Boxes";
 import Pagination from "comps/Pagination";
 import Bubble from "comps/Bubble";
+
+//icons
+import Shot from "assets/icons/Shot";
+import Defib from "assets/icons/Defib";
 
 export default function SgProfile() {
   const [errorMsg, setErrorMsg] = useState("");
@@ -149,6 +154,19 @@ export default function SgProfile() {
       );
     }
   };
+  const getIcon = (token) => {
+    console.log("running getIcon for type:", token);
+
+    switch (token) {
+      case "INSULIN":
+        return Shot;
+        break;
+
+      case "DEFIBRILATOR":
+        return Defib;
+        break;
+    }
+  };
 
   return (
     <Layout>
@@ -162,17 +180,19 @@ export default function SgProfile() {
             <div className="extras-wrapper">
               <Boxes data={boxes} user={user} refresh={setUserState} />
               <List
+                placeholder="No Game Items"
                 title="Game Items "
                 data={items}
                 schema={[
-                  { type: "icon", key: "" },
-                  { type: "text", key: "token" },
-                  { type: "text", key: "amount" },
-                  { type: "text", key: "tokenGames" },
+                  { type: "icon", key: "", comp: getIcon, name: "Item" },
+                  { type: "text", key: "token", name: " " },
+                  { type: "text", key: "amount", name: "Amount" },
+                  { type: "text", key: "tokenGames", name: "Game" },
                   {
                     type: "button",
                     key: "Get More",
                     hook: getMore,
+                    name: "Actions",
                     className: "primary",
                   },
                 ]}

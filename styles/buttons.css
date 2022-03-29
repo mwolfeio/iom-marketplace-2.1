@@ -59,6 +59,10 @@ button.secondary:hover {
   color: #fff;
   background: #33363d;
 }
+button.white {
+  color: #1d2028;
+  background: white;
+}
 
 button.turciary {
   color: #1d2028;

@@ -14,7 +14,7 @@ const generateColumns = (s, height) => {
         str = str + height + " ";
         break;
       case "button":
-        str = str + "auto ";
+        str = str + "100px ";
         break;
     }
   });
@@ -29,6 +29,7 @@ export default function Comp({
   height = "48px",
   title,
   placeholder = "Empty",
+  icon,
 }) {
   const [grid, setGrid] = useState(0);
 
@@ -48,26 +49,42 @@ export default function Comp({
           ))}
         </li>
         {loading ? (
-          <Loader />
+          <li className="palceholde-wrapper flex-justify-center flex-align-center">
+            <Loader />
+          </li>
         ) : data.length ? (
           <>
             {data.map((itm) => (
               <li key={`list-tiem-${Math.random()}`}>
-                {schema.map(({ type, key, hook, className, count }) => {
+                {schema.map(({ type, key, hook, className, count, comp }) => {
+                  console.log(itm);
                   if (type === "text") return <p>{itm[key]}</p>;
-                  if (type === "icon")
-                    return <div className="icon" style={{ margin: "auto" }} />;
+                  if (type === "icon") {
+                    if (icon) {
+                      let Cop = icon;
+                      return <Cop />;
+                    } else if (comp) {
+                      let Cop = comp(itm.token);
+                      return <Cop />;
+                    } else {
+                      return (
+                        <div className="icon" style={{ margin: "auto" }} />
+                      );
+                    }
+                  }
                   if (type === "button")
                     return (
-                      <button
-                        className={className}
-                        onClick={() =>
-                          hook(itm.token, count == "all" ? itm.amount : count)
-                        }
-                        style={{ margin: "auto" }}
-                      >
-                        {key}
-                      </button>
+                      <div style={{ justifyContent: "flex-start" }}>
+                        <button
+                          className={className}
+                          onClick={() =>
+                            hook(itm.token, count == "all" ? itm.amount : count)
+                          }
+                          style={{ margin: "auto" }}
+                        >
+                          {key}
+                        </button>
+                      </div>
                     );
                 })}
               </li>
@@ -113,7 +130,7 @@ export default function Comp({
         }
         ul li button {
           height: 28px;
-          width: fit-content;
+          width: 100%;
           border-radius: 3rem;
         }
 
@@ -127,6 +144,12 @@ export default function Comp({
 
         li.header:hover {
           background: none;
+        }
+        li.header {
+          font-size: 12px;
+          font-weight: 700;
+          text-transform: uppercase;
+          color: #b1b5c3;
         }
       `}</style>
     </div>

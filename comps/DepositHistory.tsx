@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import useUser from "lib/useUser";
+import Icon from "assets/icons/Deposit";
 
 //comps
 import Loader from "comps/Loader";
@@ -56,12 +57,13 @@ export default function Comp({ arr }) {
           loading={loading}
           title="Deposit History"
           data={history}
+          icon={Icon}
           schema={[
-            { type: "icon", key: "" },
-            { type: "text", key: "token" },
-            { type: "text", key: "amount" },
-            { type: "text", key: "status" },
-            { type: "text", key: "id" },
+            { type: "icon", key: "", name: "Token" },
+            { type: "text", key: "token", name: "  " },
+            { type: "text", key: "amount", name: "Amount" },
+            { type: "text", key: "status", name: "Status" },
+            { type: "text", key: "id", name: "Id" },
 
             {
               type: "button",

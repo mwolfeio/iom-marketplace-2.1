@@ -8,6 +8,7 @@ import useUser from "lib/useUser";
 import Loader from "comps/Loader";
 import Copy from "assets/icons/Copy";
 import List from "comps/List";
+import Icon from "assets/icons/Withdraw";
 
 export default function Comp({ arr, hook }) {
   const { user } = useUser();
@@ -64,15 +65,16 @@ export default function Comp({ arr, hook }) {
       <div className="deposit-hitory-wrapper">
         <List
           loading={loading}
-          title="Withdrawal Hisotry"
+          title="Withdrawal History"
           placeholder="No Withdrawals"
           data={history}
+          icon={Icon}
           schema={[
-            { type: "icon", key: "" },
-            { type: "text", key: "token" },
-            { type: "text", key: "amount" },
-            { type: "text", key: "status" },
-            { type: "text", key: "walletAddress" },
+            { type: "icon", key: "", name: "Token" },
+            { type: "text", key: "token", name: " " },
+            { type: "text", key: "amount", name: "Amount" },
+            { type: "text", key: "status", name: "Satus" },
+            { type: "text", key: "walletAddress", name: "Address" },
 
             {
               type: "button",

@@ -6,6 +6,7 @@ import List from "comps/List";
 import Modal from "comps/Modal";
 import OpenBox from "comps/OpenBox";
 import Loader from "comps/Loader";
+import Icon from "assets/icons/Box";
 
 export default function SgProfile({ data, user, refresh }) {
   const [errorMsg, setErrorMsg] = useState("");
@@ -91,17 +92,20 @@ export default function SgProfile({ data, user, refresh }) {
       <List
         title="Boxes"
         data={data}
+        icon={Icon}
+        placeholder="No Boxes"
         schema={[
-          { type: "icon", key: "" },
-          { type: "text", key: "token" },
-          { type: "text", key: "amount" },
-          { type: "text", key: "tokenGames" },
+          { type: "icon", key: "", name: "Type" },
+          { type: "text", key: "token", name: " " },
+          { type: "text", key: "amount", name: "Amount" },
+          { type: "text", key: "tokenGames", name: "Game" },
 
           {
             type: "button",
             key: "Open",
             count: 1,
             hook: openBoxes,
+            name: "Actions",
           },
           {
             type: "button",
@@ -109,6 +113,7 @@ export default function SgProfile({ data, user, refresh }) {
             count: "all",
             hook: openBoxes,
             className: "primary",
+            name: " ",
           },
         ]}
       />
