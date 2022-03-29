@@ -6,8 +6,10 @@ import CreateOffer from "comps/CreateOffer";
 import BreadCrumbs from "comps/BreadCrumbs";
 import Link from "next/link";
 import Image from "next/image";
-import Platform from "../assets/media/platform.png";
+import Platform from "assets/media/platform.png";
+import Back from "assets/media/asset_back.png";
 import Media from "comps/MediaManager";
+import Loader from "comps/Loader";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -23,6 +25,7 @@ export default function Comp({ data, onClose, path, children }) {
     }
   }, [user, data]);
 
+  if (!data) return <Loader />;
   return (
     <>
       <div>
@@ -46,27 +49,38 @@ export default function Comp({ data, onClose, path, children }) {
         </div>
         <div className="asset-wrapper">
           <div>
-            <Image src={Platform} width="700px" height="211px" />
-            <div className="asset-img-wrap">
-              {data.images[0] ? (
-                <Image src={data.images[0]} width="700px" height="700px" />
-              ) : (
-                <Media
-                  className="char-img"
-                  type={data.tokenCategory}
-                  token={data.token}
-                />
-              )}
+            <div className="asset-meda-cont">
+              <Image src={Back} width="700px" height="700px" />
+              <div className="asset-plat-wrap">
+                <Image src={Platform} width="700px" height="211px" />
+              </div>
+              <div className="asset-img-wrap">
+                {data.images && data.images[0] ? (
+                  <Image src={data.images[0]} width="700px" height="700px" />
+                ) : (
+                  <Media
+                    className="char-img"
+                    type={data.tokenCategory}
+                    token={data.token}
+                  />
+                )}
+              </div>
             </div>
           </div>
-          <div className="asset-content-wrap">
-            <pre>{JSON.stringify(data, null, 2)}</pre>
-            {children}
-            <CreateOffer show={owned} data={data} />
+          <div>
+            <div className="asset-content-wrap">
+              <pre>{JSON.stringify(data, null, 2)}</pre>
+              {children}
+              <CreateOffer show={owned} data={data} />
+            </div>
           </div>
         </div>
-      </div>{" "}
+      </div>
       <style jsx>{`
+        .asset-plat-wrap {
+          position: absolute;
+          bottom: 0;
+        }
         .asset-content-wrap {
           position: relative;
           padding: 1rem;
@@ -84,6 +98,9 @@ export default function Comp({ data, onClose, path, children }) {
           position: absolute;
           top: 0;
           left: 0;
+        }
+        .asset-meda-cont {
+          position: relative;
         }
         .asset-wrapper {
           display: grid;
