@@ -58,33 +58,30 @@ export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
   });
 
   useEffect(() => {
-    if (defaults) {
-      const {
-        page = 0,
-        size = 30,
-        sortAttributeName = "",
-        sortMode = "",
-        tokenGames = [],
-        priceFrom = 0,
-        priceTo = 0,
-        tokenCategories = [],
-      } = defaults;
-      setQuery({
-        page,
-        size,
-        sortAttributeName,
-        sortMode,
-        tokenGames,
-        priceFrom,
-        priceTo,
-        tokenCategories,
-      });
-    }
+    console.log("DEFAULTS: ", defaults);
+    const {
+      page = 0,
+      size = 30,
+      sortAttributeName = "",
+      sortMode = "",
+      tokenGames = [],
+      priceFrom = 0,
+      priceTo = 0,
+      tokenCategories = [],
+    } = defaults;
+    setQuery({
+      page,
+      size,
+      sortAttributeName,
+      sortMode,
+      tokenGames,
+      priceFrom,
+      priceTo,
+      tokenCategories,
+    });
   }, [defaults]);
 
   useEffect(() => {
-    console.log("rejistered a query change");
-
     getOffers();
   }, [JSON.stringify(query)]);
 
@@ -100,21 +97,9 @@ export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
       priceTo = 0,
       tokenCategories = [],
     } = query;
-
-    console.log(
-      "getting offers: ",
-      `https://api.apiiom.com/store/offer?size=${size}&page=${page}${
-        tokenCategories.length
-          ? `&tokenCategories=${tokenCategories.toString()}`
-          : ""
-      }${sortMode ? `&sortMode=${sortMode}` : ""}${
-        tokenGames.length ? `&tokenGames=${tokenGames.toString()}` : ""
-      }${priceFrom ? `&priceFrom=${priceFrom}` : ""}${
-        priceTo ? `&priceTo=${priceTo} ` : ""
-      }`
-    );
-
+    if (tokenCategories.length < 1) return;
     setLoading(true);
+
     try {
       console.log("fetching offers");
       const {
