@@ -3,18 +3,27 @@
 import Image from "next/image";
 import ItemBack from "assets/media/ItemBack.png";
 
+import SkyImg from "assets/media/skyzao_logo.png";
+
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-export default function Comp({ data: { images = [], price }, owned }) {
+export default function Comp({
+  wallet = false,
+  data: { images = [], availableAmount, price },
+  owned,
+}) {
   return (
     <>
       <div className="char-item-wrapper flex-col">
         <div className="gallery-itme-image-wrapper">
           <div className="game-icons" />
           <Image src={ItemBack} layout="fill" />
-
+          <button>Rarity</button>
+          <div className="char-game-badge">
+            <Image className="char-img" src={SkyImg} layout="fill" />
+          </div>
           {images.length > 0 ? (
             <Image className="char-img" src={images[0]} layout="fill" />
           ) : (
@@ -31,7 +40,6 @@ export default function Comp({ data: { images = [], price }, owned }) {
               <h1 style={{ opacity: 0.6 }}>No Image</h1>
             </div>
           )}
-          <button>Rarity</button>
         </div>
         <div className="gallery-item-info-wrapper">
           <div
@@ -39,16 +47,22 @@ export default function Comp({ data: { images = [], price }, owned }) {
             className="flex-align-center flex-justify-btw"
           >
             <p>Gordola</p>
-            <p>Supply</p>
+            <p>Available</p>
           </div>
           <div className="flex-align-center flex-justify-btw">
-            <h3>Available</h3>
-            <h3>1</h3>
+            <h3>Gordola Name</h3>
+            <h3>{availableAmount}</h3>
           </div>
           {owned ? (
-            <button style={{ marginTop: ".5rem" }} className="primary">
-              Sell
-            </button>
+            wallet ? (
+              <button style={{ marginTop: ".5rem" }} className="primary">
+                Create Offer
+              </button>
+            ) : (
+              <button style={{ marginTop: ".5rem" }} className="primary">
+                Delete Offer
+              </button>
+            )
           ) : (
             <div
               style={{ marginTop: "12px" }}
@@ -72,6 +86,13 @@ export default function Comp({ data: { images = [], price }, owned }) {
             -4.46782px 4.46782px 0px rgba(255, 255, 255, 0.25)
           );
           border-radius: 11.1695px;
+        }
+        .char-game-badge {
+          position: absolute;
+          top: 0.5rem;
+          right: 1rem;
+          height: 55px;
+          width: 120px;
         }
 
         .gallery-itme-image-wrapper {

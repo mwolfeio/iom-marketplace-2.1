@@ -205,6 +205,7 @@ export default function SgProfile() {
         ) : (
           <>
             <Gallery
+              wallet={true}
               title={"Characters"}
               data={chars}
               hook={getChars}

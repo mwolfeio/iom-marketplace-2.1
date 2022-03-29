@@ -14,7 +14,9 @@ export default function Comp({ data }) {
       style={{ marginTop: "1rem" }}
     >
       <button className="icon">{`<`}</button>
-      <div>page 1</div>
+      <button className="icon">{`1`}</button>
+      <button className="icon">{`2`}</button>
+      <button className="icon">{`3`}</button>
       <button className="icon">{`>`}</button>
     </div>
   );

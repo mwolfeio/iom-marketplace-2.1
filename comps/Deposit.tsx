@@ -45,16 +45,38 @@ export default function Comp({ data }) {
   if (loading) return <Loader />;
   return (
     <>
-      <div>Deposit QR Code</div>
-      <div className="flex-align-center flex-justify-center list-spacing-sml">
-        <p>
-          <span className="deposit-text">Deposit Address:</span> <b>{code}</b>
-        </p>
-        <button className="icon" onClick={() => copyCode()}>
-          <Copy />
-        </button>
+      <div className="login vert-space-med">
+        <h1 style={{ margin: 0 }}>Deposits</h1>
+        <p>Send you IOM deposits to the address listed below:</p>
+        <div>
+          <div className=" address-wrapper flex-align-center flex-justify-center list-spacing-sml">
+            <p>
+              <span className="deposit-text"></span> <b>{code}</b>
+            </p>
+            <button className="icon" onClick={() => copyCode()}>
+              <Copy />
+            </button>
+          </div>
+        </div>
       </div>
       <style jsx>{`
+        .login {
+          margin: 0 auto;
+          background: #1d2028;
+          border-radius: 24px;
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          padding: 24px;
+          width: fit-content;
+          display: flex;
+          flex-direction: column;
+          box-shadow: 0 2px 4px rgb(0 0 0 / 2%);
+        }
+        .address-wrapper {
+          background: #ffffff10;
+          border-radius: 0.5rem;
+          padding: 0.5rem;
+          width: 100%;
+        }
         .deposit-text {
           opacity: 0.8;
         }

@@ -55,6 +55,7 @@ export default function Offer({ id, userId, nftId, asset, href }) {
       {loading && <Loader />}
       {!loading && offer ? (
         <>
+          <Asset data={offer} />
           <PurchaseOffer
             href={href}
             offer={offer}
@@ -63,10 +64,7 @@ export default function Offer({ id, userId, nftId, asset, href }) {
             setErrorMsg={setErrorMsg}
           />
           {errorMsg && <p className="error-wrapper">⛔ {errorMsg}</p>}
-
-          <pre>{JSON.stringify(offer, null, 2)}</pre>
-
-          <Asset data={offer} />
+          <div>Gallery</div>
         </>
       ) : (
         <p>No offer found</p>

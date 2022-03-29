@@ -2,6 +2,6 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ["i2.wp.com"],
+    domains: ["i2.wp.com", "imgur.com"],
   },
 };

@@ -24,6 +24,7 @@ export default function Comp({
   placeholder = "No Items",
   filter = [],
   title,
+  wallet = false,
 }) {
   const [open, setOpen] = useState(true);
   const { user } = useUser();
@@ -48,6 +49,7 @@ export default function Comp({
         return (
           <CharGalleryItem
             data={item}
+            wallet={wallet}
             owned={
               user &&
               user.isLoggedIn &&
