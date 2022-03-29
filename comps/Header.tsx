@@ -40,7 +40,10 @@ export default function Header() {
           return a + b.amount;
         }, 0)
       );
-      setIom(user.balances.filter((obj) => obj.token === "IOM")[0].amount);
+      let red = user.balances.filter((obj) => obj.token === "IOM")[0];
+      console.log("red: ", red);
+
+      setIom(red ? red.amount : 0);
     }
   }, [user]);
 
