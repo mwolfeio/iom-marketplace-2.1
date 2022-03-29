@@ -155,6 +155,7 @@ export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
               canReset={JSON.stringify(initQuery) !== JSON.stringify(query)}
               filter={filter}
               open={open}
+              setOpen={setOpen}
               reset={reset}
               query={query}
               setQuery={setQuery}
