@@ -12,6 +12,7 @@ import fetchJson from "lib/fetchJson";
 // import fetchJson, { FetchError } from "lib/fetchJson";
 
 import Asset from "comps/Asset";
+import AssetCarosel from "comps/AssetCarosel";
 import Loader from "comps/Loader";
 
 export default function Offer({ id, userId, nftId, asset, href, onClose }) {
@@ -20,22 +21,34 @@ export default function Offer({ id, userId, nftId, asset, href, onClose }) {
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const [offer, setOffer] = useState();
+  const [simlar, setSimilar] = useState();
   // const [offer, setOffer] = useState();
 
   useEffect(() => {
     // console.log("getting offer iwth id: ", id);
 
-    if (id) getOffer(id);
+    if (id) hydratePage(id);
   }, [id]);
 
-  const getOffer = async (id) => {
+  const hydratePage = async (id) => {
     setLoading(true);
+    setErrorMsg("");
+    try {
+      const o = await getOffer(id);
+      await getSimilar(o);
+    } catch (err) {
+      console.error("An unexpected error happened:", err);
+    }
+    setLoading(false);
+  };
+  const getOffer = async (id) => {
     try {
       console.log("fetching offer");
       const { data } = await axios.get(
         `https://api.apiiom.com/store/offer/${id}`
       );
       setOffer(data);
+      return data;
     } catch ({ response }) {
       if (response) {
         setErrorMsg(response.data.message);
@@ -43,9 +56,29 @@ export default function Offer({ id, userId, nftId, asset, href, onClose }) {
         console.error("An unexpected error happened:", response);
       }
     }
-    setLoading(false);
   };
-  console.log("Path-------", router.pathname);
+  const getSimilar = async (o) => {
+    try {
+      console.log("fetching similar products");
+      console.log("offer: ", o);
+      console.log(
+        `https://api.apiiom.com/store/offer?page=0&size=4&tokenCategories=${o.tokenCategory}`
+      );
+
+      const {
+        data: { rows, pages },
+      } = await axios.get(
+        `https://api.apiiom.com/store/offer?page=0&size=4&tokenCategories=${o.tokenCategory}`
+      );
+      console.log("rows: ", rows);
+
+      setSimilar(rows);
+    } catch (error) {
+      if (error instanceof FetchError) {
+        setErrorMsg(error.data.message);
+      } else console.error("An unexpected error happened:", error);
+    }
+  };
 
   //If the offer's user ID = this Users Id then add
   //the edit controlls
@@ -72,7 +105,7 @@ export default function Offer({ id, userId, nftId, asset, href, onClose }) {
             </>
           </Asset>
 
-          <div>Gallery</div>
+          <AssetCarosel slides={simlar} />
         </>
       ) : (
         <p>No offer found</p>

@@ -1,7 +1,13 @@
 // @ts-nocheck
 import { FormEvent } from "react";
 
-export default function Modal({ id, onClose, children, background = true }) {
+export default function Modal({
+  id,
+  noBack,
+  onClose,
+  children,
+  background = true,
+}) {
   return (
     <div className="modal-back" onClick={() => onClose()}>
       <div className="modal-wrap" onClick={(event) => event.stopPropagation()}>
@@ -17,7 +23,8 @@ export default function Modal({ id, onClose, children, background = true }) {
           z-index: 100;
           width: 100vw;
           height: 100vh;
-          background: #00000080;
+          backdrop-filter: blur(4px);
+          background: ${background ? "#00000080" : "rgba(0,0,0,.80)"};
         }
         .modal-wrap {
           max-width: 1008px;

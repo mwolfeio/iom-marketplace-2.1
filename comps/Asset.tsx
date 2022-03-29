@@ -10,6 +10,7 @@ import Platform from "assets/media/platform.png";
 import Back from "assets/media/asset_back.png";
 import Media from "comps/MediaManager";
 import Loader from "comps/Loader";
+import SkyImg from "assets/media/skyzao_logo.png";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -51,6 +52,9 @@ export default function Comp({ data, onClose, path, children }) {
           <div>
             <div className="asset-meda-cont">
               <Image src={Back} width="700px" height="700px" />
+              <div className="char-game-badge">
+                <Image className="char-img" src={SkyImg} layout="fill" />
+              </div>
               <div className="asset-plat-wrap">
                 <Image src={Platform} width="700px" height="211px" />
               </div>
@@ -77,6 +81,14 @@ export default function Comp({ data, onClose, path, children }) {
         </div>
       </div>
       <style jsx>{`
+        .char-game-badge {
+          position: absolute;
+          top: 1rem;
+          left: 1rem;
+          height: 55px;
+          width: 120px;
+        }
+
         .asset-plat-wrap {
           position: absolute;
           bottom: 0;

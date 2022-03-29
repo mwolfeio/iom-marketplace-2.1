@@ -65,7 +65,10 @@ export default function Comp({
   return (
     <>
       {router.query.id && (
-        <Modal onClose={() => router.push(router.pathname)}>
+        <Modal
+          onClose={() => router.push(router.pathname)}
+          background={type !== "offer"}
+        >
           {type === "offer" && (
             <Offer
               id={router.query.id}
