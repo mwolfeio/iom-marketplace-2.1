@@ -61,6 +61,7 @@ export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
     },
     {
       type: "slider",
+      lable: "Price Range",
       keyField: "priceTo",
     },
     { type: "div" },

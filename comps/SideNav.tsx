@@ -31,7 +31,7 @@ export default function GalleryPage({
               return <PopDown data={options} />;
               break;
             case "slider":
-              return <Range data={options} />;
+              return <Range lable={lable} data={options} />;
               break;
             case "drop":
               return (
