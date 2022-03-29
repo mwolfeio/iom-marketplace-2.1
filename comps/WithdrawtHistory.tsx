@@ -20,6 +20,9 @@ export default function Comp({ arr, hook }) {
   }, [user]);
 
   useEffect(() => {
+    console.log("arr: ", arr);
+    console.log("history: ", history);
+
     setHistory([...arr, ...history]);
   }, [arr]);
 
@@ -64,7 +67,7 @@ export default function Comp({ arr, hook }) {
       <div className="deposit-hitory-wrapper">
         <List
           loading={loading}
-          title="Deposit History"
+          title="Withdrawal Hisotry"
           placeholder="No Withdrawals"
           data={history}
           schema={[
@@ -72,7 +75,7 @@ export default function Comp({ arr, hook }) {
             { type: "text", key: "token" },
             { type: "text", key: "amount" },
             { type: "text", key: "status" },
-            { type: "text", key: "id" },
+            { type: "text", key: "walletAddress" },
 
             {
               type: "button",

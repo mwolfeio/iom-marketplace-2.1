@@ -12,7 +12,7 @@ export default function Comp() {
   return (
     <Layout>
       <BreadCrumbs path={["wallet", "withdraw"]} />
-      <Withdraw arr={newWith} hook={setNewWith} />
+      <Withdraw hook={setNewWith} />
       <History arr={newWith} />
     </Layout>
   );
