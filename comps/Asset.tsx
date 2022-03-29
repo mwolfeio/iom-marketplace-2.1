@@ -90,6 +90,7 @@ export default function Comp({
   children,
   hook,
   hideHeader = false,
+  isBox = false,
 }) {
   const [owned, setOwned] = useState("");
   const { user } = useUser();
@@ -135,10 +136,22 @@ export default function Comp({
               <div className="char-game-badge">
                 <Image className="char-img" src={SkyImg} layout="fill" />
               </div>
-              <div className="asset-plat-wrap">
+              <div
+                className="asset-plat-wrap"
+                style={{
+                  width: isBox ? "100%" : "",
+                  bottom: isBox ? "0" : "",
+                }}
+              >
                 <Image src={Platform} width="700px" height="211px" />
               </div>
-              <div className="asset-img-wrap">
+              <div
+                className="asset-img-wrap"
+                style={{
+                  borderRadius: isBox ? "1rem" : "",
+                  overflow: isBox ? "hidden" : "",
+                }}
+              >
                 {data.images && data.images[0] ? (
                   <Image src={data.images[0]} width="700px" height="700px" />
                 ) : (
@@ -262,6 +275,13 @@ export default function Comp({
           .asset-wrapper {
             grid-template-columns: 1fr 1fr;
             grid-gap: 2rem;
+            padding-bottom: 4rem;
+          }
+          .asset-plat-wrap {
+            position: absolute;
+            bottom: -7.5%;
+            left: 0;
+            width: 130%;
           }
         }
       `}</style>

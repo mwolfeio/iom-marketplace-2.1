@@ -260,6 +260,7 @@ export default function Offer({
       {!loading && offer ? (
         <>
           <Asset
+            isBox={offer.tokenCategory === "BOX"}
             hideHeader={hideHeader}
             data={offer}
             onClose={onClose}
@@ -329,12 +330,16 @@ export default function Offer({
       )}
       <style jsx>
         {`
-          .price-button {
+          .price-button,
+          .price-button:hover {
             border-radius: 50px;
             width: 100%;
             border: 2px solid #fff;
             color: #fff;
+            cursor: auto;
+            background: #33363d;
           }
+
           .attributes-wrapper {
             border-radius: 1rem;
             background: #ffffff10;
@@ -463,6 +468,8 @@ const PurchaseOffer = ({ offer, id, setErrorMsg, href, refresh }) => {
           <Loader />
         ) : owner ? (
           "Delete Offer"
+        ) : user.iom < offer.price ? (
+          "Insufficient Funds"
         ) : (
           `Buy ${qt > 1 ? `(${qt * offer.price} IOM)` : ""}`
         )}

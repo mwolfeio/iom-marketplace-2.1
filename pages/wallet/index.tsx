@@ -214,7 +214,6 @@ export default function SgProfile() {
               type="asset"
               placeholder="No Characters"
             />
-            <Pagination />
           </>
         )}
       </div>

@@ -205,7 +205,7 @@ export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
                 <h2>{title}</h2>
               )}
 
-              <Bubble clickable={true}>All Games</Bubble>
+              <Bubble>All Games</Bubble>
             </div>
             <div>
               <Gallery
