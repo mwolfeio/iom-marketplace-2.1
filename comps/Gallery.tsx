@@ -9,6 +9,8 @@ import Modal from "comps/Modal";
 import Asset from "comps/Asset";
 import Offer from "comps/Offer";
 import CharGalleryItem from "comps/CharGalleryItem";
+import ItemGalleryItem from "comps/ItemGalleryItem";
+import BoxGalleryItem from "comps/BoxGalleryItem";
 import Bubble from "comps/Bubble";
 import SideNav from "comps/SideNav";
 import Filter from "assets/icons/Filter";
@@ -32,6 +34,30 @@ export default function Comp({
         ? `wallet?id=${item.id}`
         : `${router.pathname !== "/" ? router.pathname : ""}/?id=${item.id}`;
     return href;
+  };
+  const getComp = (cat, item) => {
+    switch (cat) {
+      case "BOX":
+        return <BoxGalleryItem data={item} />;
+        break;
+
+      case "GAME_ITEM":
+        return <ItemGalleryItem data={item} />;
+        break;
+      default:
+        return (
+          <CharGalleryItem
+            data={item}
+            owned={
+              user &&
+              user.isLoggedIn &&
+              user.info.id ===
+                (item.ownerUserId ? item.ownerUserId : item.userId)
+            }
+          />
+        );
+        break;
+    }
   };
 
   return (
@@ -85,17 +111,7 @@ export default function Comp({
                       : `/wallet/?id=${item.id}`
                   }
                 >
-                  <a>
-                    <CharGalleryItem
-                      data={item}
-                      owned={
-                        user &&
-                        user.isLoggedIn &&
-                        user.info.id ===
-                          (item.ownerUserId ? item.ownerUserId : item.userId)
-                      }
-                    />
-                  </a>
+                  <a>{getComp(item.tokenCategory, item)}</a>
                 </Link>
               ))
             ) : (

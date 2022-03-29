@@ -2,48 +2,35 @@
 
 import Image from "next/image";
 import ItemBack from "assets/media/ItemBack.png";
+import Media from "comps/MediaManager";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-export default function Comp({ data: { images = [], price }, owned }) {
+export default function Comp({
+  data: { token, tokenCategory, availableAmount, images = [], price },
+  owned,
+}) {
   return (
     <>
       <div className="char-item-wrapper flex-col">
         <div className="gallery-itme-image-wrapper">
           <div className="game-icons" />
           <Image src={ItemBack} layout="fill" />
-
-          {images.length > 0 ? (
-            <Image className="char-img" src={images[0]} layout="fill" />
-          ) : (
-            <div
-              className="flex-align-center flex-justify-center"
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-              }}
-            >
-              <h1 style={{ opacity: 0.6 }}>No Image</h1>
-            </div>
-          )}
-          <button>Rarity</button>
+          <Media className="char-img" type={tokenCategory} token={token} />
         </div>
         <div className="gallery-item-info-wrapper">
           <div
             style={{ opacity: 0.33 }}
             className="flex-align-center flex-justify-btw"
           >
-            <p>Gordola</p>
-            <p>Supply</p>
+            <p>Box</p>
+            <p>Available</p>
           </div>
           <div className="flex-align-center flex-justify-btw">
-            <h3>Available</h3>
-            <h3>1</h3>
+            <h3>{token}</h3>
+            <h3>{availableAmount}</h3>
           </div>
           {owned ? (
             <button style={{ marginTop: ".5rem" }} className="primary">
