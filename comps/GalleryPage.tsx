@@ -60,7 +60,30 @@ export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
     {
       type: "pop",
       keyField: "sortAttributeName",
+      keyField2: "sortMode",
       lable: "",
+      options: [
+        {
+          key: "High to Low Price",
+          value: "price",
+          value2: "DESC",
+        },
+        {
+          key: "Low to High Price",
+          value: "price",
+          value2: "ASC",
+        },
+        {
+          key: "New to Old",
+          value: "createdAt",
+          value2: "DESC",
+        },
+        {
+          key: "Old to New",
+          value: "createdAt",
+          value2: "ASC",
+        },
+      ],
     },
     {
       type: "slider",

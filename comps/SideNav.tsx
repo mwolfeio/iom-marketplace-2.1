@@ -31,10 +31,20 @@ export default function GalleryPage({
             open ? "" : "not-expanded"
           }`}
         >
-          {filter.map(({ type, lable, options, keyField }) => {
+          {filter.map(({ type, lable, options, keyField, keyField2 }) => {
             switch (type) {
               case "pop":
-                return <PopDown data={options} />;
+                return (
+                  <PopDown
+                    prefix="Sort: "
+                    keyField={keyField}
+                    keyField2={keyField2}
+                    lable={lable}
+                    data={options}
+                    query={query}
+                    setQuery={setQuery}
+                  />
+                );
                 break;
               case "slider":
                 return (
