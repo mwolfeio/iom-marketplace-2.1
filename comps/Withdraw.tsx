@@ -11,7 +11,7 @@ import Copy from "assets/icons/Copy";
 
 export default function Comp({ arr, hook }) {
   const { user } = useUser();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [iom, setIom] = useState(0);
   const [withdraw, setWithdraw] = useState(0);
@@ -20,12 +20,31 @@ export default function Comp({ arr, hook }) {
   useEffect(() => {
     if (user && user.isLoggedIn) {
       let red = user.balances.filter((obj) => obj.token === "IOM")[0];
-      console.log("red: ", red);
-
+      getFee();
       setIom(red ? red.amount : 0);
     }
   }, [user]);
 
+  const getFee = async () => {
+    console.log("running get fee");
+
+    try {
+      //submit withdraw
+      const { data } = await axios.get("https://api.apiiom.com/parameters", {
+        headers: { Authorization: user.token },
+      });
+
+      console.log("data: ", data);
+
+      //clear inputs
+    } catch (error) {
+      console.log("Error: ", error.response);
+      setError(
+        `Error: ${error.response ? error.response.data.message : error}`
+      );
+    }
+    setLoading(false);
+  };
   const copyCode = () => {
     navigator.clipboard.writeText(code);
     toast.success("Address Coppied");

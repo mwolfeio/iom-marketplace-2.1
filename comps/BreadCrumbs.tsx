@@ -26,7 +26,7 @@ export default function Comp({ path, buttonText = "Back", icon = true, hook }) {
           <span>{buttonText}</span>
         </button>
 
-        <div className="breadcrumbs-links list-spacing-sml flex-align-center">
+        <div className="breadcrumbs-links list-spacing-sml flex-align-center mobile-hide">
           {path.map((p, i) => {
             if (path.length - 1 !== i) {
               return (
