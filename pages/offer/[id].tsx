@@ -12,7 +12,7 @@ export default function SgProfile() {
 
   return (
     <Layout>
-      <Offer id={router.query.id} nftId="1234" />
+      <Offer id={router.query.id} nftId="1234" hideHeader={true} />
     </Layout>
   );
 }

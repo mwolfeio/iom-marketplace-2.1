@@ -13,7 +13,7 @@ import Media from "comps/MediaManager";
 import Loader from "comps/Loader";
 import SkyImg from "assets/media/skyzao_logo.png";
 
-function numberWithCommas(x) {
+function numberWithCommas(x = 0) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
@@ -83,7 +83,14 @@ const getAttributes = (attrb, token, type) => {
   }
 };
 
-export default function Comp({ data, onClose, path, children, hook }) {
+export default function Comp({
+  data,
+  onClose,
+  path,
+  children,
+  hook,
+  hideHeader = false,
+}) {
   const [owned, setOwned] = useState("");
   const { user } = useUser();
 
@@ -97,24 +104,28 @@ export default function Comp({ data, onClose, path, children, hook }) {
   return (
     <>
       <div>
-        <div className="flex-justify-btw">
-          <BreadCrumbs
-            icon={false}
-            hook={onClose}
-            buttonText="Close"
-            path={[path, data.token]}
-          />
-          <div className="wallet-wrapper flex-align-center">
-            <Link href="/wallet">
-              <a>
-                <span style={{ color: "rgb(255, 206, 56)" }}>
-                  {numberWithCommas(user.iom)} $IOM{" "}
-                </span>
-                <span> Wallet</span>
-              </a>
-            </Link>
-          </div>
-        </div>
+        {!hideHeader && (
+          <>
+            <div className="flex-justify-btw asset-header">
+              <BreadCrumbs
+                icon={false}
+                hook={onClose}
+                buttonText="Close"
+                path={[path, data.token]}
+              />
+              <div className="wallet-wrapper flex-align-center">
+                <Link href="/wallet">
+                  <a>
+                    <span style={{ color: "rgb(255, 206, 56)" }}>
+                      {numberWithCommas(user.iom)} $IOM{" "}
+                    </span>
+                    <span> Wallet</span>
+                  </a>
+                </Link>
+              </div>
+            </div>
+          </>
+        )}
         <div className="asset-wrapper">
           <div>
             <div className="asset-meda-cont">

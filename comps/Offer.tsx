@@ -29,6 +29,7 @@ export default function Offer({
   href,
   onClose,
   refresh,
+  hideHeader,
 }) {
   const { user } = useUser();
   const router = useRouter();
@@ -103,7 +104,6 @@ export default function Offer({
 
     return moment(d).format("MMM Do YY, h:mm:ss a");
   };
-
   const getAttributes = (attrb, token, type) => {
     switch (type) {
       case "CHAR":
@@ -228,19 +228,20 @@ export default function Offer({
             );
             break;
           case "BOX2":
-            return;
-            <div>
-              <p
-                style={{
-                  fontWeight: 600,
-                  opacity: 0.6,
-                  marginBottom: ".5rem",
-                }}
-              >
-                About
-              </p>
-              <p>Boxes are a great way to earn rare, valuable fatties.</p>
-            </div>;
+            return (
+              <div>
+                <p
+                  style={{
+                    fontWeight: 600,
+                    opacity: 0.6,
+                    marginBottom: ".5rem",
+                  }}
+                >
+                  About
+                </p>
+                <p>Boxes are a great way to earn rare, valuable fatties.</p>
+              </div>
+            );
             break;
           default:
             return <div>Boc info</div>;
@@ -259,6 +260,7 @@ export default function Offer({
       {!loading && offer ? (
         <>
           <Asset
+            hideHeader={hideHeader}
             data={offer}
             onClose={onClose}
             path={router.pathname.replace("/", "")}
@@ -299,9 +301,15 @@ export default function Offer({
                   offer.tokenCategory
                 )}
               </div>
-              <button className="price-button">
-                Price: {numberWithCommas(offer.price)} $IOM
-              </button>
+              <div className="list-spacing-sml flex-align-center">
+                {console.log("offer: ", offer)}
+                <button className="price-button" style={{ width: "100%" }}>
+                  {offer.availableAmount
+                    ? `Available: ${offer.availableAmount} - `
+                    : ""}
+                  Price: {numberWithCommas(offer.price)} $IOM{" "}
+                </button>
+              </div>
               <PurchaseOffer
                 href={href}
                 offer={offer}
@@ -340,6 +348,7 @@ export default function Offer({
 
 const PurchaseOffer = ({ offer, user, id, setErrorMsg, href, refresh }) => {
   const [loading, setLoading] = useState(false);
+  const [qt, setQt] = useState();
   const router = useRouter();
   const { mutateUser } = useUser({
     redirectTo: "",
@@ -413,11 +422,13 @@ const PurchaseOffer = ({ offer, user, id, setErrorMsg, href, refresh }) => {
       className="flex-align-center list-spacing-sml"
     >
       {offer.tokenType === "FUNGIBLE" && (
-        <label>
+        <label style={{ width: "100%" }}>
           <input
             type="number"
             name="quantity"
             placeholder="Quantity..."
+            onChange={() => setQt(event.target.value)}
+            value={qt}
             required
           />
         </label>
@@ -428,7 +439,11 @@ const PurchaseOffer = ({ offer, user, id, setErrorMsg, href, refresh }) => {
         className={`primary ${user.iom < offer.price && "disabled"}`}
         disabled={user.iom < offer.price}
       >
-        {loading ? <Loader /> : "Purchase"}
+        {loading ? (
+          <Loader />
+        ) : (
+          `Buy ${qt > 1 ? `(${qt * offer.price} IOM)` : ""}`
+        )}
       </button>
     </form>
   );
