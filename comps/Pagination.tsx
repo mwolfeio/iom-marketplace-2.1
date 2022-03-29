@@ -12,11 +12,13 @@ export default function Comp({ pageCount, page, setPage }) {
       className="flex-align-center flex-justify-center list-spacing-sml"
       style={{ marginTop: "1rem" }}
     >
-      <button className="icon">
-        <div style={{ transform: "rotate(180deg)" }}>
-          <Chev />
-        </div>
-      </button>
+      {page !== 0 && (
+        <button className="icon" onClick={() => setPage(page - 1)}>
+          <div style={{ transform: "rotate(180deg)" }}>
+            <Chev />
+          </div>
+        </button>
+      )}
       {[...Array(pageCount)].map((e, i) => (
         <button
           className={`icon ${i === page ? "active" : ""}`}
@@ -26,9 +28,11 @@ export default function Comp({ pageCount, page, setPage }) {
         </button>
       ))}
 
-      <button className="icon">
-        <Chev />
-      </button>
+      {page !== pageCount - 1 && (
+        <button className="icon" onClick={() => setPage(page + 1)}>
+          <Chev />
+        </button>
+      )}
       <style jsx>{`
         button.active {
           background: #fff;

@@ -3,14 +3,42 @@ import React, { useState, useEffect } from "react";
 
 import Chev from "assets/icons/ChevDown";
 
-export default function GalleryPage({ lable, data, selected, hook }) {
+export default function GalleryPage({
+  lable,
+  data,
+  keyField,
+  selected,
+  setQuery,
+  query,
+}) {
   const [open, setOpen] = useState(true);
   const [list, setList] = useState([]);
+  const [active, setActive] = useState();
 
   useEffect(() => {
     console.log("New Data: ", data);
-    if (data) setList(data);
-  }, [data]);
+    console.log("New Query: ", query);
+    if (data) {
+      console.log("query[keyField]: ", query[keyField]);
+      console.log("data: ", data);
+
+      const qv = query[keyField];
+      const i = data.findIndex(
+        (x) => JSON.stringify(x.value) == JSON.stringify(qv)
+      );
+      console.log("index: ", i);
+
+      setActive(i === -1 ? 0 : i);
+      setList(data);
+    }
+  }, [JSON.stringify(data), JSON.stringify(query)]);
+
+  const addToQuery = (val) => {
+    let p = { ...query };
+    p[keyField] = val;
+    console.log("new query = ", p);
+    setQuery(p);
+  };
 
   return (
     <>
@@ -20,14 +48,19 @@ export default function GalleryPage({ lable, data, selected, hook }) {
           onClick={() => setOpen(!open)}
           className="header flex-align-center flex-justify-btw"
         >
-          <span>Active</span>
+          <span>{data[active] ? data[active].key : ""}</span>
           <div className="chev flex-align-center flex-justify-center">
             <Chev />
           </div>
         </div>
         <ul className={`${open && "open"}`}>
           {list.map(({ key, value }, i) => (
-            <li className="flex-align-center flex-justify-left list-spacing-sml">
+            <li
+              onClick={() => addToQuery(value)}
+              className={`flex-align-center flex-justify-left list-spacing-sml ${
+                active === i ? "active" : ""
+              }`}
+            >
               {key}
             </li>
           ))}
@@ -97,6 +130,9 @@ export default function GalleryPage({ lable, data, selected, hook }) {
           margin: 0 -0.5rem;
           padding: 0 0.5rem;
           transition: 0.15s cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        li.active {
+          color: #3772ff;
         }
         li:hover {
           background: #ffffff10;

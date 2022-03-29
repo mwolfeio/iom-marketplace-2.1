@@ -11,33 +11,6 @@ import SideNav from "comps/SideNav";
 import Filter from "assets/icons/Filter";
 import Pagination from "comps/Pagination";
 
-const filter = [
-  {
-    type: "pop",
-    key: "sortAttributeName",
-    lable: "",
-  },
-  {
-    type: "slider",
-  },
-  { type: "div" },
-  {
-    type: "drop",
-    lable: "Game",
-    options: [
-      {
-        key: "All Games",
-        value: "",
-      },
-      {
-        key: "Skyzao",
-        value: "SKYZAO",
-      },
-    ],
-  },
-  { type: "div" },
-];
-
 export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(true);
@@ -56,9 +29,9 @@ export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
     priceTo: 0,
     tokenCategories: [],
   });
+  const reset = () => {
+    console.log("running reset");
 
-  useEffect(() => {
-    console.log("DEFAULTS: ", defaults);
     const {
       page = 0,
       size = 30,
@@ -79,6 +52,38 @@ export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
       priceTo,
       tokenCategories,
     });
+  };
+  const filter = [
+    {
+      type: "pop",
+      keyField: "sortAttributeName",
+      lable: "",
+    },
+    {
+      type: "slider",
+      keyField: "priceTo",
+    },
+    { type: "div" },
+    {
+      type: "drop",
+      lable: "Game",
+      keyField: "tokenGames",
+      options: [
+        {
+          key: "All Games",
+          value: [],
+        },
+        {
+          key: "Skyzao",
+          value: ["SKYZAO"],
+        },
+      ],
+    },
+    { type: "div" },
+  ];
+
+  useEffect(() => {
+    reset();
   }, [defaults]);
 
   useEffect(() => {
@@ -132,7 +137,15 @@ export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
         <p className="error">{errorMsg}</p>
       ) : (
         <div className={`widget-wrapper ${sideNav && "active"}`}>
-          {sideNav && <SideNav filter={filter} open={open} />}
+          {sideNav && (
+            <SideNav
+              filter={filter}
+              open={open}
+              reset={reset}
+              query={query}
+              setQuery={setQuery}
+            />
+          )}
           <div style={{ width: "100%" }}>
             <div
               className="flex-align-center flex-justify-btw"

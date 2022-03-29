@@ -12,6 +12,9 @@ export default function GalleryPage({
   width = "256px",
   filter = [],
   open = true,
+  reset,
+  query,
+  setQuery,
 }) {
   // const [open, setOpen] = useState(true);
 
@@ -22,16 +25,24 @@ export default function GalleryPage({
   return (
     <>
       <div className="side-nav-wrapper vert-space-med ">
-        {filter.map(({ type, lable, options }) => {
+        {filter.map(({ type, lable, options, keyField }) => {
           switch (type) {
             case "pop":
               return <PopDown data={options} />;
               break;
             case "slider":
-              return <Range />;
+              return <Range data={options} />;
               break;
             case "drop":
-              return <Dropdown lable={lable} data={options} />;
+              return (
+                <Dropdown
+                  keyField={keyField}
+                  lable={lable}
+                  data={options}
+                  query={query}
+                  setQuery={setQuery}
+                />
+              );
               break;
             default:
               return <div className="div-line" />;
@@ -39,7 +50,10 @@ export default function GalleryPage({
           }
         })}
         <div className="flex-align-center flex-justify-left list-spacing-sml">
-          <div className="flex-align-center list-spacing-sml">
+          <div
+            className="flex-align-center list-spacing-sml"
+            onClick={() => reset()}
+          >
             <Clear />
             <span>Clear</span>
           </div>
