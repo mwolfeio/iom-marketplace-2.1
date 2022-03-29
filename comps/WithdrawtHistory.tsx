@@ -20,9 +20,6 @@ export default function Comp({ arr, hook }) {
   }, [user]);
 
   useEffect(() => {
-    console.log("arr: ", arr);
-    console.log("history: ", history);
-
     setHistory([...arr, ...history]);
   }, [arr]);
 

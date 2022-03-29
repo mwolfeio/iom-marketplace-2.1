@@ -65,10 +65,6 @@ export default function Comp({ arr, hook }) {
             setError("");
             setAddress("");
 
-            //add withdraw to history
-            console.log("Arr: ", arr);
-            console.log("data: ", data);
-
             hook([data]);
             toast.success(`Withdraw successful!`);
           } catch (error) {

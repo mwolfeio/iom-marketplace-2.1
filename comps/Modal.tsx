@@ -21,16 +21,24 @@ export default function Modal({ id, onClose, children }) {
         }
         .modal-wrap {
           max-width: 1008px;
-          margin: 2rem auto;
+          margin: 1rem auto;
           position: relative;
           color: #fff;
-          width: Calc(100vw - 4rem);
+          width: Calc(100vw - 1rem);
           max-height: Calc(100vh - 4rem);
           overflow-y: auto;
+          overflow-x: hidden;
           box-sizing: border-box;
           border-radius: 1rem;
           background: #242830;
-          padding: 1rem;
+          padding: 0.5rem;
+        }
+        @media (min-width: 768px) {
+          .modal-wrap {
+            margin: 2rem auto;
+            width: Calc(100vw - 4rem);
+            padding: 1rem;
+          }
         }
       `}</style>
     </div>

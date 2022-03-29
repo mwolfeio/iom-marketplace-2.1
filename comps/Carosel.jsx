@@ -11,7 +11,7 @@ const getDate = (utcSeconds) => {
 
 const EmblaCarousel = ({ slides }) => {
   const [viewportRef, embla] = useEmblaCarousel({
-    slidesToScroll: 2,
+    slidesToScroll: 1,
     skipSnaps: false,
   });
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
@@ -91,7 +91,7 @@ const EmblaCarousel = ({ slides }) => {
         </div>
         {slides.length > 1 && (
           <div
-            style={{ marginTop: "1rem" }}
+            style={{ margin: "1rem 0" }}
             className="flex-align-center flex-justify-center list-spacing-med"
           >
             <button onClick={scrollPrev}>Back</button>
@@ -130,14 +130,17 @@ const EmblaCarousel = ({ slides }) => {
 
         .embla {
           position: relative;
-          padding: 20px;
+          padding: 0;
           margin-left: auto;
           margin-right: auto;
         }
 
         .embla__viewport {
           overflow: hidden;
-          width: 100%;
+          background: #1d2028;
+          padding: 1rem 0;
+          margin: 0 -1rem;
+          width: Calc(100% + 2rem);
         }
 
         .embla__viewport.is-draggable {
@@ -166,7 +169,6 @@ const EmblaCarousel = ({ slides }) => {
 
         .embla__slide__inner {
           position: relative;
-          padding: 1rem;
         }
 
         .embla__slide__img {
@@ -215,6 +217,8 @@ const EmblaCarousel = ({ slides }) => {
 
         .embla__button--next {
           right: 27px;
+        }
+        @media (min-width: 768px) {
         }
       `}</style>
     </>
