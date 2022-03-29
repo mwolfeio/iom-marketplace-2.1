@@ -14,7 +14,7 @@ import fetchJson from "lib/fetchJson";
 import Asset from "comps/Asset";
 import Loader from "comps/Loader";
 
-export default function Offer({ id, userId, nftId, asset, href }) {
+export default function Offer({ id, userId, nftId, asset, href, onClose }) {
   const { user } = useUser();
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState("");
@@ -45,25 +45,33 @@ export default function Offer({ id, userId, nftId, asset, href }) {
     }
     setLoading(false);
   };
+  console.log("Path-------", router.pathname);
 
   //If the offer's user ID = this Users Id then add
   //the edit controlls
 
   return (
     <div>
-      <h1>Offer</h1>
       {loading && <Loader />}
       {!loading && offer ? (
         <>
-          <Asset data={offer} />
-          <PurchaseOffer
-            href={href}
-            offer={offer}
-            user={user}
-            id={id}
-            setErrorMsg={setErrorMsg}
-          />
-          {errorMsg && <p className="error-wrapper">⛔ {errorMsg}</p>}
+          <Asset
+            data={offer}
+            onClose={onClose}
+            path={router.pathname.replace("/", "")}
+          >
+            <>
+              <PurchaseOffer
+                href={href}
+                offer={offer}
+                user={user}
+                id={id}
+                setErrorMsg={setErrorMsg}
+              />
+              {errorMsg && <p className="error-wrapper">⛔ {errorMsg}</p>}
+            </>
+          </Asset>
+
           <div>Gallery</div>
         </>
       ) : (

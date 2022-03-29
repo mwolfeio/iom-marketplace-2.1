@@ -47,7 +47,7 @@ export default function Comp({ data }) {
     <>
       <div className="login vert-space-med">
         <h1 style={{ margin: 0 }}>Deposits</h1>
-        <p>Send you IOM deposits to the address listed below:</p>
+        <p>Send your IOM deposits to the address listed below:</p>
         <div>
           <div className=" address-wrapper flex-align-center flex-justify-center list-spacing-sml">
             <p>

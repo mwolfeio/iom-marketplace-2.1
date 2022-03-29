@@ -1,30 +1,30 @@
 // @ts-nocheck
-import Router from "next/router";
+import { useRouter } from "next/router";
 import Link from "next/link";
 
 import Chev from "assets/icons/ChevRight";
 
 export default function Comp({ path, buttonText = "Back", icon = true, hook }) {
+  const router = useRouter();
+
   return (
     <div style={{ marginBottom: "1rem" }}>
       <div className="list-spacing-med flex-align-center">
-        <Link href="/wallet">
-          <button
-            onClick={() => {
-              if (hook) {
-                hook();
-              }
-            }}
-            className={icon ? "icon-text " : ""}
-          >
-            {icon && (
-              <div style={{ transform: "rotate(180deg)" }}>
-                <Chev />
-              </div>
-            )}
-            <span>{buttonText}</span>
-          </button>
-        </Link>
+        <button
+          onClick={() => {
+            if (hook) {
+              hook();
+            } else router.push("/wallet");
+          }}
+          className={icon ? "icon-text " : ""}
+        >
+          {icon && (
+            <div style={{ transform: "rotate(180deg)" }}>
+              <Chev />
+            </div>
+          )}
+          <span>{buttonText}</span>
+        </button>
 
         <div className="breadcrumbs-links list-spacing-sml flex-align-center">
           {path.map((p, i) => {

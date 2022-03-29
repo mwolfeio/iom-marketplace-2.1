@@ -67,10 +67,17 @@ export default function Comp({
       {router.query.id && (
         <Modal onClose={() => router.push(router.pathname)}>
           {type === "offer" && (
-            <Offer id={router.query.id} href={router.pathname} />
+            <Offer
+              id={router.query.id}
+              href={router.pathname}
+              onClose={() => router.push(router.pathname)}
+            />
           )}
           {type === "asset" && (
-            <Asset data={data.find((obj) => obj.id === router.query.id)} />
+            <Asset
+              data={data.find((obj) => obj.id === router.query.id)}
+              onClose={() => router.push(router.pathname)}
+            />
           )}
         </Modal>
       )}

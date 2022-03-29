@@ -172,7 +172,8 @@ export default function SgProfile() {
     <Layout>
       <div className="vert-space-med">
         <div className="flex-justify-btw flex-align-center list-spacing-med">
-          <h1>Wallet</h1> <Bubble>{user && user.info.email}</Bubble>
+          <h1>Wallet</h1>{" "}
+          <Bubble>{user && user.isLoggedIn && user.info.email}</Bubble>
         </div>
         {user && schema && (
           <>
