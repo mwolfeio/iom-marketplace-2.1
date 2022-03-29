@@ -144,7 +144,7 @@ export default function GalleryPage({
           }
 
           .mobile-close {
-            display: none;
+            display: none !important;
           }
           .side-nav-wrapper {
             opacity: 1;

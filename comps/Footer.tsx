@@ -37,8 +37,14 @@ const Footer = () => {
             <List
               title="Resources"
               links={[
-                { text: "Marketplace", link: "" },
-                { text: "White Paper", link: "" },
+                {
+                  text: "Landing Page",
+                  link: "https://influencersofthemetaverse.com/",
+                },
+                {
+                  text: "White Paper",
+                  link: "https://whitepaper.influencersofthemetaverse.com/",
+                },
                 { text: "Coin Marketcap", link: "" },
               ]}
             />
@@ -81,6 +87,7 @@ const Footer = () => {
             grid-template-columns: 1fr;
             grid-gap: 24px;
             text-align: center;
+            padding: 1rem 0 2rem;
           }
           footer img.footer-logo {
             display: block;
@@ -143,10 +150,10 @@ const Footer = () => {
             color: #b2b3b6;
             background: #12151b;
             font-size: 14px;
-            height: 24px;
-            display: block;
+            height: 32px;
             box-sizing: border-box;
             margin-bottom: 0;
+            text-align: center;
           }
 
           .spacer {
@@ -185,7 +192,6 @@ const Footer = () => {
             }
             footer > * {
               display: grid;
-              grid-template-columns: 3fr 1fr;
               grid-gap: 24px;
               padding: 40px 0;
               text-align: left;
@@ -254,6 +260,7 @@ const List = ({ title, links, style }) => {
       </nav>
       <style jsx>{`
         .links li a {
+          color: white;
           opacity: 0.6;
           display: block;
           box-sizing: border-box;
@@ -262,6 +269,12 @@ const List = ({ title, links, style }) => {
         }
         .links li a:hover {
           opacity: 1;
+        }
+        span {
+          font-size: 18px;
+          line-height: 18px;
+          text-transform: uppercase;
+          font-family: Loyola;
         }
       `}</style>
     </>
@@ -299,6 +312,12 @@ const Socials = ({ title, links }) => {
           box-sizing: border-box;
           padding: 4px 0;
           transition: 0.15s ease;
+        }
+        span {
+          font-size: 18px;
+          line-height: 18px;
+          text-transform: uppercase;
+          font-family: Loyola;
         }
         li a:hover {
           opacity: 1;

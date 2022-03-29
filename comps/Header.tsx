@@ -51,10 +51,15 @@ export default function Header() {
           className="mobile-menu-back desktop-hide"
           onClick={() => setOpen(false)}
         >
-          <nav className="mobile-menu">
+          <nav
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            className="mobile-menu"
+          >
             <ul>
               <li>
-                <Navlink exact href="/">
+                <Navlink exact href="/ ">
                   NFT Marketplace
                 </Navlink>
               </li>
@@ -189,10 +194,18 @@ export default function Header() {
           }
           .mobile-menu ul li {
             height: 40px;
+            width: 100%;
             font-weight: 700;
             text-align: center;
             display: flex;
             align-items: center;
+          }
+          .mobile-menu ul li {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+            width: 100%;
+            tex-align: center;
           }
         .mobile-menu-content {
           position: relative;

@@ -95,6 +95,8 @@ export default function Comp({
   const { user } = useUser();
 
   useEffect(() => {
+    console.log("DATAAAAA: ", data);
+
     if (data && user.isLoggedIn) {
       setOwned(user.info.id === data.ownerUserId);
     }

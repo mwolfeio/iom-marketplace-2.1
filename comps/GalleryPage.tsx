@@ -66,12 +66,12 @@ export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
         {
           key: "High to Low Price",
           value: "price",
-          value2: "DESC",
+          value2: "ASC",
         },
         {
           key: "Low to High Price",
           value: "price",
-          value2: "ASC",
+          value2: "DESC",
         },
         {
           key: "New to Old",
