@@ -40,6 +40,7 @@ export default function Modal({
           background: ${background ? "#242830" : "none"};
           padding: 0.5rem;
         }
+
         @media (min-width: 768px) {
           .modal-wrap {
             margin: 2.75rem auto;

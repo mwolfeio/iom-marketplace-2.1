@@ -11,22 +11,17 @@ import Offer from "comps/Offer";
 import CharGalleryItem from "comps/CharGalleryItem";
 import ItemGalleryItem from "comps/ItemGalleryItem";
 import BoxGalleryItem from "comps/BoxGalleryItem";
-import Bubble from "comps/Bubble";
-import SideNav from "comps/SideNav";
-import Filter from "assets/icons/Filter";
 
 export default function Comp({
   data,
   hook,
   loading,
   type = "offer",
-  sideNav = false,
   placeholder = "No Items",
   filter = [],
   title,
   wallet = false,
 }) {
-  const [open, setOpen] = useState(true);
   const { user } = useUser();
   const router = useRouter();
   const getHref = (item) => {
@@ -65,10 +60,7 @@ export default function Comp({
   return (
     <>
       {router.query.id && (
-        <Modal
-          onClose={() => router.push(router.pathname)}
-          background={type !== "offer"}
-        >
+        <Modal onClose={() => router.push(router.pathname)} background={false}>
           {type === "offer" && (
             <Offer
               id={router.query.id}
@@ -85,64 +77,33 @@ export default function Comp({
         </Modal>
       )}
 
-      <div className={`widget-wrapper ${sideNav && "active"}`}>
-        {sideNav && <SideNav filter={filter} open={open} />}
-        <div style={{ width: "100%" }}>
-          <div
-            className="flex-align-center flex-justify-btw"
-            style={{ height: "50px" }}
-          >
-            {sideNav ? (
-              <Bubble
-                active={open}
-                clickable={true}
-                hook={() => setOpen(!open)}
-              >
-                <Filter />
-                <span>Filter</span>
-              </Bubble>
-            ) : (
-              <h2>{title}</h2>
-            )}
-
-            <Bubble clickable={true}>All Games</Bubble>
+      <div className="gallery-wrapper">
+        {loading ? (
+          <div className="placeholder-wrapper flex-align-center flex-justify-center">
+            <Loader />
           </div>
-          <div className="gallery-wrapper">
-            {loading ? (
-              <div className="placeholder-wrapper flex-align-center flex-justify-center">
-                <Loader />
-              </div>
-            ) : data.length ? (
-              data.map((item, i) => (
-                <Link
-                  key={item.id}
-                  href={getHref(item)}
-                  as={
-                    type === "offer"
-                      ? `/offer/${item.id}`
-                      : `/wallet/?id=${item.id}`
-                  }
-                >
-                  <a>{getComp(item.tokenCategory, item)}</a>
-                </Link>
-              ))
-            ) : (
-              <div className="placeholder-wrapper flex-align-center flex-justify-center">
-                {placeholder}
-              </div>
-            )}
+        ) : data.length ? (
+          data.map((item, i) => (
+            <Link
+              key={item.id}
+              href={getHref(item)}
+              as={
+                type === "offer"
+                  ? `/offer/${item.id}`
+                  : `/wallet/?id=${item.id}`
+              }
+            >
+              <a>{getComp(item.tokenCategory, item)}</a>
+            </Link>
+          ))
+        ) : (
+          <div className="placeholder-wrapper flex-align-center flex-justify-center">
+            {placeholder}
           </div>
-        </div>
+        )}
       </div>
 
       <style jsx>{`
-        .widget-wrapper {
-          margin: 1rem 0;
-        }
-        .widget-wrapper.active {
-          display: flex;
-          align-items: felx-start;
-        }
         .gallery-wrapper {
           border-radius: 1rem;
           width: 100%;

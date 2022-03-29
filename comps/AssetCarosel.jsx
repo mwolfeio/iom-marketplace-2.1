@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 
 import Image from "next/image";
+import Link from "next/link";
 import ItemBack from "assets/media/ItemBack.png";
 
 import CharGalleryItem from "comps/CharGalleryItem";
@@ -23,8 +24,6 @@ const EmblaCarousel = ({ slides }) => {
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
 
-  // const scrollPrev = useCallback(() => embla && embla.scrollPrev(), [embla]);
-  // const scrollNext = useCallback(() => embla && embla.scrollNext(), [embla]);
   const onSelect = useCallback(() => {
     if (!embla) return;
     setPrevBtnEnabled(embla.canScrollPrev());
@@ -62,11 +61,13 @@ const EmblaCarousel = ({ slides }) => {
         <div className="embla__viewport" ref={viewportRef}>
           <div className="embla__container">
             {list.map((item, index) => (
-              <div className="embla__slide" key={index}>
-                <div className="embla__slide__inner">
-                  {getComp(item.tokenCategory, item)}
+              <Link href={`/offer/${item.id}`}>
+                <div className="embla__slide" key={index}>
+                  <div className="embla__slide__inner">
+                    {getComp(item.tokenCategory, item)}
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -141,6 +142,7 @@ const EmblaCarousel = ({ slides }) => {
         }
 
         .embla__slide {
+          cursor: pointer;
           position: relative;
           min-width: 50%;
           padding-left: 1rem;

@@ -2,22 +2,39 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function Comp({ data }) {
-  const [bal, setBal] = useState(0);
-  useEffect(() => {
-    console.log("data: ", data);
-  }, []);
+import Chev from "assets/icons/ChevRight";
+
+export default function Comp({ pageCount, page, setPage }) {
+  // console.log("items: ", pageCount, page, setPage);
 
   return (
     <div
       className="flex-align-center flex-justify-center list-spacing-sml"
       style={{ marginTop: "1rem" }}
     >
-      <button className="icon">{`<`}</button>
-      <button className="icon">{`1`}</button>
-      <button className="icon">{`2`}</button>
-      <button className="icon">{`3`}</button>
-      <button className="icon">{`>`}</button>
+      <button className="icon">
+        <div style={{ transform: "rotate(180deg)" }}>
+          <Chev />
+        </div>
+      </button>
+      {[...Array(pageCount)].map((e, i) => (
+        <button
+          className={`icon ${i === page ? "active" : ""}`}
+          onClick={() => setPage(i)}
+        >
+          {i + 1}
+        </button>
+      ))}
+
+      <button className="icon">
+        <Chev />
+      </button>
+      <style jsx>{`
+        button.active {
+          background: #fff;
+          color: #1d2028;
+        }
+      `}</style>
     </div>
   );
 }
