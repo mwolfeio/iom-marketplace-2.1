@@ -24,6 +24,12 @@ export default function Header() {
   const { user, mutateUser } = useUser();
   const router = useRouter();
 
+  const signOut = async (e) => {
+    e.preventDefault();
+    mutateUser(await fetchJson("/api/logout", { method: "POST" }), false);
+    router.push("/login");
+  };
+
   useEffect(() => {
     console.log("user: ", user);
 
@@ -41,17 +47,55 @@ export default function Header() {
   return (
     <>
       {open && (
-        <div className="mobile-menu-back" onClick={() => setOpen(false)}>
-          <div className="mobile-menu"></div>
+        <div
+          className="mobile-menu-back desktop-hide"
+          onClick={() => setOpen(false)}
+        >
+          <nav className="mobile-menu">
+            <ul>
+              <li>
+                <Navlink exact href="/">
+                  NFT Marketplace
+                </Navlink>
+              </li>
+              <li>
+                <Navlink href="/game-items">Game Items</Navlink>{" "}
+              </li>
+              <li>
+                <Navlink href="/boxes">Boxes</Navlink>
+              </li>
+              <li>
+                <Navlink href="/games">Games</Navlink>
+              </li>
+            </ul>
+            <div className="mobile-button-wrap flex-align-center flex-justify-center list-spacing-sml">
+              <Link href="/wallet/deposit">
+                <a>
+                  <button>Deposit</button>
+                </a>
+              </Link>
+              <Link href="/wallet/withdraw">
+                <a>
+                  <button>Withdraw</button>
+                </a>
+              </Link>
+
+              <button onClick={signOut}>Sign Out</button>
+            </div>
+          </nav>
         </div>
       )}
       {boxCount > 0 && (
-        <Banner
-          icon={Box}
-          text={`You have ${boxCount} Box${boxCount > 1 && "es"} to Open!`}
-        />
+        <div className={`${open && "active"} `}>
+          <Banner
+            icon={Box}
+            text={`You have ${boxCount} Box${boxCount > 1 && "es"} to Open!`}
+          />
+        </div>
       )}
-      <header className="flex-align-center flex-justify-btw">
+      <header
+        className={`flex-align-center flex-justify-btw ${open && "active"}`}
+      >
         <Link href="/">
           <a className="mobile-hide">
             <Image height="80px" width="190px" src="/logo.svg" />
@@ -112,13 +156,44 @@ export default function Header() {
         </nav>
         <button
           className="icon desktop-hide mobile-menu-content"
-          onClick={() => setOpen(true)}
+          onClick={() => setOpen(!open)}
         >
           {open ? <Close /> : <Menu />}
         </button>
       </header>
 
       <style jsx>{`
+        .mobile-button-wrap {
+          padding: 1rem 1rem;
+          box-sizing: border-box;
+          margin= auto;
+          border-top: 1px solid #ffffff30;
+
+
+        }
+        .mobile-button-wrap>*, .mobile-button-wrap>*>*{
+          width: 100%;
+          max-width: 130px;
+        }
+        .mobile-menu {
+          position: absolute:
+          z-index: 22;
+          background: #242830;
+          padding-top: ${boxCount > 0 ? "96px" : "64px"};
+        }
+          .mobile-menu ul {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: .5rem
+          }
+          .mobile-menu ul li {
+            height: 40px;
+            font-weight: 700;
+            text-align: center;
+            display: flex;
+            align-items: center;
+          }
         .mobile-menu-content {
           position: relative;
           z-index: 25;
@@ -135,7 +210,7 @@ export default function Header() {
           backdrop-filter: blur(4px);
           background: rgba(0, 0, 0, 0.8);
         }
-        ul {
+        header ul {
           display: flex;
           align-items: center;
           height: 40px;
@@ -144,18 +219,18 @@ export default function Header() {
           margin: 0;
         }
 
-        li:first-child {
+        header li:first-child {
           margin-left: auto;
         }
 
-        a {
+        header a {
           color: #fff;
           text-decoration: none;
           display: flex;
           align-items: center;
         }
 
-        a img {
+        header a img {
           margin-right: 1em;
         }
         .wallet-wrapper {
@@ -178,14 +253,39 @@ export default function Header() {
           height: 24px;
           margin: 0 1rem;
         }
-        header {
+        header{
+          position: relatie;
+          z-index: 24;
           padding: 0.5rem 1rem;
           box-sizing: border-box;
-          color: #fff;
+          color: #fff;width: 100%
           max-width: 1300px;
           margin: auto;
         }
+
+        .active,
+        header.active{
+          width: 100%;
+          position: fixed;
+          top: 0;
+          left: 0;
+          z-index: 24;
+        }
+
+        header.active{
+          top: ${boxCount > 0 ? "32px" : "0"};
+        }
+
         @media (min-width: 768px) {
+
+          .active,
+          header.active {
+            width: 100%;
+              position: relative;
+            top: 0;
+            left: 0;
+            z-index: 24;
+          }
         }
       `}</style>
     </>

@@ -16,6 +16,8 @@ export default function Header({ text, icon }) {
 
       <style jsx>{`
         .box-banner {
+          position: relative;
+          z-index: 25;
           height: 32px;
           background: #ff4544;
           font-weight: 600;
