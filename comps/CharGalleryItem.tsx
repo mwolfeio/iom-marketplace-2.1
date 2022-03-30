@@ -11,7 +11,7 @@ function numberWithCommas(x) {
 
 export default function Comp({
   wallet = false,
-  data: { images = [], availableAmount, price },
+  data: { images = [], availableAmount, price, title, token },
   owned,
 }) {
   return (
@@ -50,7 +50,7 @@ export default function Comp({
             <p>Available</p>
           </div>
           <div className="flex-align-center flex-justify-btw">
-            <h3>Gordola Name</h3>
+            <h3>{title ? title : token}</h3>
             <h3>{availableAmount}</h3>
           </div>
           {owned ? (

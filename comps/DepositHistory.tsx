@@ -24,19 +24,19 @@ export default function Comp({ arr }) {
     setLoading(true);
     try {
       const { data } = await axios.get(
-        "https://api.apiiom.com/bank/deposits?depositStatus=PENDING",
+        "https://api.apiiom.com/bank/deposits?depositStatus=COMPLETED",
         {
           headers: { Authorization: user.token },
         }
       );
-      const confirmed = await axios.get(
-        "https://api.apiiom.com/bank/deposits?depositStatus=PENDING",
-        {
-          headers: { Authorization: user.token },
-        }
-      );
+      // const confirmed = await axios.get(
+      //   "https://api.apiiom.com/bank/deposits?depositStatus=COMPLETED",
+      //   {
+      //     headers: { Authorization: user.token },
+      //   }
+      // );
 
-      data.concat(confirmed.data);
+      // data.concat(confirmed.data);
 
       console.log("data:", data);
       setHistory(data);

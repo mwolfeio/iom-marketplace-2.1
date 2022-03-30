@@ -3,11 +3,21 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Loader from "comps/Loader";
 
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 const generateColumns = (s, height) => {
   let str = "";
   s.forEach(({ type }, i) => {
     switch (type) {
       case "text":
+        str = str + "1fr ";
+        break;
+      case "status":
+        str = str + "1fr ";
+        break;
+      case "number":
         str = str + "1fr ";
         break;
       case "address":
@@ -21,7 +31,6 @@ const generateColumns = (s, height) => {
         break;
     }
   });
-  console.log("str = ", str);
   return str;
 };
 
@@ -35,6 +44,16 @@ export default function Comp({
   icon,
 }) {
   const [grid, setGrid] = useState(0);
+
+  const getStatus = (s) => {
+    switch (s) {
+      case "IN_PROCESS":
+        return <span style={{ opacity: 0.6 }}>Processing...</span>;
+        break;
+      default:
+        return <span style={{ color: "#219653" }}>confirmed...</span>;
+    }
+  };
 
   useEffect(() => {
     setGrid(generateColumns(schema, height));
@@ -61,8 +80,10 @@ export default function Comp({
               <li key={`list-tiem-${Math.random()}`}>
                 {schema.map(
                   ({ type, key, hook, hookType, className, count, comp }) => {
-                    console.log(itm);
                     if (type === "text") return <p>{itm[key]}</p>;
+                    if (type === "status") return <p>{getStatus(itm[key])}</p>;
+                    if (type === "number")
+                      return <p>{numberWithCommas(itm[key])}</p>;
                     if (type === "address")
                       return (
                         <p>

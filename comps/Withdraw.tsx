@@ -10,6 +10,10 @@ import ethereum_address from "ethereum-address";
 import Loader from "comps/Loader";
 import Copy from "assets/icons/Copy";
 
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 export default function Comp({ arr, hook }) {
   const { user } = useUser();
   const [loading, setLoading] = useState(true);
@@ -44,6 +48,18 @@ export default function Comp({ arr, hook }) {
 
       if (obj) setFee(f);
       setError("");
+
+      //refresh user
+      const response = await fetch("/api/refreshUser", {
+        method: "POST",
+        body: JSON.stringify(user),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const dd = await response.json();
+      console.log("dd: ", dd);
 
       //clear inputs
     } catch (error) {
@@ -143,9 +159,9 @@ export default function Comp({ arr, hook }) {
           />
           {address &&
             (ethereum_address.isAddress(address) ? (
-              <p>✅ Valid Ethereum address</p>
+              <p>✅ Valid BSC address</p>
             ) : (
-              <p>⚠️ This is not a valid Ethereum address</p>
+              <p>⚠️ This is not a valid BSC address</p>
             ))}
         </label>
         <label>
@@ -205,24 +221,28 @@ export default function Comp({ arr, hook }) {
             </span>
           )}
         </button>
-        <div className="flex-align-center flex-justify-btw">
+        <div className="flex-align-center flex-justify-btw text-stuff">
           <p>
-            <span style={{ opacity: 0.6 }}>Total:</span> <b>{withdraw}</b>
+            <span style={{ opacity: 0.6 }}>Total:</span>{" "}
+            <b>{numberWithCommas(withdraw)}</b>
           </p>
           <p>
             <span style={{ opacity: 0.6 }}>Subtotal:</span>{" "}
-            <b>{withdraw * (1 - fee)}</b>
+            <b>{numberWithCommas(withdraw * (1 - fee))}</b>
           </p>
           <p>
             <span style={{ opacity: 0.6 }}>Fee:</span>{" "}
             <b>
-              {withdraw * fee} ({fee * 100}%)
+              {numberWithCommas(withdraw * fee)} ({fee * 100}%)
             </b>
           </p>
         </div>
       </FormWrapper>
 
       <style jsx>{`
+        .text-stuff {
+          text-align: center;
+        }
         input.good {
           border: 2px solid #219653;
           background: #21965310;

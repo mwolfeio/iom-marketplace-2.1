@@ -99,7 +99,7 @@ const Footer = () => {
             font-size: 18px;
             line-height: 18px;
             text-transform: uppercase;
-            font-family: Loyola;
+            font-weight: 700;
           }
 
           footer div.footer-nav {
@@ -274,7 +274,7 @@ const List = ({ title, links, style }) => {
           font-size: 18px;
           line-height: 18px;
           text-transform: uppercase;
-          font-family: Loyola;
+          font-weight: 700;
         }
       `}</style>
     </>
@@ -317,7 +317,7 @@ const Socials = ({ title, links }) => {
           font-size: 18px;
           line-height: 18px;
           text-transform: uppercase;
-          font-family: Loyola;
+          font-weight: 700;
         }
         li a:hover {
           opacity: 1;

@@ -4,6 +4,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import useUser from "lib/useUser";
 
+import { QRCode } from "react-qrcode-logo";
+
 //comps
 import Loader from "comps/Loader";
 import Copy from "assets/icons/Copy";
@@ -48,6 +50,9 @@ export default function Comp({ data }) {
       <div className="login vert-space-med">
         <h1 style={{ margin: 0 }}>Deposits</h1>
         <p>Send your IOM deposits to the address listed below:</p>
+        <div className="code-wrapper">
+          <QRCode value={code} />
+        </div>
         <div>
           <div className=" address-wrapper flex-align-center flex-justify-center list-spacing-sml">
             <p>
@@ -60,6 +65,15 @@ export default function Comp({ data }) {
         </div>
       </div>
       <style jsx>{`
+        .code-wrapper {
+          margin: 1rem auto;
+          border-radius: 1rem;
+
+          overflow: hidden;
+        }
+        .code-wrapper > * {
+          display: block;
+        }
         .login {
           margin: 0 auto;
           background: #1d2028;

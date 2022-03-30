@@ -13,7 +13,7 @@ export default function GalleryPage({
   query,
   prefix,
 }) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [list, setList] = useState([]);
   const [active, setActive] = useState();
   const descRef = useRef();

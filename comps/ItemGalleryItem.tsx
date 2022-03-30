@@ -9,7 +9,7 @@ function numberWithCommas(x) {
 }
 
 export default function Comp({
-  data: { token, tokenCategory, availableAmount, images = [], price },
+  data: { token, tokenCategory, availableAmount, images = [], price, title },
   owned,
 }) {
   return (
@@ -29,8 +29,12 @@ export default function Comp({
             <p>Available</p>
           </div>
           <div className="flex-align-center flex-justify-btw">
-            <h3>{token}</h3>
-            <h3>{availableAmount}</h3>
+            <h3>{title ? title : token}</h3>
+            <h3>
+              {availableAmount > 999000
+                ? "999k+"
+                : numberWithCommas(availableAmount)}
+            </h3>
           </div>
           {owned ? (
             <button style={{ marginTop: ".5rem" }} className="primary">

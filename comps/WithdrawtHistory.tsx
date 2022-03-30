@@ -72,8 +72,8 @@ export default function Comp({ arr, hook }) {
           schema={[
             { type: "icon", key: "", name: "Token" },
             { type: "text", key: "token", name: " " },
-            { type: "text", key: "amount", name: "Amount" },
-            { type: "text", key: "status", name: "Sattus" },
+            { type: "number", key: "amount", name: "Amount" },
+            { type: "status", key: "status", name: "Satuts" },
             { type: "address", key: "walletAddress", name: "Address" },
             {
               type: "button",

@@ -45,7 +45,7 @@ export default function Header() {
 
       setIom(red ? red.amount : 0);
     }
-  }, [user]);
+  }, [JSON.stringify(user)]);
 
   return (
     <>
