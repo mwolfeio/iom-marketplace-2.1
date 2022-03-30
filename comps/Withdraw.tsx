@@ -4,6 +4,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import useUser from "lib/useUser";
 import FormWrapper from "comps/FormWrapper";
+import ethereum_address from "ethereum-address";
 
 //comps
 import Loader from "comps/Loader";
@@ -122,13 +123,30 @@ export default function Comp({ arr, hook }) {
             <span style={{ opacity: 0.6 }}>IOM Address</span>
           </div>
           <input
+            className={
+              !address
+                ? ""
+                : ethereum_address.isAddress(address)
+                ? "good"
+                : "warning"
+            }
             type="address"
             name="address"
             onChange={() => setAddress(event.target.value)}
             value={address}
             placeholder="Address..."
             required
+            style={{
+              marginBottom:
+                address && ethereum_address.isAddress(address) ? ".5rem" : "",
+            }}
           />
+          {address &&
+            (ethereum_address.isAddress(address) ? (
+              <p>✅ Valid Ethereum address</p>
+            ) : (
+              <p>⚠️ This is not a valid Ethereum address</p>
+            ))}
         </label>
         <label>
           <div className="flex-justify-btw" style={{ margin: ".5rem 0" }}>
@@ -184,15 +202,35 @@ export default function Comp({ arr, hook }) {
               {withdraw > 0
                 ? `Withdraw ${withdraw * (1 - fee)} IOM`
                 : "Withdraw"}
-              <span style={{ opacity: 0.8 }}>
-                {withdraw > 0 && fee ? ` (${fee * 100}% Fee)` : ""}
-              </span>
             </span>
           )}
         </button>
+        <div className="flex-align-center flex-justify-btw">
+          <p>
+            <span style={{ opacity: 0.6 }}>Total:</span> <b>{withdraw}</b>
+          </p>
+          <p>
+            <span style={{ opacity: 0.6 }}>Subtotal:</span>{" "}
+            <b>{withdraw * (1 - fee)}</b>
+          </p>
+          <p>
+            <span style={{ opacity: 0.6 }}>Fee:</span>{" "}
+            <b>
+              {withdraw * fee} ({fee * 100}%)
+            </b>
+          </p>
+        </div>
       </FormWrapper>
 
       <style jsx>{`
+        input.good {
+          border: 2px solid #219653;
+          background: #21965310;
+        }
+        input.warning {
+          border: 2px solid #f2c94c;
+          background: #f2c94c10;
+        }
         p {
           opacity: 0.8;
         }

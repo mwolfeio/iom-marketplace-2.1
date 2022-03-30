@@ -10,6 +10,9 @@ const generateColumns = (s, height) => {
       case "text":
         str = str + "1fr ";
         break;
+      case "address":
+        str = str + "1fr ";
+        break;
       case "icon":
         str = str + height + " ";
         break;
@@ -56,37 +59,53 @@ export default function Comp({
           <>
             {data.map((itm) => (
               <li key={`list-tiem-${Math.random()}`}>
-                {schema.map(({ type, key, hook, className, count, comp }) => {
-                  console.log(itm);
-                  if (type === "text") return <p>{itm[key]}</p>;
-                  if (type === "icon") {
-                    if (icon) {
-                      let Cop = icon;
-                      return <Cop />;
-                    } else if (comp) {
-                      let Cop = comp(itm.token);
-                      return <Cop />;
-                    } else {
+                {schema.map(
+                  ({ type, key, hook, hookType, className, count, comp }) => {
+                    console.log(itm);
+                    if (type === "text") return <p>{itm[key]}</p>;
+                    if (type === "address")
                       return (
-                        <div className="icon" style={{ margin: "auto" }} />
+                        <p>
+                          {itm[key].substring(0, 5)}...
+                          {itm[key].substring(itm[key].length - 5)}
+                        </p>
                       );
+
+                    if (type === "icon") {
+                      if (icon) {
+                        let Cop = icon;
+                        return <Cop />;
+                      } else if (comp) {
+                        let Cop = comp(itm.token);
+                        return <Cop />;
+                      } else {
+                        return (
+                          <div className="icon" style={{ margin: "auto" }} />
+                        );
+                      }
                     }
+                    if (type === "button")
+                      return (
+                        <div style={{ justifyContent: "flex-start" }}>
+                          <button
+                            className={className}
+                            onClick={() => {
+                              if (hookType === "link") {
+                                return hook(itm.walletAddress);
+                              }
+                              hook(
+                                itm.token,
+                                count == "all" ? itm.amount : count
+                              );
+                            }}
+                            style={{ margin: "auto" }}
+                          >
+                            {key}
+                          </button>
+                        </div>
+                      );
                   }
-                  if (type === "button")
-                    return (
-                      <div style={{ justifyContent: "flex-start" }}>
-                        <button
-                          className={className}
-                          onClick={() =>
-                            hook(itm.token, count == "all" ? itm.amount : count)
-                          }
-                          style={{ margin: "auto" }}
-                        >
-                          {key}
-                        </button>
-                      </div>
-                    );
-                })}
+                )}
               </li>
             ))}
           </>

@@ -56,8 +56,8 @@ export default function Comp({ arr, hook }) {
     }
     setLoading(false);
   };
-  const goTo = () => {
-    console.log("go to");
+  const goTo = (itm) => {
+    window.open(`https://etherscan.io/address/${itm}`, "_newtab");
   };
 
   return (
@@ -65,7 +65,7 @@ export default function Comp({ arr, hook }) {
       <div className="deposit-hitory-wrapper">
         <List
           loading={loading}
-          title="Withdrawal History"
+          title="Summary"
           placeholder="No Withdrawals"
           data={history}
           icon={Icon}
@@ -73,11 +73,12 @@ export default function Comp({ arr, hook }) {
             { type: "icon", key: "", name: "Token" },
             { type: "text", key: "token", name: " " },
             { type: "text", key: "amount", name: "Amount" },
-            { type: "text", key: "status", name: "Satus" },
-            { type: "text", key: "walletAddress", name: "Address" },
-
+            { type: "text", key: "status", name: "Sattus" },
+            { type: "address", key: "walletAddress", name: "Address" },
             {
               type: "button",
+              hookType: "link",
+              name: "View",
               key: "View",
               hook: goTo,
               className: "",

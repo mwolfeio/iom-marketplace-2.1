@@ -55,7 +55,7 @@ export default function Comp({ arr }) {
       <div className="deposit-hitory-wrapper">
         <List
           loading={loading}
-          title="Deposit History"
+          title="Summary"
           data={history}
           icon={Icon}
           schema={[

@@ -8,6 +8,7 @@
   "dependencies": {
     "axios": "^0.26.1",
     "embla-carousel-react": "^6.2.0",
+    "ethereum-address": "^0.0.4",
     "iron-session": "latest",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
