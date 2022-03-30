@@ -97,7 +97,9 @@ export default function Header() {
         <div className={`${open && "active"} `}>
           <Banner
             icon={Box}
-            text={`You have ${boxCount} Box${boxCount > 1 && "es"} to Open!`}
+            text={`You have ${boxCount} Box${
+              boxCount > 1 ? "es" : ""
+            } to Open!`}
           />
         </div>
       )}
