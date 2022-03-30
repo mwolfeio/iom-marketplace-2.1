@@ -15,6 +15,7 @@ export default function Comp({ arr, hook }) {
   const [error, setError] = useState("");
   const [iom, setIom] = useState(0);
   const [withdraw, setWithdraw] = useState(0);
+  const [fee, setFee] = useState(0);
   const [address, setAddress] = useState("");
 
   useEffect(() => {
@@ -33,8 +34,15 @@ export default function Comp({ arr, hook }) {
       const { data } = await axios.get("https://api.apiiom.com/parameters", {
         headers: { Authorization: user.token },
       });
-
       console.log("data: ", data);
+
+      let obj = data.find((x) => x.key === "WITHDRAWAL_PERCENTAGE_FEE_RATE");
+      console.log("obj: ", obj);
+      let f = obj.value / 100;
+      console.log("f: ", f);
+
+      if (obj) setFee(f);
+      setError("");
 
       //clear inputs
     } catch (error) {
@@ -168,7 +176,20 @@ export default function Comp({ arr, hook }) {
             <span>{iom} IOM</span>
           </div>
         </label>
-        <button className="primary">{loading ? <Loader /> : "Withdraw"}</button>
+        <button className="primary">
+          {loading ? (
+            <Loader />
+          ) : (
+            <span>
+              {withdraw > 0
+                ? `Withdraw ${withdraw * (1 - fee)} IOM`
+                : "Withdraw"}
+              <span style={{ opacity: 0.8 }}>
+                {withdraw > 0 && fee ? ` (${fee * 100}% Fee)` : ""}
+              </span>
+            </span>
+          )}
+        </button>
       </FormWrapper>
 
       <style jsx>{`
