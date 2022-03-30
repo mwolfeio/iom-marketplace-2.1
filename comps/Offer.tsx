@@ -28,6 +28,7 @@ export default function Offer({
   asset,
   href,
   onClose,
+
   refresh,
   hideHeader,
 }) {
@@ -270,7 +271,7 @@ export default function Offer({
               <div>
                 <div className="flex-align-center flex-justify-btw">
                   <h1>
-                    {offer.token}{" "}
+                    {offer.title ? offer.title : offer.token}{" "}
                     {offer.tokenType === "NON_FUNGIBLE" && (
                       <span style={{ opacity: 0.3 }}>(NFT)</span>
                     )}
