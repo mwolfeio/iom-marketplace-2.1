@@ -73,7 +73,7 @@ export default function Comp({ arr, hook }) {
             { type: "icon", key: "", name: "Token" },
             { type: "text", key: "token", name: " " },
             { type: "number", key: "amount", name: "Amount" },
-            { type: "status", key: "status", name: "Satuts" },
+            { type: "status", key: "status", name: "Status" },
             { type: "address", key: "walletAddress", name: "Address" },
             {
               type: "button",
