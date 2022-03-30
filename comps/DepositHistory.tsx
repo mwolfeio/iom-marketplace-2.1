@@ -24,7 +24,7 @@ export default function Comp({ arr }) {
     setLoading(true);
     try {
       const { data } = await axios.get(
-        "https://api.apiiom.com/bank/deposits?depositStatus=COMPLETED",
+        "https://api.apiiom.com/bank/deposits?depositStatus=CONFIRMED",
         {
           headers: { Authorization: user.token },
         }
