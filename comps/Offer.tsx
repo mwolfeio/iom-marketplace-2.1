@@ -307,7 +307,11 @@ export default function Offer({
                 {console.log("offer: ", offer)}
                 <button className="price-button" style={{ width: "100%" }}>
                   {offer.availableAmount
-                    ? `Available: ${offer.availableAmount} - `
+                    ? `Available: ${
+                        offer.availableAmount > 999000
+                          ? "999k+"
+                          : numberWithCommas(offer.availableAmount)
+                      } - `
                     : ""}
                   Price: {numberWithCommas(offer.price)} $IOM{" "}
                 </button>
