@@ -18,6 +18,7 @@ button {
   display: flex !important;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 button svg {
   display: block;

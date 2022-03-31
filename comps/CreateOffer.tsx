@@ -34,12 +34,8 @@ export default function Comp({
           Close
         </button>
       ) : (
-        <button
-          className="primary"
-          onClick={() => setOpen(true)}
-          style={{ width: "100%" }}
-        >
-          Create Offer
+        <button disabled className="primary disabled" style={{ width: "100%" }}>
+          Create Offer (Comming Soon)
         </button>
       )}
       {open && (

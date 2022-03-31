@@ -55,8 +55,12 @@ export default function Comp({
           </div>
           {owned ? (
             wallet ? (
-              <button style={{ marginTop: ".5rem" }} className="primary">
-                Create Offer
+              <button
+                style={{ marginTop: ".5rem" }}
+                disabled
+                className="primary disabled"
+              >
+                Create Offer (Comming Soon)
               </button>
             ) : (
               <button style={{ marginTop: ".5rem" }} className="primary">
