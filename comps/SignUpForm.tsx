@@ -114,16 +114,20 @@ export default function Form({
               required
             />
           </label>
-          <label>
-            <input
-              type="text"
-              name="referral"
-              onChange={() => setRefCode(event.target.value)}
-              value={refCode}
-              placeholder="Referral code..."
-              required
-            />
-          </label>
+          {true ? (
+            ""
+          ) : (
+            <label>
+              <input
+                type="text"
+                name="referral"
+                onChange={() => setRefCode(event.target.value)}
+                value={refCode}
+                placeholder="Referral code..."
+                required
+              />
+            </label>
+          )}
         </>
       )}
 
