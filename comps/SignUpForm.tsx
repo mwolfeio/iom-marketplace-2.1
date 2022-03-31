@@ -20,6 +20,7 @@ export default function Form({
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [pass, setPass] = useState("");
+  const [username, setUsername] = useState("");
   const [refCode, setRefCode] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -29,6 +30,7 @@ export default function Form({
     try {
       await axios.post("https://api.apiiom.com/user", {
         email: email,
+        username: username,
         password: pass,
         referralId: refCode,
       });
@@ -94,6 +96,16 @@ export default function Form({
         </label>
       ) : (
         <>
+          <label>
+            <input
+              type="text"
+              name="username"
+              onChange={() => setUsername(event.target.value)}
+              value={username}
+              placeholder="Username..."
+              required
+            />
+          </label>
           <label>
             <input
               type="email"

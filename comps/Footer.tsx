@@ -28,10 +28,8 @@ const Footer = () => {
             <List
               title="Exchanges"
               links={[
-                { text: "DYDX", link: "" },
-                { text: "PancakeSwap", link: "" },
-                { text: "Swapzone", link: "" },
-                { text: "SushiSwap", link: "" },
+                { text: "PancakeSwap", link: "https://pancakeswap.finance/" },
+                { text: "PooCoin", link: "https://poocoin.app/" },
               ]}
             />
             <List
