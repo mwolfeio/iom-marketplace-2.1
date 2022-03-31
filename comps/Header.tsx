@@ -81,19 +81,35 @@ export default function Header() {
                 <Navlink href="/games">Games</Navlink>
               </li>
             </ul>
-            <div className="mobile-button-wrap flex-align-center flex-justify-center list-spacing-sml">
-              <Link href="/wallet/deposit">
-                <a>
-                  <button>Deposit</button>
-                </a>
-              </Link>
-              <Link href="/wallet/withdraw">
-                <a>
-                  <button>Withdraw</button>
-                </a>
-              </Link>
-
-              <button onClick={signOut}>Sign Out</button>
+            <div className="mobile-button-wrap flex-col flex-align-center">
+              <div className="flex-align-center flex-justify-center list-spacing-sml">
+                <Link href="/wallet/deposit">
+                  <a>
+                    <button>Deposit</button>
+                  </a>
+                </Link>
+                <Link href="/wallet/withdraw">
+                  <a>
+                    <button>Withdraw</button>
+                  </a>
+                </Link>
+                <button onClick={signOut}>Sign Out</button>
+              </div>
+              <a
+                href="https://play.influencersofthemetaverse.com/"
+                target="_blank"
+                style={{
+                  maxWidth: "360px",
+                  display: "block",
+                }}
+              >
+                <button
+                  className="primary"
+                  style={{ marginTop: ".5rem", width: "100%" }}
+                >
+                  Play
+                </button>
+              </a>
             </div>
           </nav>
         </div>
@@ -155,7 +171,7 @@ export default function Header() {
                     href="https://play.influencersofthemetaverse.com/"
                     target="_blank"
                   >
-                    <button className="primary">Play</button>
+                    <button className="primary mobile-hide">Play</button>
                   </a>
                 </li>
               </>
@@ -179,7 +195,7 @@ export default function Header() {
                     href="https://play.influencersofthemetaverse.com/"
                     target="_blank"
                   >
-                    <button className="primary">Play</button>
+                    <button className="primary mobile-hide">Play</button>
                   </a>
                 </li>
                 <li className="mobile-hide">
@@ -206,10 +222,15 @@ export default function Header() {
 
 
         }
-        .mobile-button-wrap>*, .mobile-button-wrap>*>*{
-          width: 100%;
-          max-width: 130px;
+        .mobile-button-wrap div button {
+          width: 116px;
+
         }
+        .mobile-button-wrap>*{
+          width: 100%;
+          max-width: 360px;
+        }
+
         .mobile-menu {
           position: absolute:
           z-index: 22;
