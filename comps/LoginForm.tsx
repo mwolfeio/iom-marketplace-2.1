@@ -6,7 +6,7 @@ export default function Form({ loading }) {
   return (
     <>
       <h1 style={{ margin: 0 }}>Welcome!</h1>
-      <p>
+      <p style={{ padding: ".5rem 0" }}>
         Sign in to access the IOM Marketplace or create a new account{" "}
         <Link href="/sign-up">
           <a>here</a>
@@ -27,7 +27,10 @@ export default function Form({ loading }) {
       <Link href="/forgot">
         <a>Forgot password?</a>
       </Link>
-      <div className="form-button-wapper flex-align-center list-spacing-sml">
+      <div
+        className="form-button-wapper flex-align-center list-spacing-sml"
+        style={{ paddingTop: ".5rem" }}
+      >
         <Link href="/sign-up">
           <a>
             <button type="button">Sign up</button>

@@ -67,7 +67,7 @@ export default function Form() {
       className="vert-space-sml"
     >
       <h1 style={{ margin: 0 }}>{sub ? "New Password" : "Reset Password"}</h1>
-      <p>
+      <p style={{ padding: ".5rem 0" }}>
         {sub
           ? "Enter your confirmation code and Create a new password."
           : "Forgot your password? No problem. Enter your email address."}
@@ -112,7 +112,10 @@ export default function Form() {
         </>
       )}
 
-      <div className="form-button-wapper flex-align-center list-spacing-sml">
+      <div
+        className="form-button-wapper flex-align-center list-spacing-sml"
+        style={{ paddingTop: ".5rem" }}
+      >
         <Link href="/login">
           <a>
             <button type="button">Back</button>

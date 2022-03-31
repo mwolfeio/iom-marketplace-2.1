@@ -19,7 +19,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <a target="_blank" href="https://influencersofthemetaverse.com/">
               <button className="white">Learn More</button>
             </a>
-            <button className="primary">Play now</button>
+            <a
+              href="https://play.influencersofthemetaverse.com/"
+              target="_blank"
+            >
+              <button className="primary">Play now</button>
+            </a>
           </div>
         </div>
       </div>

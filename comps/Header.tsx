@@ -142,13 +142,23 @@ export default function Header() {
               </Navlink>
             </li>
             {user.isLoggedIn === false && (
-              <li className="mobile-menu-content">
-                <Link href="/login">
-                  <a>
-                    <button className="primary">Login</button>
+              <>
+                <li className="mobile-menu-content">
+                  <Link href="/login">
+                    <a>
+                      <button className="">Login</button>
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <a
+                    href="https://play.influencersofthemetaverse.com/"
+                    target="_blank"
+                  >
+                    <button className="primary">Play</button>
                   </a>
-                </Link>
-              </li>
+                </li>
+              </>
             )}
             {user.isLoggedIn === true && (
               <>
@@ -163,6 +173,14 @@ export default function Header() {
                       <span> Wallet</span>
                     </a>
                   </Link>
+                </li>
+                <li>
+                  <a
+                    href="https://play.influencersofthemetaverse.com/"
+                    target="_blank"
+                  >
+                    <button className="primary">Play</button>
+                  </a>
                 </li>
                 <li className="mobile-hide">
                   <MoreButton />

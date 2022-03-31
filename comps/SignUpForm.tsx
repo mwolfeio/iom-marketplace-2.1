@@ -78,7 +78,7 @@ export default function Form({
   return (
     <form onSubmit={(event) => signIn(event)} className="vert-space-sml">
       <h1 style={{ margin: 0 }}>{sub ? "Verify your Email" : "Sign up"}</h1>
-      <p>
+      <p style={{ padding: ".5rem 0 " }}>
         {sub
           ? "We sent a verificaiton code to your email. Please add the code below."
           : "After signing up, you will receive an email with a verification code."}
@@ -143,7 +143,10 @@ export default function Form({
         </>
       )}
 
-      <div className="form-button-wapper flex-align-center list-spacing-sml">
+      <div
+        className="form-button-wapper flex-align-center list-spacing-sml"
+        style={{ paddingTop: ".5rem" }}
+      >
         <Link href="/login">
           <a>
             <button type="button">Sign in</button>

@@ -6,6 +6,7 @@ import fetchJson from "lib/fetchJson";
 import useUser from "lib/useUser";
 
 //comps
+import Head from "next/head";
 import Layout from "comps/Layout";
 import Gallery from "comps/Gallery";
 import Wallet from "comps/Wallet";
@@ -170,6 +171,10 @@ export default function SgProfile() {
 
   return (
     <Layout>
+      <Head>
+        <title>Create Next App</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <div className="vert-space-med">
         <div className="flex-justify-btw flex-align-center list-spacing-med">
           <h1>Wallet</h1>{" "}

@@ -37,9 +37,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     setNewUser(data);
   };
 
-  console.log("cache User--------------: ", user);
-  console.log("app user--------------: ", newUser);
-
   return (
     <UserContext.Provider value={{ ...newUser, refreshUSer }}>
       <SWRConfig
