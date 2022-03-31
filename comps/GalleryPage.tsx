@@ -1,6 +1,7 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import useUser from "lib/useUser";
 
 import Layout from "comps/Layout";
 import Image from "next/image";
@@ -17,6 +18,7 @@ export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
   const [offers, setOffers] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   const [open, setOpen] = useState(true);
+  const { user } = useUser();
 
   //query perams
   const [initQuery, setInitQuery] = useState();
@@ -53,6 +55,8 @@ export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
       priceTo,
       tokenCategories,
     };
+    console.log("q from defaults: ", q);
+
     setQuery(q);
     setInitQuery(q);
   };
@@ -119,6 +123,9 @@ export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
 
   //https://api.apiiom.com/store/offer?tokenGames=ALL,SKYZAO&priceFrom=0&priceTo=10000&size=10&page=0&tokenCategories=CHAR,GAME_ITEM
   const getOffers = async () => {
+    console.log("running getOffers to refresh page");
+    console.log("query: ", query);
+
     const {
       page = 0,
       size = 30,
@@ -131,6 +138,8 @@ export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
     } = query;
     if (tokenCategories.length < 1) return;
     setLoading(true);
+    let throwAway = user;
+    console.log("throwaway user ", user);
 
     try {
       console.log(
@@ -156,6 +165,7 @@ export default function GalleryPage({ defaults, placeholder, title, sideNav }) {
           tokenGames.length ? `&tokenGames=${tokenGames.toString()}` : ""
         }&priceFrom=0${priceTo ? `&priceTo=${priceTo} ` : ""}`
       );
+      console.log();
 
       setOffers(rows);
       setPageCount(totalPages);

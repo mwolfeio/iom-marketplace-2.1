@@ -31,7 +31,7 @@ export default function Header() {
   };
 
   useEffect(() => {
-    console.log("user: ", user);
+    console.log("user updated: ", user);
 
     if (user && user.isLoggedIn && user.balances) {
       let b = user.balances.filter((obj) => obj.token.indexOf("BOX") !== -1);

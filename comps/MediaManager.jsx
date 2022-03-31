@@ -9,7 +9,6 @@ import Defib from "assets/media/DEFIB_SKYZAOOO 3.png";
 import Shot from "assets/media/SHOT_SKYZAOOO 3.png";
 
 export default function GalleryPage({ type, token, className }) {
-  console.log("running media manageer with: ", { type, token, className });
   switch (type) {
     case "BOX":
       switch (token) {

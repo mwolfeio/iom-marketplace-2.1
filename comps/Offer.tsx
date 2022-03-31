@@ -365,7 +365,7 @@ const PurchaseOffer = ({ offer, id, setErrorMsg, href, refresh }) => {
     redirectIfFound: false,
   });
 
-  const owner = offer.userId === user.info.id;
+  const owner = user.isLoggedIn && offer.userId === user.info.id;
   const purchaseOffer = async (event) => {
     event.preventDefault();
     console.log("purchasing product");
@@ -416,6 +416,8 @@ const PurchaseOffer = ({ offer, id, setErrorMsg, href, refresh }) => {
         console.log("item purchaesd");
       }
 
+      console.log("now refreshing user");
+
       //add new asset to balance - refresh user
       // await refreshUser(user);
       const response = await fetch("/api/refreshUser", {
@@ -427,6 +429,8 @@ const PurchaseOffer = ({ offer, id, setErrorMsg, href, refresh }) => {
       });
 
       const data = await response.json();
+      console.log("recievd new user: ", data);
+
       refresh();
       console.log("user updated: ", data);
 

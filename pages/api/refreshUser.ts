@@ -30,10 +30,10 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
       balances: filteredBalances,
     };
 
-    console.log("updating user");
-
     req.session.user = userData;
     await req.session.save();
+
+    console.log("updated user balance: ", iom);
     res.json(userData);
   } catch (error) {
     console.log("API Error:", error);
