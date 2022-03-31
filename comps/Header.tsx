@@ -1,7 +1,9 @@
 // @ts-nocheck
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import fetchJson from "lib/fetchJson";
+import { UserContext } from "lib/UserContext";
+
 import useUser from "lib/useUser";
 
 import Image from "next/image";
@@ -21,8 +23,11 @@ export default function Header() {
   const [boxCount, setBoxCount] = useState(0);
   const [open, setOpen] = useState(false);
   const [iom, setIom] = useState(0);
-  const { user, mutateUser } = useUser();
+  const { mutateUser } = useUser();
   const router = useRouter();
+  const user = useContext(UserContext);
+
+  console.log("HEADER NEW USER: ", user);
 
   const signOut = async (e) => {
     e.preventDefault();
@@ -136,7 +141,7 @@ export default function Header() {
                 NFT Marketplace
               </Navlink>
             </li>
-            {user?.isLoggedIn === false && (
+            {user.isLoggedIn === false && (
               <li className="mobile-menu-content">
                 <Link href="/login">
                   <a>
@@ -145,7 +150,7 @@ export default function Header() {
                 </Link>
               </li>
             )}
-            {user?.isLoggedIn === true && (
+            {user.isLoggedIn === true && (
               <>
                 <li className="wallet-wrapper flex-align-center mobile-menu-content">
                   <Link href="/wallet">

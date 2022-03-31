@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useState, useEffect, FormEvent } from "react";
+import React, { useState, useEffect, useContext, FormEvent } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import useUser from "lib/useUser";
@@ -8,6 +8,7 @@ import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import fetchJson from "lib/fetchJson";
 import moment from "moment";
+import { UserContext } from "lib/UserContext";
 
 // import type { User } from "api/user";
 // import fetchJson, { FetchError } from "lib/fetchJson";
@@ -41,8 +42,6 @@ export default function Offer({
   // const [offer, setOffer] = useState();
 
   useEffect(() => {
-    // console.log("getting offer iwth id: ", id);
-
     if (id) hydratePage(id);
   }, [id]);
 
@@ -364,25 +363,17 @@ const PurchaseOffer = ({ offer, id, setErrorMsg, href, refresh }) => {
     redirectTo: "",
     redirectIfFound: false,
   });
+  const { newUser, refreshUSer } = useContext(UserContext);
 
   const owner = user.isLoggedIn && offer.userId === user.info.id;
   const purchaseOffer = async (event) => {
     event.preventDefault();
-    console.log("purchasing product");
 
     //if not logged in redirect
     if (!user.isLoggedIn) return router.push("/login");
     setLoading(true);
     setErrorMsg("");
-    console.log("payload: ", {
-      offerId: id,
-      amount:
-        offer.tokenType === "FUNGIBLE" ? event.currentTarget.quantity.value : 1,
-    });
-
     try {
-      console.log("user balance before: ", user.balances);
-
       //prchase offer
       if (owner) {
         console.log(
@@ -416,29 +407,10 @@ const PurchaseOffer = ({ offer, id, setErrorMsg, href, refresh }) => {
         console.log("item purchaesd");
       }
 
-      console.log("now refreshing user");
-
       //add new asset to balance - refresh user
-      // await refreshUser(user);
-      const response = await fetch("/api/refreshUser", {
-        method: "POST",
-        body: JSON.stringify(user),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const data = await response.json();
-      console.log("recievd new user: ", data);
-
+      refreshUSer();
       refresh();
-      console.log("user updated: ", data);
 
-      //show toast
-      toast.success(`Item purchased!`);
-
-      //close offer and refresh page
-      // router.back();
       href ? router.push(href) : router.push("/wallet");
     } catch (error) {
       console.log("Error: ", error);
@@ -447,8 +419,6 @@ const PurchaseOffer = ({ offer, id, setErrorMsg, href, refresh }) => {
 
     setLoading(false);
   };
-  console.log("user Id", user);
-  console.log("owner Id", offer.userId);
 
   return (
     <form

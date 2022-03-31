@@ -1,10 +1,11 @@
 // @ts-nocheck
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import useUser from "lib/useUser";
 import FormWrapper from "comps/FormWrapper";
 import ethereum_address from "ethereum-address";
+import { UserContext } from "lib/UserContext";
 
 //comps
 import Loader from "comps/Loader";
@@ -22,6 +23,7 @@ export default function Comp({ arr, hook }) {
   const [withdraw, setWithdraw] = useState(0);
   const [fee, setFee] = useState(0);
   const [address, setAddress] = useState("");
+  const { newUser, refreshUSer } = useContext(UserContext);
 
   useEffect(() => {
     if (user && user.isLoggedIn) {
@@ -39,27 +41,15 @@ export default function Comp({ arr, hook }) {
       const { data } = await axios.get("https://api.apiiom.com/parameters", {
         headers: { Authorization: user.token },
       });
-      console.log("data: ", data);
 
       let obj = data.find((x) => x.key === "WITHDRAWAL_PERCENTAGE_FEE_RATE");
-      console.log("obj: ", obj);
       let f = obj.value / 100;
-      console.log("f: ", f);
 
       if (obj) setFee(f);
       setError("");
 
       //refresh user
-      const response = await fetch("/api/refreshUser", {
-        method: "POST",
-        body: JSON.stringify(user),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const dd = await response.json();
-      console.log("dd: ", dd);
+      refreshUSer();
 
       //clear inputs
     } catch (error) {

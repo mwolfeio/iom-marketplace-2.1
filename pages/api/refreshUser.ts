@@ -23,7 +23,7 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
     const filteredBalances = data.filter((b) => b.amount > 0);
     const iom = data.find((b) => b.token === "IOM").amount;
     const userData = {
-      // isLoggedIn: true,
+      isLoggedIn: true,
       info,
       token,
       iom,
