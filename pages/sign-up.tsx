@@ -1,6 +1,7 @@
 // @ts-nocheck
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import { useRouter } from "next/router";
 
 import useUser from "lib/useUser";
 import Layout from "comps/Layout";
@@ -16,6 +17,7 @@ export default function Login() {
   });
 
   const [errorMsg, setErrorMsg] = useState("");
+  const router = useRouter();
 
   return (
     <Layout>
@@ -38,7 +40,7 @@ export default function Login() {
                   body: JSON.stringify(body),
                 })
               );
-              toast.success(`Welcome Back!`);
+              router.push("/wallet");
             } catch (error) {
               console.log("Error logging in: ", error.response);
 
