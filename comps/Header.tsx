@@ -155,9 +155,11 @@ export default function Header() {
                 <li className="wallet-wrapper flex-align-center mobile-menu-content">
                   <Link href="/wallet">
                     <a>
-                      <span style={{ color: "rgb(255, 206, 56)" }}>
+                      <span
+                        style={{ display: "none", color: "rgb(255, 206, 56)" }}
+                      >
                         {numberWithCommas(iom)} $IOM{" "}
-                      </span>{" "}
+                      </span>
                       <span> Wallet</span>
                     </a>
                   </Link>
