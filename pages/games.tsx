@@ -2,12 +2,44 @@
 import Layout from "comps/Layout";
 import Image from "next/image";
 import Games from "comps/Games";
+import Head from "next/head";
+import Img from "assets/media/thumbnail.png";
 
 export default function Home() {
   return (
-    <Layout>
-      <h1>Games</h1>
-      <Games />
-    </Layout>
+    <>
+      <Head>
+        <title>IOM — Games</title>
+        <link rel="icon" href="/favicon.ico" />
+        <meta charset="UTF-8" />
+        <meta name="title" content="IOM — Games" />
+        <meta
+          name="description"
+          content="The official NFT, in-game item and boxes marketplace for all Influencers of the Metaverse games! Check out all the crazy characters and fun Blochian based games."
+        />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://metatags.io/" />
+        <meta property="og:title" content="IOM — Games" />
+        <meta
+          property="og:description"
+          content="The official NFT, in-game item and boxes marketplace for all Influencers of the Metaverse games! Check out all the crazy characters and fun Blochian based games."
+        />
+        <meta property="og:image" content={Img} />
+
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://metatags.io/" />
+        <meta property="twitter:title" content="IOM — Games" />
+        <meta
+          property="twitter:description"
+          content="The official NFT, in-game item and boxes marketplace for all Influencers of the Metaverse games! Check out all the crazy characters and fun Blochian based games."
+        />
+        <meta property="twitter:image" content={Img} />
+      </Head>{" "}
+      <Layout>
+        <h1>Games</h1>
+        <Games />
+      </Layout>
+    </>
   );
 }

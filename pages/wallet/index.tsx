@@ -12,6 +12,7 @@ import Gallery from "comps/Gallery";
 import Wallet from "comps/Wallet";
 import List from "comps/List";
 import Boxes from "comps/Boxes";
+import Img from "assets/media/thumbnail.png";
 import Pagination from "comps/Pagination";
 import Bubble from "comps/Bubble";
 
@@ -172,9 +173,39 @@ export default function SgProfile() {
   return (
     <Layout>
       <Head>
-        <title>Create Next App</title>
+        <title>IOM — Wallet</title>
         <link rel="icon" href="/favicon.ico" />
-      </Head>
+        <meta charset="UTF-8" />
+        <meta name="title" content="IOM — Wallet" />
+        <meta
+          name="description"
+          content="The official NFT, in-game item and boxes marketplace for all Influencers of the Metaverse games! Check out all the crazy characters and fun Blochian based games."
+        />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://metatags.io/" />
+        <meta
+          property="og:title"
+          content="Influencers of the Metaverse  — Marketplace"
+        />
+        <meta
+          property="og:description"
+          content="The official NFT, in-game item and boxes marketplace for all Influencers of the Metaverse games! Check out all the crazy characters and fun Blochian based games."
+        />
+        <meta property="og:image" content={Img} />
+
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://metatags.io/" />
+        <meta
+          property="twitter:title"
+          content="Influencers of the Metaverse  — Marketplace"
+        />
+        <meta
+          property="twitter:description"
+          content="The official NFT, in-game item and boxes marketplace for all Influencers of the Metaverse games! Check out all the crazy characters and fun Blochian based games."
+        />
+        <meta property="twitter:image" content={Img} />
+      </Head>{" "}
       <div className="vert-space-med">
         <div className="flex-justify-btw flex-align-center list-spacing-med">
           <h1>Wallet</h1>{" "}

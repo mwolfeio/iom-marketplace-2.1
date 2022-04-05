@@ -5,9 +5,6 @@ import Footer from "comps/Footer";
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Head>
-        <title>IOM Marketplace</title>
-      </Head>
       <style jsx global>{`
         *,
         *::before,
