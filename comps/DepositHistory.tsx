@@ -29,20 +29,14 @@ export default function Comp({ arr }) {
           headers: { Authorization: user.token },
         }
       );
-      // const confirmed = await axios.get(
-      //   "https://api.apiiom.com/bank/deposits?depositStatus=COMPLETED",
-      //   {
-      //     headers: { Authorization: user.token },
-      //   }
-      // );
-
-      // data.concat(confirmed.data);
 
       console.log("data:", data);
       setHistory(data);
     } catch (error) {
-      console.log("Error: ", error.response);
-      setError(error.response.data.message);
+      console.log("Error: ", error);
+      error.respons
+        ? setError(error.response.data.message)
+        : setError("There was an error");
     }
     setLoading(false);
   };
