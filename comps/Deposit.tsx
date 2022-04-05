@@ -15,6 +15,7 @@ export default function Comp({ data }) {
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [bnb, setBnb] = useState(true);
 
   useEffect(() => {
     if (user) getAddress();
@@ -50,6 +51,24 @@ export default function Comp({ data }) {
       <div className="login vert-space-med">
         <h1 style={{ margin: 0 }}>Deposits</h1>
         <p>Send your IOM deposits to the address listed below:</p>
+        <div>
+          <span style={{ opacity: 0.6 }}>I would like to deposit:</span>
+          <div className="options-wrapper flex-align-center flex-justify-btw">
+            <div className="slider" />
+            <div
+              onClick={() => setBnb(true)}
+              className="option flex-align-center flex-justify-center"
+            >
+              BNB
+            </div>
+            <div
+              onClick={() => setBnb(false)}
+              className="option flex-align-center flex-justify-center"
+            >
+              IOM
+            </div>
+          </div>
+        </div>
         <div className="code-wrapper">
           <QRCode value={code} />
         </div>
@@ -65,6 +84,40 @@ export default function Comp({ data }) {
         </div>
       </div>
       <style jsx>{`
+        .slider {
+          position: absolute;
+          background: #ff4544;
+          border-radius: 0.5rem;
+          height: 40px;
+          width: 50%;
+          z-index: 0;
+          top: 0;
+          left: ${bnb ? "0" : "50%"};
+          transition: 150ms cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        .option {
+          width: 100%;
+          height: 40px;
+          font-size: 20px;
+          border-radius: 0.5rem;
+          position: relative;
+          z-index: 1;
+          background: #ffffff00;
+          font-weight: 600;
+          cursor: pointer;
+          transition: 150ms cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        .options-wrapper {
+          position: relative;
+          overflow: none;
+          margin-top: 0.5rem;
+          height: 40px;
+          border-radius: 0.5rem;
+          background: #ffffff10;
+        }
+        .option:hover {
+          background: #ffffff10;
+        }
         .code-wrapper {
           margin: 1rem auto;
           border-radius: 1rem;
