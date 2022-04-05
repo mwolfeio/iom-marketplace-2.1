@@ -105,6 +105,7 @@ export default function Comp({ data }) {
           background: #ffffff00;
           font-weight: 600;
           cursor: pointer;
+          padding-bottom: 4px;
           transition: 150ms cubic-bezier(0.215, 0.61, 0.355, 1);
         }
         .options-wrapper {
