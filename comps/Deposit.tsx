@@ -86,7 +86,7 @@ export default function Comp({ data }) {
       <style jsx>{`
         .slider {
           position: absolute;
-          background: #ff4544;
+          background: ${bnb ? "#F0B90B" : "#ff4544"};
           border-radius: 0.5rem;
           height: 40px;
           width: 50%;

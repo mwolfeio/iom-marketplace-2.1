@@ -38,14 +38,20 @@ export default function Comp({ arr, hook }) {
 
     try {
       //submit withdraw
-      const { data } = await axios.get("https://api.apiiom.com/parameters", {
-        headers: { Authorization: user.token },
-      });
+      // const { data } = await axios.get("https://api.apiiom.com/parameters", {
 
-      let obj = data.find((x) => x.key === "WITHDRAWAL_PERCENTAGE_FEE_RATE");
-      let f = obj.value / 100;
+      const { data } = await axios.get(
+        "https://apiiom.algopro.com.br/bank/withdrawals/fee",
+        {
+          headers: { Authorization: user.token },
+        }
+      );
 
-      if (obj) setFee(f);
+      // let obj = data.find((x) => x.key === "WITHDRAWAL_PERCENTAGE_FEE_RATE");
+      // let f = obj.value / 100;
+      // if (obj) setFee(f);
+
+      setFee(data / 100);
       setError("");
 
       //refresh user
