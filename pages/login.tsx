@@ -1,6 +1,7 @@
 // @ts-nocheck
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import { useRouter } from "next/router";
 
 import useUser from "lib/useUser";
 import Layout from "comps/Layout";
@@ -19,6 +20,7 @@ export default function Login() {
 
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState("");
+  const router = useRouter();
 
   return (
     <>
@@ -77,6 +79,7 @@ export default function Login() {
                   })
                 );
                 toast.success(`Welcome Back!`);
+                router.push("/wallet");
               } catch (error) {
                 if (error instanceof FetchError) {
                   setErrorMsg(error.data.message);
