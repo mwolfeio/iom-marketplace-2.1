@@ -29,14 +29,6 @@ export default function Comp({ arr }) {
           headers: { Authorization: user.token },
         }
       );
-      // const confirmed = await axios.get(
-      //   "https://api.apiiom.com/bank/deposits?depositStatus=COMPLETED",
-      //   {
-      //     headers: { Authorization: user.token },
-      //   }
-      // );
-
-      // data.concat(confirmed.data);
 
       console.log("data:", data);
       setHistory(data);
@@ -46,8 +38,8 @@ export default function Comp({ arr }) {
     }
     setLoading(false);
   };
-  const goTo = () => {
-    console.log("go to ");
+  const goTo = (itm) => {
+    window.open(`https://bscscan.com/address/${itm}`, "_newtab");
   };
 
   return (
@@ -63,10 +55,11 @@ export default function Comp({ arr }) {
             { type: "text", key: "token", name: "  " },
             { type: "text", key: "amount", name: "Amount" },
             { type: "text", key: "status", name: "Status" },
-            { type: "text", key: "id", name: "Id" },
-
+            { type: "address", key: "id", name: "Txid" },
             {
               type: "button",
+              hookType: "link",
+              name: "View",
               key: "View",
               hook: goTo,
               className: "",

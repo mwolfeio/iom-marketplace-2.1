@@ -57,7 +57,7 @@ export default function Comp({ arr, hook }) {
     setLoading(false);
   };
   const goTo = (itm) => {
-    window.open(`https://etherscan.io/address/${itm}`, "_newtab");
+    window.open(`https://bscscan.com/address/${itm}`, "_newtab");
   };
 
   return (
@@ -75,6 +75,7 @@ export default function Comp({ arr, hook }) {
             { type: "number", key: "amount", name: "Amount" },
             { type: "status", key: "status", name: "Status" },
             { type: "address", key: "walletAddress", name: "Address" },
+            { type: "address", key: "id", name: "Txid" },
             {
               type: "button",
               hookType: "link",

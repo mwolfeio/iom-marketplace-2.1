@@ -149,6 +149,7 @@ export default function Comp({
           border: 1px solid white;
           margin: 1rem 0;
           background: #1d2028;
+          overflow-x: scroll;
         }
 
         li {

@@ -55,13 +55,31 @@ export default function Comp({ data }) {
         </div>
         <div>
           <div className=" address-wrapper flex-align-center flex-justify-center list-spacing-sml">
-            <p>
-              <span className="deposit-text"></span> <b>{code}</b>
+            <p
+              style={{
+                wordWrap: "break-word",
+                display: "inline-block",
+                width: "100%",
+                textAlign: "center",
+                maxWidth: "Calc(100vw - 92px)",
+              }}
+            >
+              <b>{code}</b>
             </p>
-            <button className="icon" onClick={() => copyCode()}>
+            <button className="icon mobile-hide" onClick={() => copyCode()}>
               <Copy />
             </button>
           </div>
+          <button
+            style={{ margin: ".5rem auto 0" }}
+            className="icon-text desktop-hide "
+            onClick={() => copyCode()}
+          >
+            <div style={{ marginRight: ".5rem" }}>
+              <Copy />
+            </div>
+            Copy Address
+          </button>
         </div>
       </div>
       <style jsx>{`
@@ -79,7 +97,7 @@ export default function Comp({ data }) {
           background: #1d2028;
           border-radius: 24px;
           border: 1px solid rgba(255, 255, 255, 0.3);
-          padding: 24px;
+          padding: 1rem;
           width: fit-content;
           display: flex;
           flex-direction: column;
@@ -93,6 +111,11 @@ export default function Comp({ data }) {
         }
         .deposit-text {
           opacity: 0.8;
+        }
+        @media (min-width: 768px) {
+          .login {
+            padding: 24px;
+          }
         }
       `}</style>
     </>

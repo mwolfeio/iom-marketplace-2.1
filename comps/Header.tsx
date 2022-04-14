@@ -298,8 +298,8 @@ export default function Header() {
           margin-right: 1em;
         }
         .wallet-wrapper {
+          margin: 0;
           height: 40px;
-
           transition: 100ms cubic-bezier(0.215, 0.61, 0.355, 1);
           background: #ffffff00;
           border-radius: 50px;
@@ -341,6 +341,9 @@ export default function Header() {
         }
 
         @media (min-width: 768px) {
+          .wallet-wrapper {
+            margin: 0 1rem 0 0;
+          }
 
           .active,
           header.active {
