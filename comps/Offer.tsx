@@ -33,7 +33,7 @@ export default function Offer({
   refresh,
   hideHeader,
 }) {
-  const { user } = useUser();
+  const { user, mutateUser } = useUser();
   const router = useRouter();
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
@@ -376,16 +376,6 @@ const PurchaseOffer = ({ offer, id, setErrorMsg, href, refresh }) => {
     try {
       //prchase offer
       if (owner) {
-        console.log(
-          "deleting with payload",
-          {
-            offerId: id,
-          },
-          {
-            headers: { Authorization: user.token },
-          }
-        );
-
         await axios.delete(`https://api.apiiom.com/store/offer/${id}`, {
           headers: { Authorization: user.token },
         });
@@ -413,8 +403,14 @@ const PurchaseOffer = ({ offer, id, setErrorMsg, href, refresh }) => {
 
       href ? router.push(href) : router.push("/wallet");
     } catch (error) {
-      console.log("Error: ", error);
-      if (error.response) setErrorMsg(`Error: ${error.response.data.message}`);
+      if (error.response) {
+        if (error.response.status === 401) {
+          mutateUser(await fetchJson("/api/logout", { method: "POST" }), false);
+          router.push("/login");
+        }
+        console.error("Error:", error.response.data);
+        setErrorMsg(error.response.data.message);
+      } else console.error("An unexpected error happened:", error);
     }
 
     setLoading(false);

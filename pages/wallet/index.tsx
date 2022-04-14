@@ -105,9 +105,16 @@ export default function SgProfile() {
       return data;
     } catch (error) {
       if (error.response) {
-        console.error("Error:", error.response.data);
+        console.log("error.response.status: ", error.response.status);
+        if (error.response.status === 401) {
+          mutateUser(await fetchJson("/api/logout", { method: "POST" }), false);
+
+          router.push("/login");
+        }
         setErrorMsg(error.response.data.message);
-      } else console.error("An unexpected error happened:", error);
+      } else {
+        console.log("Error: ", error);
+      }
     }
   };
   const hydratBlanace = (bal, sch) => {

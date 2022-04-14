@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import useUser from "lib/useUser";
 import axios from "axios";
+import fetchJson from "lib/fetchJson";
 
 import FormWrapper from "comps/FormWrapper";
 import Loader from "comps/Loader";
@@ -20,7 +21,7 @@ export default function Comp({
   const [laoding, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const router = useRouter();
-  const { user } = useUser();
+  const { user, mutateUser } = useUser();
 
   if (!show) return <></>;
   return (
@@ -72,13 +73,6 @@ export default function Comp({
 
               //refresh getChars
               hook();
-              // const res = await fetch("/api/refreshUser", {
-              //   method: "POST",
-              //   body: JSON.stringify(user),
-              //   headers: {
-              //     "Content-Type": "application/json",
-              //   },
-              // });
 
               //toast
               toast.success(`Offer Created!`);
@@ -86,9 +80,17 @@ export default function Comp({
               //close modal
               router.push("/wallet");
             } catch (error) {
-              console.log("Error: ", error);
-              if (error.response)
-                setErrorMsg(`Error: ${error.response.data.message}`);
+              if (error.response) {
+                if (error.response.status === 401) {
+                  mutateUser(
+                    await fetchJson("/api/logout", { method: "POST" }),
+                    false
+                  );
+                  router.push("/login");
+                }
+                console.error("Error:", error.response.data);
+                setErrorMsg(error.response.data.message);
+              } else console.error("An unexpected error happened:", error);
             }
             setLoading(false);
           }}

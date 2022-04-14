@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import useUser from "lib/useUser";
+import { useRouter } from "next/router";
+import fetchJson from "lib/fetchJson";
 
 //comps
 import Loader from "comps/Loader";
@@ -11,10 +13,11 @@ import List from "comps/List";
 import Icon from "assets/icons/Withdraw";
 
 export default function Comp({ arr, hook }) {
-  const { user } = useUser();
+  const { user, mutateUser } = useUser();
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (user) getHistory();
@@ -28,31 +31,26 @@ export default function Comp({ arr, hook }) {
     setLoading(true);
     try {
       const { data } = await axios.get(
-        "https://api.apiiom.com/bank/withdrawals?withdrawalStatus=IN_PROCESS",
+        "https://api.apiiom.com/bank/withdrawals?withdrawalStatus",
         {
           headers: { Authorization: user.token },
         }
       );
-      const confirmed = await axios.get(
-        "https://api.apiiom.com/bank/withdrawals?withdrawalStatus=COMPLETE",
-        {
-          headers: { Authorization: user.token },
-        }
-      );
-      const cancled = await axios.get(
-        "https://api.apiiom.com/bank/withdrawals?withdrawalStatus=CANCELED",
-        {
-          headers: { Authorization: user.token },
-        }
-      );
-
-      data.concat(confirmed.data, cancled.data);
 
       console.log("data:", data);
       setHistory(data);
     } catch (error) {
-      console.log("Error: ", error.response);
-      if (error.respons) setError(error.response.data.message);
+      if (error.response) {
+        console.log("error.response.status: ", error.response.status);
+        mutateUser(await fetchJson("/api/logout", { method: "POST" }), false);
+
+        if (error.response.status === 401) {
+          router.push("/login");
+        }
+        setError(error.response.data.message);
+      } else {
+        console.log("Error: ", error);
+      }
     }
     setLoading(false);
   };

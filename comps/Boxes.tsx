@@ -1,6 +1,9 @@
 // @ts-nocheck
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import fetchJson from "lib/fetchJson";
+import { useRouter } from "next/router";
+import useUser from "lib/useUser";
 
 import List from "comps/List";
 import Modal from "comps/Modal";
@@ -13,6 +16,8 @@ export default function SgProfile({ data, user, refresh }) {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [newChar, setNewChar] = useState([]);
+  const { mutateUser } = useUser();
+  const router = useRouter();
 
   const openBoxes = async (token, count = 1) => {
     console.log("running openBoxes");
@@ -73,8 +78,14 @@ export default function SgProfile({ data, user, refresh }) {
       console.log("d: ", d);
       refresh(d);
     } catch (error) {
-      console.log("Error: ", error);
-      if (error.response) setErrorMsg(`Error: ${error.response.data.message}`);
+      if (error.response) {
+        if (error.response.status === 401) {
+          mutateUser(await fetchJson("/api/logout", { method: "POST" }), false);
+          router.push("/login");
+        }
+        console.error("Error:", error.response.data);
+        setErrorMsg(error.response.data.message);
+      } else console.error("An unexpected error happened:", error);
     }
   };
 

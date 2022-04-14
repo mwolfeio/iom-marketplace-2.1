@@ -6,6 +6,9 @@ import useUser from "lib/useUser";
 import FormWrapper from "comps/FormWrapper";
 import ethereum_address from "ethereum-address";
 import { UserContext } from "lib/UserContext";
+import { useRouter } from "next/router";
+
+import fetchJson from "lib/fetchJson";
 
 //comps
 import Loader from "comps/Loader";
@@ -16,7 +19,7 @@ function numberWithCommas(x) {
 }
 
 export default function Comp({ arr, hook }) {
-  const { user } = useUser();
+  const { user, mutateUser } = useUser();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [iom, setIom] = useState(0);
@@ -24,6 +27,7 @@ export default function Comp({ arr, hook }) {
   const [fee, setFee] = useState(0);
   const [address, setAddress] = useState("");
   const { newUser, refreshUSer } = useContext(UserContext);
+  const router = useRouter();
 
   useEffect(() => {
     if (user && user.isLoggedIn) {
@@ -59,10 +63,14 @@ export default function Comp({ arr, hook }) {
 
       //clear inputs
     } catch (error) {
-      console.log("Error: ", error.response);
-      setError(
-        `Error: ${error.response ? error.response.data.message : error}`
-      );
+      if (error.response) {
+        if (error.response.status === 401) {
+          mutateUser(await fetchJson("/api/logout", { method: "POST" }), false);
+          router.push("/login");
+        }
+        console.error("Error:", error.response.data);
+        setError(error.response.data.message);
+      } else console.error("An unexpected error happened:", error);
     }
     setLoading(false);
   };
@@ -82,10 +90,6 @@ export default function Comp({ arr, hook }) {
             token: "IOM",
             amount: withdraw,
             walletAddress: address,
-          });
-
-          console.log("header: ", {
-            headers: { Authorization: user.token },
           });
 
           try {
@@ -113,10 +117,17 @@ export default function Comp({ arr, hook }) {
             hook([data]);
             toast.success(`Withdraw successful!`);
           } catch (error) {
-            console.log("Error: ", error.response);
-            setError(
-              `Error: ${error.response ? error.response.data.message : error}`
-            );
+            if (error.response) {
+              if (error.response.status === 401) {
+                mutateUser(
+                  await fetchJson("/api/logout", { method: "POST" }),
+                  false
+                );
+                router.push("/login");
+              }
+              console.error("Error:", error.response.data);
+              setError(error.response.data.message);
+            } else console.error("An unexpected error happened:", error);
           }
           setLoading(false);
         }}

@@ -4,6 +4,9 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import useUser from "lib/useUser";
 import Icon from "assets/icons/Deposit";
+import { useRouter } from "next/router";
+
+import fetchJson from "lib/fetchJson";
 
 //comps
 import Loader from "comps/Loader";
@@ -11,10 +14,11 @@ import Copy from "assets/icons/Copy";
 import List from "comps/List";
 
 export default function Comp({ arr }) {
-  const { user } = useUser();
+  const { user, mutateUser } = useUser();
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (user) getHistory();
@@ -33,8 +37,14 @@ export default function Comp({ arr }) {
       console.log("data:", data);
       setHistory(data);
     } catch (error) {
-      console.log("Error: ", error.response);
-      setError(error.response.data.message);
+      if (error.response) {
+        if (error.response.status === 401) {
+          mutateUser(await fetchJson("/api/logout", { method: "POST" }), false);
+          router.push("/login");
+        }
+        console.error("Error:", error.response.data);
+        setError(error.response.data.message);
+      } else console.error("An unexpected error happened:", error);
     }
     setLoading(false);
   };
