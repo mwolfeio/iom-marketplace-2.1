@@ -5,6 +5,8 @@ import Image from "next/image";
 //media
 import Box2 from "assets/media/BOX_SKYZAOOO 2.png";
 import Box1 from "assets/media/BOX_SKYZAOOO 1.png";
+import BoxPrior from "assets/media/BOX_PRIOR.png";
+import BoxGordolinha from "assets/media/BOX_GORDOLINHA.png";
 import Defib from "assets/media/DEFIB_SKYZAOOO 3.png";
 import Shot from "assets/media/SHOT_SKYZAOOO 3.png";
 
@@ -18,6 +20,14 @@ export default function GalleryPage({ type, token, className }) {
 
         case "BOX2":
           return <Image className={className} src={Box2} layout="fill" />;
+          break;
+          
+        case "BOXPRIOR":
+          return <Image className={className} src={BoxPrior} layout="fill" />;
+          break;
+          
+        case "BOXGORDOLINHA":
+          return <Image className={className} src={BoxGordolinha} layout="fill" />;
           break;
       }
       break;
