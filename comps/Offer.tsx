@@ -309,7 +309,7 @@ export default function Offer({
                     ? `Available: ${
                         offer.availableAmount > 999000
                           ? "999k+"
-                          : numberWithCommas(offer.availableAmount)
+                          : "999k+"
                       } - `
                     : ""}
                   Price: {numberWithCommas(offer.price)} $IOM{" "}
