@@ -436,8 +436,7 @@ const PurchaseOffer = ({ offer, id, setErrorMsg, href, refresh }) => {
       <button
         type="submit"
         style={{ width: "100%" }}
-        className={`primary ${user.iom < offer.price && "disabled"}`}
-        disabled={user.iom < offer.price}
+        className={`primary`}
       >
         {loading ? (
           <Loader />
