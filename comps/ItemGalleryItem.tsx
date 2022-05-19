@@ -12,6 +12,7 @@ export default function Comp({
   data: { token, tokenCategory, availableAmount, images = [], price, title },
   owned,
 }) {
+  /*
   return (
     <>
       <div className="char-item-wrapper flex-col">
@@ -89,6 +90,8 @@ export default function Comp({
       `}</style>
     </>
   );
+  */
+  return null;
 }
 
 //        <pre>{JSON.stringify(data, null, 2)}</pre>
