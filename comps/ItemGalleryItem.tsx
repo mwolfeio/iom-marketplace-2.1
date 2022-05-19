@@ -12,7 +12,6 @@ export default function Comp({
   data: { token, tokenCategory, availableAmount, images = [], price, title },
   owned,
 }) {
-  /*
   return (
     <>
       <div className="char-item-wrapper flex-col">
@@ -21,6 +20,7 @@ export default function Comp({
           <Image src={ItemBack} layout="fill" />
           <Media className="char-img" type={tokenCategory} token={token} />
         </div>
+        /*
         <div className="gallery-item-info-wrapper">
           <div
             style={{ opacity: 0.33 }}
@@ -50,6 +50,7 @@ export default function Comp({
             </div>
           )}
         </div>
+        */
       </div>
       <style jsx>{`
         .char-item-wrapper {
@@ -90,8 +91,6 @@ export default function Comp({
       `}</style>
     </>
   );
-  */
-  return '...';
 }
 
 //        <pre>{JSON.stringify(data, null, 2)}</pre>
