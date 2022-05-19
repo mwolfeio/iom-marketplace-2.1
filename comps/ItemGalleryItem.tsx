@@ -96,8 +96,8 @@ export default function Comp({
           border: 10px solid red;
         }
       `}</style>
-      */
     </>
+    */
   );
 }
 
