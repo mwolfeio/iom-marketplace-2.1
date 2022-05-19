@@ -21,6 +21,7 @@ export default function Comp({
           <Media className="char-img" type={tokenCategory} token={token} />
         </div>
       </div>
+     </>
       /*
       <div className="char-item-wrapper flex-col">
         <div className="gallery-itme-image-wrapper">
