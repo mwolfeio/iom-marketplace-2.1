@@ -13,8 +13,15 @@ export default function Comp({
   owned,
 }) {
   return (
-    */
     <>
+      <div className="char-item-wrapper flex-col">
+        <div className="gallery-itme-image-wrapper">
+          <div className="game-icons" />
+          <Image src={ItemBack} layout="fill" />
+          <Media className="char-img" type={tokenCategory} token={token} />
+        </div>
+      </div>
+      /*
       <div className="char-item-wrapper flex-col">
         <div className="gallery-itme-image-wrapper">
           <div className="game-icons" />
@@ -88,8 +95,8 @@ export default function Comp({
           border: 10px solid red;
         }
       `}</style>
+      */
     </>
-    */
   );
 }
 
