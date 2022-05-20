@@ -9,12 +9,20 @@ function numberWithCommas(x) {
 }
 
 export default function Comp({
-  data: { token, tokenCategory, availableAmount, images = [], price, title },
+  data: {
+    token,
+    tokenCategory,
+    availableAmount,
+    images = [],
+    price,
+    title,
+    currencyTokenBase,
+  },
   owned,
 }) {
   return (
-      <>
-        <div className="char-item-wrapper flex-col">
+    <>
+      <div className="char-item-wrapper flex-col">
         <div className="gallery-itme-image-wrapper">
           <div className="game-icons" />
           <Image src={ItemBack} layout="fill" />
@@ -45,7 +53,10 @@ export default function Comp({
               style={{ marginTop: "12px" }}
               className="flex-align-center flex-justify-btw list-spacing-sml"
             >
-              <button>{price ? numberWithCommas(price) : 0} $IOM</button>
+              <button>
+                {price ? numberWithCommas(price) : 0}{" "}
+                {currencyTokenBase === "IOM" ? "$IOM" : currencyTokenBase}
+              </button>
             </div>
           )}
         </div>
@@ -87,7 +98,7 @@ export default function Comp({
           border: 10px solid red;
         }
       `}</style>
-      </>
+    </>
   );
 }
 

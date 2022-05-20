@@ -72,7 +72,10 @@ export default function Comp({
               style={{ marginTop: "12px" }}
               className="flex-align-center flex-justify-btw list-spacing-sml"
             >
-              <button>{price ? numberWithCommas(price) : 0} $IOM</button>
+              <button>
+                {price ? numberWithCommas(price) : 0}{" "}
+                {currencyTokenBase === "IOM" ? "$IOM" : currencyTokenBase}
+              </button>
             </div>
           )}
         </div>

@@ -312,7 +312,10 @@ export default function Offer({
                           : numberWithCommas(offer.availableAmount)
                       } - `
                     : ""}
-                  Price: {numberWithCommas(offer.price)} $IOM{" "}
+                  Price: {numberWithCommas(offer.price)}{" "}
+                  {offer.currencyTokenBase === "IOM"
+                    ? "$IOM"
+                    : offer.currencyTokenBase}
                 </button>
               </div>
               <PurchaseOffer
@@ -433,11 +436,7 @@ const PurchaseOffer = ({ offer, id, setErrorMsg, href, refresh }) => {
           />
         </label>
       )}
-      <button
-        type="submit"
-        style={{ width: "100%" }}
-        className={`primary`}
-      >
+      <button type="submit" style={{ width: "100%" }} className={`primary`}>
         {loading ? (
           <Loader />
         ) : owner ? (
