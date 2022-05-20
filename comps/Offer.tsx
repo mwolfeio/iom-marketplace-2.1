@@ -421,6 +421,7 @@ const PurchaseOffer = ({ offer, id, setErrorMsg, href, refresh }) => {
   };
   const getBnb = () => {
     let bnb = 0;
+    if (!user.isLoggedIn) return bnb;
     if (user.bnb) {
       bnb = user.bnb;
     } else {
