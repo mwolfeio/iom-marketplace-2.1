@@ -11,7 +11,14 @@ function numberWithCommas(x) {
 
 export default function Comp({
   wallet = false,
-  data: { images = [], availableAmount, price, title, token },
+  data: {
+    images = [],
+    availableAmount,
+    price,
+    title,
+    token,
+    currencyTokenBase,
+  },
   owned,
 }) {
   return (

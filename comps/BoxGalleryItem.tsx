@@ -9,7 +9,15 @@ function numberWithCommas(x) {
 }
 
 export default function Comp({
-  data: { token, tokenCategory, availableAmount, images = [], price, title },
+  data: {
+    token,
+    tokenCategory,
+    availableAmount,
+    images = [],
+    price,
+    title,
+    currencyTokenBase,
+  },
   owned,
 }) {
   return (
@@ -18,7 +26,12 @@ export default function Comp({
         <div className="gallery-itme-image-wrapper">
           <div className="game-icons" />
           <Image src={ItemBack} layout="fill" />
-          <Media className="char-img" type={tokenCategory} token={token} />
+          <Media
+            className="char-img"
+            type={tokenCategory}
+            token={token}
+            title={title}
+          />
         </div>
         <div className="gallery-item-info-wrapper">
           <div

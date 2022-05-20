@@ -10,7 +10,12 @@ import BoxGordolinha from "assets/media/BOXGORDOLINHA.png";
 import Defib from "assets/media/DEFIB_SKYZAOOO 3.png";
 import Shot from "assets/media/SHOT_SKYZAOOO 3.png";
 
-export default function GalleryPage({ type, token, className }) {
+export default function GalleryPage({
+  type,
+  token,
+  className,
+  title = "Offer",
+}) {
   switch (type) {
     case "BOX":
       switch (token) {
@@ -21,13 +26,32 @@ export default function GalleryPage({ type, token, className }) {
         case "BOX2":
           return <Image className={className} src={Box2} layout="fill" />;
           break;
-          
+
         case "BOXPRIOR":
           return <Image className={className} src={BoxPrior} layout="fill" />;
           break;
-          
+
         case "BOXGORDOLINHA":
-          return <Image className={className} src={BoxGordolinha} layout="fill" />;
+          return (
+            <Image className={className} src={BoxGordolinha} layout="fill" />
+          );
+          break;
+
+        default:
+          return (
+            <div
+              className="flex-align-center flex-justify-center"
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              <h1 style={{ opacity: 0.6 }}>{title}</h1>
+            </div>
+          );
           break;
       }
       break;
@@ -39,6 +63,23 @@ export default function GalleryPage({ type, token, className }) {
 
         case "DEFIBRILATOR":
           return <Image className={className} src={Defib} layout="fill" />;
+          break;
+
+        default:
+          return (
+            <div
+              className="flex-align-center flex-justify-center"
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              <h1 style={{ opacity: 0.6 }}>{title}</h1>
+            </div>
+          );
           break;
       }
       break;
