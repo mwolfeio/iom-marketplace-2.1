@@ -6,11 +6,16 @@ export default function Modal({
   noBack,
   onClose,
   children,
+  style,
   background = true,
 }) {
   return (
     <div className="modal-back" onClick={() => onClose()}>
-      <div className="modal-wrap" onClick={(event) => event.stopPropagation()}>
+      <div
+        className="modal-wrap"
+        onClick={(event) => event.stopPropagation()}
+        style={style}
+      >
         {children}
       </div>
       <style jsx>{`

@@ -78,6 +78,11 @@ export default function Login() {
                     body: JSON.stringify(body),
                   })
                 );
+                console.log("setting local storage");
+                localStorage.setItem(
+                  "already-logged-in",
+                  JSON.stringify(false)
+                );
                 toast.success(`Welcome Back!`);
                 router.push("/wallet");
               } catch (error) {

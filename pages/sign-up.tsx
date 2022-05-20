@@ -77,6 +77,12 @@ export default function Login() {
                     body: JSON.stringify(body),
                   })
                 );
+                console.log("setting local storage");
+
+                localStorage.setItem(
+                  "already-logged-in",
+                  JSON.stringify(false)
+                );
                 router.push("/wallet");
               } catch (error) {
                 console.log("Error logging in: ", error.response);
