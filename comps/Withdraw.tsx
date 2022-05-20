@@ -22,18 +22,26 @@ export default function Comp({ arr, hook }) {
   const { user, mutateUser } = useUser();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [iom, setIom] = useState(0);
   const [withdraw, setWithdraw] = useState(0);
   const [fee, setFee] = useState(0);
   const [address, setAddress] = useState("");
   const { newUser, refreshUSer } = useContext(UserContext);
   const router = useRouter();
 
+  const [usebnb, setuseBnb] = useState(false);
+  const [iomBalance, setIomBalance] = useState(0);
+  const [bnbBalance, setBnbBalance] = useState(0);
+  // const [activeTokenBalance, setActiveTokenBalance] = useState(0);
+
+  const [iom, setIom] = useState(0);
+
   useEffect(() => {
     if (user && user.isLoggedIn) {
-      let red = user.balances.filter((obj) => obj.token === "IOM")[0];
+      let iomBal = user.balances.filter((obj) => obj.token === "IOM")[0];
+      let bnbBal = user.balances.filter((obj) => obj.token === "BNB")[0];
       getFee();
-      setIom(red ? red.amount : 0);
+      setIomBalance(iomBal ? iomBal.amount : 0);
+      setBnbBalance(bnbBal ? bnbBal.amount : 0);
     }
   }, [user]);
 
@@ -74,10 +82,6 @@ export default function Comp({ arr, hook }) {
     }
     setLoading(false);
   };
-  const copyCode = () => {
-    navigator.clipboard.writeText(code);
-    toast.success("Address Coppied");
-  };
 
   return (
     <div className="login">
@@ -85,19 +89,15 @@ export default function Comp({ arr, hook }) {
         errorMessage={error}
         onSubmit={async function handleSubmit(event) {
           event.preventDefault();
+          if (usebnb) return;
           setLoading(true);
-          console.log("payload: ", {
-            token: "IOM",
-            amount: withdraw,
-            walletAddress: address,
-          });
 
           try {
             //submit withdraw
             const { data } = await axios.post(
               "https://api.apiiom.com/bank/withdrawal",
               {
-                token: "IOM",
+                token: usebnb ? "BNB" : "IOM",
                 amount: withdraw,
                 walletAddress: address,
               },
@@ -132,18 +132,38 @@ export default function Comp({ arr, hook }) {
           setLoading(false);
         }}
       >
-        <h1 style={{ margin: 0 }}>Withdraw IOM</h1>
+        <h1 style={{ margin: 0 }}>Withdraw</h1>
         <p>
-          Enter the amount and the IOM address you would like to withdraw funds
-          to.
+          Enter the amount and destination address of the token you would like
+          to withdraw.
         </p>
+        <div>
+          <span style={{ opacity: 0.6 }}>I would like to withdraw:</span>
+          <div className="options-wrapper flex-align-center flex-justify-btw">
+            <div className="slider" />
+            <div
+              onClick={() => setuseBnb(true)}
+              className="option flex-align-center flex-justify-center"
+            >
+              BNB
+            </div>
+            <div
+              onClick={() => setuseBnb(false)}
+              className="option flex-align-center flex-justify-center"
+            >
+              IOM
+            </div>
+          </div>
+        </div>
 
         <label>
           <div className="flex-justify-btw" style={{ margin: ".5rem 0" }}>
             <span>
               <b>Destination:</b>
             </span>
-            <span style={{ opacity: 0.6 }}>IOM Address</span>
+            <span style={{ opacity: 0.6 }}>
+              {usebnb ? "BNB" : "IOM"} Address
+            </span>
           </div>
           <input
             className={
@@ -176,7 +196,9 @@ export default function Comp({ arr, hook }) {
             <span>
               <b>Amount:</b>
             </span>
-            <span style={{ opacity: 0.6 }}>Max: {iom}</span>
+            <span style={{ opacity: 0.6 }}>
+              Max: {usebnb ? bnbBalance : iomBalance}
+            </span>
           </div>
           <div id="withdraw-input">
             <input
@@ -187,7 +209,15 @@ export default function Comp({ arr, hook }) {
               min={0}
               max={iom}
               onChange={() =>
-                setWithdraw(Math.max(0, Math.min(iom, event.target.value)))
+                setWithdraw(
+                  Math.max(
+                    0,
+                    Math.min(
+                      usebnb ? bnbBalance : iomBalance,
+                      event.target.value
+                    )
+                  )
+                )
               }
               value={withdraw}
               required
@@ -196,10 +226,30 @@ export default function Comp({ arr, hook }) {
         </label>
 
         <div className="withdraw-buttons flex-justify-btw">
-          <div onClick={() => setWithdraw(Math.round(iom * 0.25))}>25%</div>
-          <div onClick={() => setWithdraw(Math.round(iom * 0.5))}>50%</div>
-          <div onClick={() => setWithdraw(Math.round(iom * 0.75))}>75%</div>
-          <div onClick={() => setWithdraw(iom)}>100%</div>
+          <div
+            onClick={() =>
+              setWithdraw(Math.round(usebnb ? bnbBalance : iomBalance * 0.25))
+            }
+          >
+            25%
+          </div>
+          <div
+            onClick={() =>
+              setWithdraw(Math.round(usebnb ? bnbBalance : iomBalance * 0.5))
+            }
+          >
+            50%
+          </div>
+          <div
+            onClick={() =>
+              setWithdraw(Math.round(usebnb ? bnbBalance : iomBalance * 0.75))
+            }
+          >
+            75%
+          </div>
+          <div onClick={() => setWithdraw(usebnb ? bnbBalance : iomBalance)}>
+            100%
+          </div>
         </div>
         <label>
           <input
@@ -209,21 +259,28 @@ export default function Comp({ arr, hook }) {
             onChange={() => setWithdraw(event.target.value)}
             value={withdraw}
             min="0"
-            max={iom}
+            max={usebnb ? bnbBalance : iomBalance}
             required
           />
           <div className="flex-justify-btw" style={{ margin: "0 0 .5rem 0" }}>
-            <span>0 IOM</span>
-            <span>{iom} IOM</span>
+            <span>0 {usebnb ? "BNB" : "IOM"}</span>
+            <span>
+              {usebnb ? bnbBalance : iomBalance} {usebnb ? "BNB" : "IOM"}
+            </span>
           </div>
         </label>
-        <button className="primary">
+        {usebnb ? (
+          <p style={{ textAlign: "center" }}>
+            BNB Withdraws are not supported yet
+          </p>
+        ) : null}
+        <button className={usebnb ? "disabled" : "primary"} disabled={usebnb}>
           {loading ? (
             <Loader />
           ) : (
             <span>
               {withdraw > 0
-                ? `Withdraw ${withdraw * (1 - fee)} IOM`
+                ? `Withdraw ${withdraw * (1 - fee)} ${usebnb ? "BNB" : "IOM"}`
                 : "Withdraw"}
             </span>
           )}
@@ -247,6 +304,42 @@ export default function Comp({ arr, hook }) {
       </FormWrapper>
 
       <style jsx>{`
+        .slider {
+          position: absolute;
+          background: ${usebnb ? "#F0B90B" : "#ff4544"};
+          border-radius: 0.5rem;
+          height: 40px;
+          width: 50%;
+          z-index: 0;
+          top: 0;
+          left: ${usebnb ? "0" : "50%"};
+          transition: 150ms cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        .option {
+          width: 100%;
+          height: 40px;
+          font-size: 20px;
+          border-radius: 0.5rem;
+          position: relative;
+          z-index: 1;
+          background: #ffffff00;
+          font-weight: 600;
+          cursor: pointer;
+          padding-bottom: 4px;
+          transition: 150ms cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        .options-wrapper {
+          position: relative;
+          overflow: none;
+          margin-top: 0.5rem;
+          height: 40px;
+          border-radius: 0.5rem;
+          background: #ffffff10;
+        }
+        .option:hover {
+          background: #ffffff10;
+        }
+
         .text-stuff {
           text-align: center;
         }
@@ -262,7 +355,7 @@ export default function Comp({ arr, hook }) {
           opacity: 0.8;
         }
         .login {
-          margin: 0 auto;
+          margin: 0 auto 24px;
           background: #1d2028;
           border-radius: 24px;
           border: 1px solid rgba(255, 255, 255, 0.3);
@@ -305,17 +398,14 @@ export default function Comp({ arr, hook }) {
           position: relative;
         }
         #withdraw-input::after {
-          content: "IOM";
+          content: "${usebnb ? "BNB" : "IOM"}";
           display: block;
           position: absolute;
           right: 0.5rem;
           bottom: 6px;
         }
 
-        #withdraw-input:hover::after,
-        #withdraw-input:focus-within::after {
-          right: 2rem;
-        }
+
       `}</style>
     </div>
   );

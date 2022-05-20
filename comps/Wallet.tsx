@@ -6,10 +6,16 @@ function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-export default function Comp({ data }) {
+export default function Comp({ data, bnb }) {
   const [bal, setBal] = useState(0);
+  const [bnbbal, setBnbBal] = useState(0);
   useEffect(() => {
-    if (data && data.length) setBal(numberWithCommas(data[0].amount));
+    if (data && data.length) {
+      setBal(numberWithCommas(data[0].amount));
+    }
+    if (bnb && bnb.length) {
+      setBnbBal(numberWithCommas(bnb[0].amount));
+    }
   }, [JSON.stringify(data)]);
 
   return (
@@ -17,7 +23,7 @@ export default function Comp({ data }) {
       <div className="wallet-wrapper flex-col flex-align-center">
         <h1 style={{ color: "rgb(255, 206, 56)" }}>{bal} IOM</h1>
         <p>
-          <b>$0.00 USD</b>
+          <b>{bnbbal} BNB</b>
         </p>
         <div
           className="list-spacing-sml flex-align-center"

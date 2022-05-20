@@ -220,7 +220,10 @@ export default function SgProfile() {
         </div>
         {user && schema && (
           <>
-            <Wallet data={iom} />
+            <Wallet
+              data={iom}
+              bnb={user.balances.filter((obj) => obj.token === "BNB")}
+            />
             <div className="extras-wrapper">
               <Boxes data={boxes} user={user} refresh={setUserState} />
               <List

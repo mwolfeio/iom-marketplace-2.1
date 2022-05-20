@@ -15,10 +15,14 @@ export default function Comp({ data }) {
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [bnb, setBnb] = useState(true);
 
   useEffect(() => {
     if (user) getAddress();
   }, [user]);
+  useEffect(() => {
+    if (user) getAddress();
+  }, [bnb]);
 
   const getAddress = async () => {
     setLoading(true);
@@ -27,9 +31,12 @@ export default function Comp({ data }) {
     try {
       const {
         data: { address },
-      } = await axios.get("https://api.apiiom.com/bank/wallet/IOM/address", {
-        headers: { Authorization: user.token },
-      });
+      } = await axios.get(
+        `https://api.apiiom.com/bank/wallet/${bnb ? "BNB" : "IOM"}/address`,
+        {
+          headers: { Authorization: user.token },
+        }
+      );
       console.log("address:", address);
 
       setCode(address);
@@ -44,28 +51,59 @@ export default function Comp({ data }) {
     toast.success("Address Coppied");
   };
 
-  if (loading) return <Loader />;
   return (
     <>
       <div className="login vert-space-med">
         <h1 style={{ margin: 0 }}>Deposits</h1>
         <p>Send your IOM deposits to the address listed below:</p>
+        <div>
+          <span style={{ opacity: 0.6 }}>I would like to deposit:</span>
+          <div className="options-wrapper flex-align-center flex-justify-btw">
+            <div className="slider" />
+            <div
+              onClick={() => setBnb(true)}
+              className="option flex-align-center flex-justify-center"
+            >
+              BNB
+            </div>
+            <div
+              onClick={() => setBnb(false)}
+              className="option flex-align-center flex-justify-center"
+            >
+              IOM
+            </div>
+          </div>
+        </div>
+
         <div className="code-wrapper">
-          <QRCode value={code} />
+          {loading ? (
+            <div
+              className="flex-align-center flex-justify-center address-wrapper"
+              style={{ display: "flex", width: "170px", height: "170px" }}
+            >
+              <Loader />
+            </div>
+          ) : (
+            <QRCode value={code} />
+          )}
         </div>
         <div>
           <div className=" address-wrapper flex-align-center flex-justify-center list-spacing-sml">
-            <p
-              style={{
-                wordWrap: "break-word",
-                display: "inline-block",
-                width: "100%",
-                textAlign: "center",
-                maxWidth: "Calc(100vw - 92px)",
-              }}
-            >
-              <b>{code}</b>
-            </p>
+            {loading ? (
+              <Loader />
+            ) : (
+              <p
+                style={{
+                  wordWrap: "break-word",
+                  display: "inline-block",
+                  width: "100%",
+                  textAlign: "center",
+                  maxWidth: "Calc(100vw - 92px)",
+                }}
+              >
+                <b>{code}</b>
+              </p>
+            )}
             <button className="icon mobile-hide" onClick={() => copyCode()}>
               <Copy />
             </button>
@@ -83,6 +121,42 @@ export default function Comp({ data }) {
         </div>
       </div>
       <style jsx>{`
+        .slider {
+          position: absolute;
+          background: ${bnb ? "#F0B90B" : "#ff4544"};
+          border-radius: 0.5rem;
+          height: 40px;
+          width: 50%;
+          z-index: 0;
+          top: 0;
+          left: ${bnb ? "0" : "50%"};
+          transition: 150ms cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        .option {
+          width: 100%;
+          height: 40px;
+          font-size: 20px;
+          border-radius: 0.5rem;
+          position: relative;
+          z-index: 1;
+          background: #ffffff00;
+          font-weight: 600;
+          cursor: pointer;
+          padding-bottom: 4px;
+          transition: 150ms cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        .options-wrapper {
+          position: relative;
+          overflow: none;
+          margin-top: 0.5rem;
+          height: 40px;
+          border-radius: 0.5rem;
+          background: #ffffff10;
+        }
+        .option:hover {
+          background: #ffffff10;
+        }
+
         .code-wrapper {
           margin: 1rem auto;
           border-radius: 1rem;

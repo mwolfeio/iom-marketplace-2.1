@@ -362,6 +362,7 @@ const PurchaseOffer = ({ offer, id, setErrorMsg, href, refresh }) => {
   const [loading, setLoading] = useState(false);
   const [qt, setQt] = useState();
   const router = useRouter();
+  const offer = useRouter();
   const { user } = useUser({
     redirectTo: "",
     redirectIfFound: false,
@@ -418,6 +419,16 @@ const PurchaseOffer = ({ offer, id, setErrorMsg, href, refresh }) => {
 
     setLoading(false);
   };
+  const getBnb = () => {
+    let bnb = 0;
+    if (user.bnb) {
+      bnb = user.bnb;
+    } else {
+      const bnbBal = user.balances.find((b) => b.token === "BNB");
+      bnb = bnbBal ? bnbBal.amount : 0;
+    }
+  };
+  const bnb = getBnb();
 
   return (
     <form
@@ -441,10 +452,17 @@ const PurchaseOffer = ({ offer, id, setErrorMsg, href, refresh }) => {
           <Loader />
         ) : owner ? (
           "Delete Offer"
-        ) : user.iom < offer.price ? (
+        ) : offer.price >
+          (offer.currencyTokenBase === "IOM" ? user.iom : getBnb()) ? (
           "Insufficient Funds"
         ) : (
-          `Buy ${qt > 1 ? `(${qt * offer.price} IOM)` : ""}`
+          `Buy ${
+            qt > 1
+              ? `(${qt * offer.price} ${
+                  offer.currencyTokenBase === "IOM" ? "IOM" : "BNB"
+                })`
+              : ""
+          }`
         )}
       </button>
     </form>

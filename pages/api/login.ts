@@ -19,15 +19,19 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
       password: password,
     });
 
+    console.log("user, token, balances: ", user, token, balances);
+
     //remove any assets wtih a zero balance
     const filteredBalances = balances.filter((b) => b.amount > 0);
     const iom = balances.find((b) => b.token === "IOM").amount;
+    const bnb = balances.find((b) => b.token === "BNB").amount;
 
     const userData = {
       // isLoggedIn: true,
       info: user,
       token,
       iom,
+      bnb,
       balances: filteredBalances,
     } as User;
     req.session.user = userData;
