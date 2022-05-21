@@ -220,7 +220,7 @@ export default function SgProfile() {
               >
                 Understood
               </button>
-              <button style={{ width: "100%" }}>I want to leave</button>
+              <button style={{ width: "100%" }} onClick={() => {window.location='https://poocoin.app/tokens/0x6ff5595e7e69fe8d1d234cca60391bb5e848f83a';}}>I want to leave</button>
             </div>
           </>
         </Modal>
