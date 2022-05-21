@@ -1,6 +1,7 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import useUser from "lib/useUser";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -8,6 +9,14 @@ function numberWithCommas(x) {
 
 export default function Comp({ data }) {
   const [bal, setBal] = useState(0);
+  const [bnbbal, setBnbBal] = useState(0);
+  const [logInModal, setLogInModal] = useState(false);
+  // const { user, mutateUser } = useUser();
+
+  // useEffect(() => {
+  //   if (user && user.firstTimeLogIn) setLogInModal(true);
+  // }, [JSON.stringify(user)]);
+
   useEffect(() => {
     if (data && data.length) setBal(numberWithCommas(data[0].amount));
   }, [JSON.stringify(data)]);
