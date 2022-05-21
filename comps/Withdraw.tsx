@@ -207,7 +207,6 @@ export default function Comp({ arr, hook }) {
               name="withdraw"
               placeholder="Withdraw amount..."
               min={0}
-              max={iom}
               onChange={() =>
                 setWithdraw(
                   Math.max(
