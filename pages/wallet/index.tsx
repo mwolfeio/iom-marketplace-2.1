@@ -207,7 +207,7 @@ export default function SgProfile() {
           <>
             <h2 style={{ marginBottom: ".25rem" }}>⚠️ ATTENTION ⚠️</h2>
             <p>
-              From the 21/05/2022th at 21:00h insulin and defibrillator fees will be billed in BNB - to learn more about HOW these fees will be used, visit our official Telegram.
+              From the 23/05/2022th at 21:00h insulin and defibrillator fees will be billed in BNB - to learn more about HOW these fees will be used, visit our official Telegram.
             </p>
             <div
               style={{ marginTop: "1rem" }}
