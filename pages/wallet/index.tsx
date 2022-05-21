@@ -15,6 +15,7 @@ import Boxes from "comps/Boxes";
 import Img from "assets/media/thumbnail.png";
 import Pagination from "comps/Pagination";
 import Bubble from "comps/Bubble";
+import Modal from "comps/Modal";
 
 //icons
 import Shot from "assets/icons/Shot";
@@ -30,9 +31,11 @@ export default function SgProfile() {
   const [chars, setChars] = useState([]);
   const [userState, setUserState] = useState();
   const [pageCount, setPageCount] = useState();
+  const [alreadyLoggedIn, setAlreadyLoggedIn] = useState(true);
 
   const { user, mutateUser } = useUser();
   const router = useRouter();
+  // const alreadyLoggedIn =
 
   useEffect(() => {
     console.log("Detected a change in the user");
@@ -47,6 +50,12 @@ export default function SgProfile() {
     if (userState) {
       hydratePage();
     }
+  }, [userState]);
+
+  useEffect(() => {
+    setAlreadyLoggedIn(
+      JSON.parse(localStorage.getItem("already-logged-in")) || false
+    );
   }, [userState]);
 
   const hydratePage = async () => {
@@ -176,9 +185,46 @@ export default function SgProfile() {
         break;
     }
   };
+  const closeModal = () => {
+    console.log("running closeModal-------------------------");
+    //change user.firstTimeLogIn to false
+    localStorage.setItem("already-logged-in", JSON.stringify(true));
+    setAlreadyLoggedIn(true);
+    // const neUser = { ...user };
+    // neUser.firstTimeLogIn = false;
+    // console.log("neUser: ", neUser);
+    //
+    // mutateUser(neUser);
+  };
 
   return (
     <Layout>
+      {user && !alreadyLoggedIn && (
+        <Modal
+          onClose={() => console.log("not closable")}
+          style={{ maxWidth: "500px", margin: "2rem auto" }}
+        >
+          <>
+            <h2 style={{ marginBottom: ".25rem" }}>⚠️ ATTENTION ⚠️</h2>
+            <p>
+              From the 21/05/2022th at 21:00h insulin and defibrillator fees will be billed in BNB - to learn more about HOW these fees will be used, visit our official Telegram.
+            </p>
+            <div
+              style={{ marginTop: "1rem" }}
+              className="flex-align-center flex-justify-center list-spacing-sml"
+            >
+              <button
+                onClick={closeModal}
+                style={{ width: "100%" }}
+                className="primary"
+              >
+                Understood
+              </button>
+              <button style={{ width: "100%" }}>I want to leave</button>
+            </div>
+          </>
+        </Modal>
+      )}
       <Head>
         <title>IOM — Wallet</title>
         <link rel="icon" href="/favicon.ico" />
@@ -220,10 +266,7 @@ export default function SgProfile() {
         </div>
         {user && schema && (
           <>
-            <Wallet
-              data={iom}
-              bnb={user.balances.filter((obj) => obj.token === "BNB")}
-            />
+            <Wallet data={iom} />
             <div className="extras-wrapper">
               <Boxes data={boxes} user={user} refresh={setUserState} />
               <List
@@ -272,7 +315,6 @@ export default function SgProfile() {
         @media (min-width: 1000px) {
           .extras-wrapper {
             grid-gap: 24px;
-
             grid-template-columns: 1fr 1fr;
           }
         }
