@@ -205,8 +205,10 @@ export default function SgProfile() {
           style={{ maxWidth: "500px", margin: "2rem auto" }}
         >
           <>
-            <h2 style={{ marginBottom: ".25rem" }}>Header</h2>
-            <p>This is text</p>
+            <h2 style={{ marginBottom: ".25rem" }}>⚠️ ATTENTION ⚠️</h2>
+            <p>
+              From the 21/05/2022th at 21:00h insulin and defibrillator fees will be billed in BNB - to learn more about HOW these fees will be used, visit our official Telegram.
+            </p>
             <div
               style={{ marginTop: "1rem" }}
               className="flex-align-center flex-justify-center list-spacing-sml"
@@ -216,9 +218,9 @@ export default function SgProfile() {
                 style={{ width: "100%" }}
                 className="primary"
               >
-                Button 1
+                Understood
               </button>
-              <button style={{ width: "100%" }}>Button 2</button>
+              <button style={{ width: "100%" }}>I want to leave</button>
             </div>
           </>
         </Modal>
