@@ -20,12 +20,14 @@ import Modal from "comps/Modal";
 //icons
 import Shot from "assets/icons/Shot";
 import Defib from "assets/icons/Defib";
+import Ticket from "assets/icons/Ticket";
 
 export default function SgProfile() {
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const [schema, setSchema] = useState([]);
   const [iom, setIom] = useState([]);
+  const [bnb, setBnb] = useState([]);
   const [boxes, setBoxes] = useState([]);
   const [items, setItems] = useState([]);
   const [chars, setChars] = useState([]);
@@ -35,7 +37,6 @@ export default function SgProfile() {
 
   const { user, mutateUser } = useUser();
   const router = useRouter();
-  // const alreadyLoggedIn =
 
   useEffect(() => {
     console.log("Detected a change in the user");
@@ -134,7 +135,13 @@ export default function SgProfile() {
     });
 
     //IOM
-    setIom(merge.filter((o) => o.tokenCategory === "CURRENCY"));
+    setIom(
+      merge.filter((o) => o.tokenCategory === "CURRENCY" && o.token === "IOM")
+    );
+    //BNB
+    setBnb(
+      merge.filter((o) => o.tokenCategory === "CURRENCY" && o.token === "BNB")
+    );
     //Boxes
     setBoxes(merge.filter((o) => o.tokenCategory === "BOX"));
     //Game Items
@@ -183,19 +190,24 @@ export default function SgProfile() {
       case "DEFIBRILATOR":
         return Defib;
         break;
+
+      case "BET_TICKET":
+        return Ticket;
+        break;
+
+      default:
+        return Ticket;
+        break;
     }
   };
   const closeModal = () => {
-    console.log("running closeModal-------------------------");
-    //change user.firstTimeLogIn to false
     localStorage.setItem("already-logged-in", JSON.stringify(true));
     setAlreadyLoggedIn(true);
-    // const neUser = { ...user };
-    // neUser.firstTimeLogIn = false;
-    // console.log("neUser: ", neUser);
-    //
-    // mutateUser(neUser);
   };
+
+  console.log("iom: ", iom);
+  console.log("bnb: ", bnb);
+  console.log("items: ", items);
 
   return (
     <Layout>
@@ -207,7 +219,9 @@ export default function SgProfile() {
           <>
             <h2 style={{ marginBottom: ".25rem" }}>⚠️ ATTENTION ⚠️</h2>
             <p>
-              From the 23/05/2022th at 21:00h insulin and defibrillator fees will be billed in BNB - to learn more about HOW these fees will be used, visit our official Telegram.
+              From the 23/05/2022th at 21:00h insulin and defibrillator fees
+              will be billed in BNB - to learn more about HOW these fees will be
+              used, visit our official Telegram.
             </p>
             <div
               style={{ marginTop: "1rem" }}
@@ -220,7 +234,15 @@ export default function SgProfile() {
               >
                 Understood
               </button>
-              <button style={{ width: "100%" }} onClick={() => {window.location='https://poocoin.app/tokens/0x6ff5595e7e69fe8d1d234cca60391bb5e848f83a';}}>I want to leave</button>
+              <button
+                style={{ width: "100%" }}
+                onClick={() => {
+                  window.location =
+                    "https://poocoin.app/tokens/0x6ff5595e7e69fe8d1d234cca60391bb5e848f83a";
+                }}
+              >
+                I want to leave
+              </button>
             </div>
           </>
         </Modal>
@@ -258,7 +280,7 @@ export default function SgProfile() {
           content="The official NFT, in-game item and boxes marketplace for all Influencers of the Metaverse games! Check out all the crazy characters and fun Blochian based games."
         />
         <meta property="twitter:image" content={Img} />
-      </Head>{" "}
+      </Head>
       <div className="vert-space-med">
         <div className="flex-justify-btw flex-align-center list-spacing-med">
           <h1>Wallet</h1>{" "}
@@ -266,7 +288,7 @@ export default function SgProfile() {
         </div>
         {user && schema && (
           <>
-            <Wallet data={iom} />
+            <Wallet iom={iom} bnb={bnb} />
             <div className="extras-wrapper">
               <Boxes data={boxes} user={user} refresh={setUserState} />
               <List
@@ -322,17 +344,3 @@ export default function SgProfile() {
     </Layout>
   );
 }
-
-// <h2>Info</h2>
-// <pre>
-//   {JSON.stringify(
-//     {
-//       isLoggedIn: user.isLoggedIn,
-//       token: user.token,
-//       info: user.info,
-//     },
-//     null,
-//     2
-//   )}
-// </pre>
-// <h2>Balance</h2>

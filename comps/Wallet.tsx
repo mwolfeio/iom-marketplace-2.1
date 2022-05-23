@@ -9,22 +9,23 @@ function numberWithCommas(x) {
   return strArr.join(".");
 }
 
-export default function Comp({ data, bnb }) {
-  const [bal, setBal] = useState(0);
+export default function Comp({ iom, bnb }) {
+  const [iombal, setIomBal] = useState(0);
   const [bnbbal, setBnbBal] = useState(0);
+
   useEffect(() => {
-    if (data && data.length) {
-      setBal(numberWithCommas(data[0].amount));
+    if (iom && iom.length) {
+      setIomBal(numberWithCommas(iom[0].amount));
     }
     if (bnb && bnb.length) {
       setBnbBal(numberWithCommas(bnb[0].amount));
     }
-  }, [JSON.stringify(data)]);
+  }, [iom, bnb]);
 
   return (
     <>
       <div className="wallet-wrapper flex-col flex-align-center">
-        <h1 style={{ color: "rgb(255, 206, 56)" }}>{bal} IOM</h1>
+        <h1 style={{ color: "rgb(255, 206, 56)" }}>{iombal} IOM</h1>
         <p>
           <b>{bnbbal} BNB</b>
         </p>

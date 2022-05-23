@@ -34,7 +34,6 @@ export default function Comp({ arr, hook }) {
   const [usebnb, setuseBnb] = useState(false);
   const [iomBalance, setIomBalance] = useState(0);
   const [bnbBalance, setBnbBalance] = useState(0);
-  // const [activeTokenBalance, setActiveTokenBalance] = useState(0);
 
   const [iom, setIom] = useState(0);
 
@@ -52,19 +51,12 @@ export default function Comp({ arr, hook }) {
     console.log("running get fee");
 
     try {
-      //submit withdraw
-      // const { data } = await axios.get("https://api.apiiom.com/parameters", {
-
       const { data } = await axios.get(
         "https://apiiom.algopro.com.br/bank/withdrawals/fee",
         {
           headers: { Authorization: user.token },
         }
       );
-
-      // let obj = data.find((x) => x.key === "WITHDRAWAL_PERCENTAGE_FEE_RATE");
-      // let f = obj.value / 100;
-      // if (obj) setFee(f);
 
       setFee(data / 100);
       setError("");
@@ -109,9 +101,6 @@ export default function Comp({ arr, hook }) {
               }
             );
 
-            //update user balance
-            //  mutate user data
-
             //clear inputs
             setWithdraw(0);
             setError("");
@@ -145,13 +134,19 @@ export default function Comp({ arr, hook }) {
           <div className="options-wrapper flex-align-center flex-justify-btw">
             <div className="slider" />
             <div
-              onClick={() => setuseBnb(true)}
+              onClick={() => {
+                setuseBnb(true);
+                setWithdraw(0);
+              }}
               className="option flex-align-center flex-justify-center"
             >
               BNB
             </div>
             <div
-              onClick={() => setuseBnb(false)}
+              onClick={() => {
+                setuseBnb(false);
+                setWithdraw(0);
+              }}
               className="option flex-align-center flex-justify-center"
             >
               IOM
@@ -230,21 +225,21 @@ export default function Comp({ arr, hook }) {
         <div className="withdraw-buttons flex-justify-btw">
           <div
             onClick={() =>
-              setWithdraw(Math.round(usebnb ? bnbBalance : iomBalance * 0.25))
+              setWithdraw((usebnb ? bnbBalance : iomBalance) * 0.25)
             }
           >
             25%
           </div>
           <div
             onClick={() =>
-              setWithdraw(Math.round(usebnb ? bnbBalance : iomBalance * 0.5))
+              setWithdraw((usebnb ? bnbBalance : iomBalance) * 0.5)
             }
           >
             50%
           </div>
           <div
             onClick={() =>
-              setWithdraw(Math.round(usebnb ? bnbBalance : iomBalance * 0.75))
+              setWithdraw((usebnb ? bnbBalance : iomBalance) * 0.75)
             }
           >
             75%
