@@ -13,8 +13,11 @@ import Media from "comps/MediaManager";
 import Loader from "comps/Loader";
 import SkyImg from "assets/media/skyzao_logo.png";
 
-function numberWithCommas(x = 0) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+function numberWithCommas(x) {
+  let str = x.toString();
+  let strArr = str.toString().split(".");
+  strArr[0] = strArr[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return strArr.join(".");
 }
 
 const getDate = (utcSeconds) => {

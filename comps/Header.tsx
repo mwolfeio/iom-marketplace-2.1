@@ -16,9 +16,11 @@ import Menu from "assets/icons/Menu";
 import Close from "assets/icons/Close";
 
 function numberWithCommas(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  let str = x.toString();
+  let strArr = str.toString().split(".");
+  strArr[0] = strArr[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return strArr.join(".");
 }
-
 export default function Header() {
   const [boxCount, setBoxCount] = useState(0);
   const [open, setOpen] = useState(false);

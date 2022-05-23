@@ -5,7 +5,10 @@ import ItemBack from "assets/media/ItemBack.png";
 import Media from "comps/MediaManager";
 
 function numberWithCommas(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  let str = x.toString();
+  let strArr = str.toString().split(".");
+  strArr[0] = strArr[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return strArr.join(".");
 }
 
 export default function Comp({

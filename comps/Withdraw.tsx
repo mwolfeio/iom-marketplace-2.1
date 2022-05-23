@@ -15,7 +15,10 @@ import Loader from "comps/Loader";
 import Copy from "assets/icons/Copy";
 
 function numberWithCommas(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  let str = x.toString();
+  let strArr = str.toString().split(".");
+  strArr[0] = strArr[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return strArr.join(".");
 }
 
 export default function Comp({ arr, hook }) {
