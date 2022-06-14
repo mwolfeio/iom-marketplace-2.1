@@ -132,7 +132,6 @@ export default function Comp({ arr, hook }) {
         <div>
           <span style={{ opacity: 0.6 }}>I would like to withdraw:</span>
           <div className="options-wrapper flex-align-center flex-justify-btw">
-            <div className="slider" />
             <div
               onClick={() => {
                 setuseBnb(false);
