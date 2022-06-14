@@ -135,15 +135,6 @@ export default function Comp({ arr, hook }) {
             <div className="slider" />
             <div
               onClick={() => {
-                setuseBnb(true);
-                setWithdraw(0);
-              }}
-              className="option flex-align-center flex-justify-center"
-            >
-              BNB
-            </div>
-            <div
-              onClick={() => {
                 setuseBnb(false);
                 setWithdraw(0);
               }}
